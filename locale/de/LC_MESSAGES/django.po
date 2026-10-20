@@ -1,0 +1,3026 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-05 05:15+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#, fuzzy
+#| msgid "Safari image"
+msgid "Safari Focused"
+msgstr "Safari-Bild"
+
+#, fuzzy
+#| msgid "Golf course"
+msgid "Golf Focused"
+msgstr "Golfplatz"
+
+#, fuzzy
+#| msgid "Safari"
+msgid "Safari + Golf"
+msgstr "Safari"
+
+#, python-format
+msgid "From %(price)s"
+msgstr "Ab %(price)s"
+
+#, python-format
+msgid "Save %(amount)s"
+msgstr "%(amount)s sparen"
+
+msgid "Pricing on request"
+msgstr "Preis auf Anfrage"
+
+msgid "View Offer"
+msgstr "Angebot ansehen"
+
+msgid "Special Offer"
+msgstr "Sonderangebot"
+
+msgid "The Founders' Pledge"
+msgstr "Das Versprechen der Gründer"
+
+msgid ""
+"For high-value journeys, trust should not be outsourced to a generic booking"
+" engine. AfroLink exists for travelers who want genuine, specialist-led "
+"planning: people who understand the pressure of a championship tee sheet, "
+"the fragility of conservation access, and the quiet importance of having a "
+"real expert accountable for every movement on the ground."
+msgstr ""
+"Bei hochwertigen Reisen sollte das Vertrauen nicht auf eine generische "
+"Buchungsmaschine ausgelagert werden. „BRAND_SHORT“ richtet sich an Reisende,"
+" die eine echte, von Spezialisten geleitete Planung wünschen: Menschen, die "
+"den Druck eines Meisterschafts-Abschlags, die Fragilität des Zugangs zu "
+"Naturschutzgebieten und die stille Bedeutung verstehen, einen echten "
+"Experten zu haben, der für jede Bewegung vor Ort verantwortlich ist."
+
+msgid "Founder specialisms"
+msgstr "Gründerspezialitäten"
+
+msgid "Portrait"
+msgstr "Porträt"
+
+msgid "The Golf Architect"
+msgstr "Der Golfarchitekt"
+
+msgid ""
+"Our golf planning begins with structural knowledge of the game: routing "
+"logic, turf behavior, approach angles, and how tee times must sit inside the"
+" wider journey. The result is seamless access to the right clubs, realistic "
+"playing windows, and course sequencing that respects both performance and "
+"recovery."
+msgstr ""
+"Unsere Golfplanung beginnt mit strukturellen Kenntnissen des Spiels: "
+"Routing-Logik, Rasenverhalten, Anflugwinkel und wie die Abschlagszeiten in "
+"die Gesamtstrecke passen müssen. Das Ergebnis ist ein nahtloser Zugriff auf "
+"die richtigen Schläger, realistische Spielfenster und eine Kursabfolge, die "
+"sowohl Leistung als auch Erholung berücksichtigt."
+
+msgid "The Wilderness Specialist"
+msgstr "Der Wildnisspezialist"
+
+msgid ""
+"Our wilderness planning is built on negotiation skill, trusted supplier "
+"relationships, and the ability to secure private concessions that avoid "
+"crowded routes. Every safari extension is chosen for access quality, guide "
+"depth, and the confidence that your time in the field is protected."
+msgstr ""
+"Unsere Wildnisplanung basiert auf Verhandlungsgeschick, vertrauenswürdigen "
+"Lieferantenbeziehungen und der Fähigkeit, private Konzessionen zu sichern, "
+"die überfüllte Routen vermeiden. Jede Safari-Verlängerung wird aufgrund der "
+"Zugangsqualität, der Tiefe des Reiseführers und der Gewissheit ausgewählt, "
+"dass Ihre Zeit vor Ort geschützt ist."
+
+msgid "Why specialist-led planning matters"
+msgstr "Warum eine von Spezialisten geleitete Planung wichtig ist"
+
+msgid ""
+"Private East African travel succeeds when golf, safari, lodging, and "
+"recovery are designed as one system — with founders accountable for the "
+"detail, not a distant booking desk."
+msgstr ""
+"Private Ostafrikareisen sind erfolgreich, wenn Golf, Safari, Unterkunft und "
+"Erholung als ein System konzipiert sind – mit Gründern, die für die Details "
+"verantwortlich sind, und nicht mit einem weit entfernten Buchungsschalter."
+
+msgid "Founder competencies"
+msgstr "Gründerkompetenzen"
+
+msgid "01 · Language"
+msgstr "01 · Sprache"
+
+msgid "Native German & English fluency"
+msgstr "Muttersprachliche fließende Deutsch- und Englischkenntnisse"
+
+msgid ""
+"Eliminates language barriers and builds direct personal trust before, "
+"during, and after the journey."
+msgstr ""
+"Beseitigt Sprachbarrieren und baut direktes persönliches Vertrauen vor, "
+"während und nach der Reise auf."
+
+msgid "02 · Support"
+msgstr "02 · Unterstützung"
+
+msgid "Uncompromised logistical luxury"
+msgstr "Kompromissloser logistischer Luxus"
+
+msgid ""
+"Guarantees localized support and direct recourse, bypassing distant hotlines"
+" and anonymous escalation chains."
+msgstr ""
+"Garantiert lokalen Support und direkten Rückgriff unter Umgehung entfernter "
+"Hotlines und anonymer Eskalationsketten."
+
+msgid "03 · Accountability"
+msgstr "03 · Verantwortlichkeit"
+
+msgid "Founders on the detail"
+msgstr "Gründer im Detail"
+
+msgid ""
+"Tee sheets, concession access, lodge pacing, and transfers are designed "
+"together — not as disconnected bookings."
+msgstr ""
+"Abschlagtücher, Konzessionszugang, Lodge-Taktung und Transfers sind "
+"gemeinsam konzipiert – und nicht als getrennte Buchungen."
+
+msgid "How we work"
+msgstr "Wie wir arbeiten"
+
+msgid ""
+"Every journey begins with a direct conversation about pace, golf priority, "
+"safari timing, and recovery needs. We then map transfers, overnight anchors,"
+" and access windows before any experience is confirmed."
+msgstr ""
+"Jede Reise beginnt mit einem direkten Gespräch über Tempo, Golfpriorität, "
+"Safari-Timing und Erholungsbedürfnisse. Anschließend kartieren wir "
+"Transfers, Übernachtungsanker und Zugangsfenster, bevor ein Erlebnis "
+"bestätigt wird."
+
+msgid ""
+"On the ground, the same founding team remains accountable: prime tee times, "
+"private wildlife access, dedicated golf-bag handling, and calm logistics "
+"that protect the itinerary when conditions change."
+msgstr ""
+"Vor Ort bleibt dasselbe Gründerteam verantwortlich: erstklassige "
+"Abschlagszeiten, privater Zugang zu Wildtieren, spezieller Umgang mit "
+"Golftaschen und eine ruhige Logistik, die die Reiseroute schützt, wenn sich "
+"die Bedingungen ändern."
+
+msgid "Operating principles"
+msgstr "Funktionsprinzipien"
+
+msgid "Access"
+msgstr "Zugang"
+
+msgid "The right clubs and quiet concessions"
+msgstr "Die richtigen Clubs und ruhige Konzessionen"
+
+msgid ""
+"We prioritize playing windows and field access that match the guest — not a "
+"generic checklist of famous names."
+msgstr ""
+"Wir priorisieren Spielfenster und Spielfeldzugang, die zum Gast passen – "
+"keine generische Checkliste berühmter Namen."
+
+msgid "Rhythm"
+msgstr "Rhythmus"
+
+msgid "Recovery between demanding days"
+msgstr "Erholung zwischen anspruchsvollen Tagen"
+
+msgid ""
+"Lodge selection and transfer timing are treated as recovery infrastructure, "
+"so golf and safari stay sharp rather than exhausting."
+msgstr ""
+"Die Auswahl der Lodge und der Zeitpunkt des Transfers werden als "
+"Erholungsinfrastruktur betrachtet, sodass Golf und Safari spannend und nicht"
+" anstrengend bleiben."
+
+msgid "Clarity"
+msgstr "Klarheit"
+
+msgid "One accountable point of contact"
+msgstr "Ein verantwortlicher Ansprechpartner"
+
+msgid ""
+"Guests speak with the people designing the journey. Decisions stay clear, "
+"escalation stays short, and the route stays composed."
+msgstr ""
+"Gäste sprechen mit den Menschen, die die Reise gestalten. Entscheidungen "
+"bleiben klar, Eskalationen bleiben kurz und die Route bleibt geordnet."
+
+msgid "Request a founder consultation"
+msgstr "Fordern Sie eine Gründerberatung an"
+
+msgid "Begin mapping your journey with our founders."
+msgstr "Beginnen Sie Ihre Reise mit unseren Gründern."
+
+msgid "Request a consultation"
+msgstr "Fordern Sie eine Beratung an"
+
+msgid "Explore Journeys →"
+msgstr "Entdecken Sie Reisen →"
+
+msgid "Back to region"
+msgstr "Zurück zur Region"
+
+msgid "Accommodation"
+msgstr "Unterkunft"
+
+msgid "Stay imagery"
+msgstr "Bleiben Sie bildhaft"
+
+msgid "Overview"
+msgstr "Überblick"
+
+msgid "Style"
+msgstr "Stil"
+
+msgid "Atmosphere"
+msgstr "Atmosphäre"
+
+msgid "Ideal guests"
+msgstr "Ideale Gäste"
+
+msgid "Rooms & amenities"
+msgstr "Zimmer und Annehmlichkeiten"
+
+msgid "Room style"
+msgstr "Zimmerstil"
+
+msgid "Occupancy"
+msgstr "Belegung"
+
+msgid "Beds"
+msgstr "Betten"
+
+msgid "Room size"
+msgstr "Zimmergröße"
+
+msgid "View"
+msgstr "Sicht"
+
+msgid "Property amenities"
+msgstr "Annehmlichkeiten der Immobilie"
+
+msgid "Shared facilities available during your stay."
+msgstr ""
+"Während Ihres Aufenthalts stehen Ihnen Gemeinschaftseinrichtungen zur "
+"Verfügung."
+
+msgid "Balcony / terrace"
+msgstr "Balkon/Terrasse"
+
+msgid "Private outdoor space from the room or suite."
+msgstr "Privater Außenbereich vom Zimmer oder der Suite."
+
+msgid "Pool"
+msgstr "Pool"
+
+msgid "Swimming and lounge space on property."
+msgstr "Schwimm- und Loungebereich auf dem Grundstück."
+
+msgid "Gym"
+msgstr "Fitnessstudio"
+
+msgid "Fitness facilities for light training."
+msgstr "Fitnesseinrichtungen für leichtes Training."
+
+msgid "Spa"
+msgstr "Spa"
+
+msgid "On-site wellness treatments."
+msgstr "Wellnessbehandlungen vor Ort."
+
+msgid "Restaurant"
+msgstr "Restaurant"
+
+msgid "Dining on property."
+msgstr "Essen vor Ort."
+
+msgid "Bar"
+msgstr "Bar"
+
+msgid "Evening drinks and lounge service."
+msgstr "Abendgetränke und Lounge-Service."
+
+msgid "Concierge"
+msgstr "Portier"
+
+msgid "Help with transfers, tee times, and safari timing."
+msgstr "Hilfe bei Transfers, Startzeiten und Safari-Timing."
+
+msgid "Wi-Fi"
+msgstr "W-lan"
+
+msgid "Internet access in rooms and public areas."
+msgstr "Internetzugang in Zimmern und öffentlichen Bereichen."
+
+msgid "Business centre"
+msgstr "Geschäftszentrum"
+
+msgid "Workspace support if needed."
+msgstr "Bei Bedarf Unterstützung am Arbeitsplatz."
+
+msgid "Logistics"
+msgstr "Logistik"
+
+msgid "Location"
+msgstr "Standort"
+
+msgid "Airport access"
+msgstr "Zugang zum Flughafen"
+
+msgid "Check-in"
+msgstr "Einchecken"
+
+msgid "Check-out"
+msgstr "Kasse"
+
+msgid "Stay policies"
+msgstr "Aufenthaltsrichtlinien"
+
+msgid "Practical options that affect how the stay is planned."
+msgstr ""
+"Praktische Optionen, die sich auf die Planung des Aufenthalts auswirken."
+
+msgid "Breakfast included"
+msgstr "Frühstück inklusive"
+
+msgid "Morning meal is part of the stay."
+msgstr "Das Frühstück ist Teil des Aufenthalts."
+
+msgid "Private dining"
+msgstr "Privates Essen"
+
+msgid "In-suite or private table dining available."
+msgstr "Essen in der Suite oder an einem privaten Tisch möglich."
+
+msgid "Early check-in"
+msgstr "Früher Check-in"
+
+msgid "Possible when rooms and timing allow."
+msgstr "Möglich, wenn Raum und Zeit es zulassen."
+
+msgid "Late check-out"
+msgstr "Später Check-out"
+
+msgid "Possible when departure timing allows."
+msgstr "Möglich, wenn die Abfahrtszeit es zulässt."
+
+msgid "Family friendly"
+msgstr "Familienfreundlich"
+
+msgid "Suitable for travelling with children."
+msgstr "Geeignet für Reisen mit Kindern."
+
+msgid "Adults only"
+msgstr "Nur für Erwachsene"
+
+msgid "Restricted to adult guests."
+msgstr "Auf erwachsene Gäste beschränkt."
+
+msgid "Policies & preparation"
+msgstr "Richtlinien und Vorbereitung"
+
+msgid "Smoking"
+msgstr "Rauchen"
+
+msgid "Pets"
+msgstr "Haustiere"
+
+msgid "Accessibility"
+msgstr "Zugänglichkeit"
+
+msgid "Dietary"
+msgstr "Diätetisch"
+
+msgid "Included & optional"
+msgstr "Im Lieferumfang enthalten und optional"
+
+msgid "Included"
+msgstr "Inbegriffen"
+
+msgid "Optional extras"
+msgstr "Optionale Extras"
+
+msgid "Gallery"
+msgstr "Galerie"
+
+msgid "FAQ"
+msgstr "FAQ"
+
+msgid "Related experiences"
+msgstr "Verwandte Erfahrungen"
+
+msgid "Shortlist"
+msgstr "Auswahlliste"
+
+msgid "Add to shortlist"
+msgstr "Zur Auswahlliste hinzufügen"
+
+msgid ""
+"Add this stay as an anchor night. We will match it to your golf and safari "
+"sequence."
+msgstr ""
+"Fügen Sie diesen Aufenthalt als Ankernacht hinzu. Wir passen es an Ihre "
+"Golf- und Safari-Sequenz an."
+
+msgid "Lodges & Resorts"
+msgstr "Lodges und Resorts"
+
+msgid "Stay with purpose."
+msgstr "Bleiben Sie zielstrebig."
+
+msgid ""
+"Accommodation anchors are selected for routing logic, rest quality, regional"
+" character, and access to golf, safari, and wellness experiences."
+msgstr ""
+"Unterkunftsanker werden nach Routenlogik, Erholungsqualität, regionalem "
+"Charakter und Zugang zu Golf-, Safari- und Wellnesserlebnissen ausgewählt."
+
+msgid "Available accommodations"
+msgstr "Verfügbare Unterkünfte"
+
+msgid "Accommodation image"
+msgstr "Bild der Unterkunft"
+
+msgid "Star"
+msgstr "Stern"
+
+msgid "Open Stay →"
+msgstr "Offener Aufenthalt →"
+
+msgid "Golf course"
+msgstr "Golfplatz"
+
+msgid "Course imagery"
+msgstr "Kursbilder"
+
+msgid "Course details"
+msgstr "Kursdetails"
+
+msgid "Layout"
+msgstr "Layout"
+
+msgid "Length"
+msgstr "Dauer"
+
+msgid "Architect"
+msgstr "Architekt"
+
+msgid "Opened"
+msgstr "Geöffnet"
+
+msgid "Turf"
+msgstr "Rasen"
+
+msgid "Difficulty"
+msgstr "Schwierigkeit"
+
+msgid "Best suited for"
+msgstr "Bestens geeignet für"
+
+msgid "Signature holes"
+msgstr "Signaturlöcher"
+
+msgid "Practice & warm-up"
+msgstr "Üben und Aufwärmen"
+
+msgid "What is available before your round to loosen up and prepare."
+msgstr "Was gibt es vor deiner Runde zum Auflockern und Vorbereiten?"
+
+msgid "Championship layout"
+msgstr "Meisterschaftslayout"
+
+msgid "A full tournament-standard course, not a casual resort loop."
+msgstr ""
+"Ein kompletter Golfplatz nach Turnierstandard, kein lockerer Resort-"
+"Rundgang."
+
+msgid "Driving range"
+msgstr "Driving Range"
+
+msgid "Full-swing warm-up before your tee time."
+msgstr "Aufwärmen mit vollem Schwung vor der Abschlagszeit."
+
+msgid "Putting green"
+msgstr "Putting-Grün"
+
+msgid "Practice greens to read speed before you start."
+msgstr ""
+"Üben Sie die Grüns, um die Geschwindigkeit zu erkennen, bevor Sie beginnen."
+
+msgid "Short-game area"
+msgstr "Kurzspielbereich"
+
+msgid "Chipping and pitching practice near the first tee."
+msgstr "Chipping- und Pitching-Übungen in der Nähe des ersten Abschlags."
+
+msgid "Golf academy"
+msgstr "Golfakademie"
+
+msgid "Coaching available if you want a lesson during the stay."
+msgstr ""
+"Coaching verfügbar, wenn Sie während des Aufenthalts Unterricht wünschen."
+
+msgid "Club facilities"
+msgstr "Clubeinrichtungen"
+
+msgid "What you will find at the club before and after the round."
+msgstr "Was Sie vor und nach der Runde im Club finden."
+
+msgid "Clubhouse"
+msgstr "Clubhaus"
+
+msgid "Check-in, lounge space, and the social centre of the club."
+msgstr "Check-in, Loungebereich und das soziale Zentrum des Clubs."
+
+msgid "Restaurant / dining"
+msgstr "Restaurant / Essen"
+
+msgid "Meals and drinks available after the round."
+msgstr "Nach der Runde gibt es Speisen und Getränke."
+
+msgid "Pro shop"
+msgstr "Pro-Shop"
+
+msgid "Balls, tees, and basic equipment on site."
+msgstr "Bälle, Abschläge und Grundausstattung vor Ort."
+
+msgid "Locker rooms"
+msgstr "Umkleideräume"
+
+msgid "Secure storage for bags and personal items."
+msgstr "Sichere Aufbewahrung für Taschen und persönliche Gegenstände."
+
+msgid "Changing rooms"
+msgstr "Umkleidekabinen"
+
+msgid "Space to change before or after play."
+msgstr "Platz zum Umziehen vor oder nach dem Spiel."
+
+msgid "How you play"
+msgstr "Wie du spielst"
+
+msgid ""
+"How guests typically move around the course and what support is available."
+msgstr ""
+"Wie sich Gäste normalerweise auf dem Platz bewegen und welche Unterstützung "
+"verfügbar ist."
+
+msgid "Walking permitted"
+msgstr "Zu Fuß gehen erlaubt"
+
+msgid "You may walk the course rather than taking a cart."
+msgstr ""
+"Sie können die Strecke auch zu Fuß zurücklegen, anstatt einen Wagen zu "
+"nehmen."
+
+msgid "Golf carts"
+msgstr "Golfwagen"
+
+msgid "Cart hire can be arranged for the round."
+msgstr "Für die Runde kann ein Bollerwagenverleih arrangiert werden."
+
+msgid "Caddie support"
+msgstr "Caddy-Unterstützung"
+
+msgid "Local caddies available subject to club rules and timing."
+msgstr ""
+"Lokale Caddies stehen vorbehaltlich der Vereinsregeln und des Zeitplans zur "
+"Verfügung."
+
+msgid "Club rental"
+msgstr "Schlägermiete"
+
+msgid "Hire a set if you prefer not to travel with your own."
+msgstr ""
+"Mieten Sie ein Set, wenn Sie lieber nicht mit Ihrem eigenen reisen möchten."
+
+msgid "Booking window"
+msgstr "Buchungsfenster"
+
+msgid "Playing time"
+msgstr "Spielzeit"
+
+msgid "Peak season"
+msgstr "Hochsaison"
+
+msgid "Best time to play"
+msgstr "Beste Zeit zum Spielen"
+
+msgid "Booking notes"
+msgstr "Buchungshinweise"
+
+msgid "Preparation"
+msgstr "Vorbereitung"
+
+msgid "Dress code"
+msgstr "Kleiderordnung"
+
+msgid "Collared shirts required."
+msgstr "Hemden mit Kragen erforderlich."
+
+msgid "Soft spikes required."
+msgstr "Softspikes erforderlich."
+
+msgid "Denim not permitted."
+msgstr "Denim ist nicht erlaubt."
+
+msgid "Arrival"
+msgstr "Ankunft"
+
+msgid ""
+"Save this course to your shortlist. Our concierge will sequence tee times "
+"around your safari and stay preferences."
+msgstr ""
+"Speichern Sie diesen Kurs in Ihrer engeren Auswahl. Unser Concierge wird die"
+" Abschlagszeiten entsprechend Ihren Safari- und Aufenthaltspräferenzen "
+"festlegen."
+
+msgid "Golf Courses"
+msgstr "Golfplätze"
+
+msgid ""
+"Browse AfroLink championship and private golf courses across East Africa, "
+"filtered by region, style, and play character."
+msgstr ""
+"Durchsuchen Sie „BRAND_SHORT“-Meisterschafts- und Privatgolfplätze in ganz "
+"Ostafrika, gefiltert nach Region, Stil und Spielcharakter."
+
+msgid ""
+"Championship and private courses selected for routing quality, turf "
+"character, and how cleanly they pair with safari and recovery days."
+msgstr ""
+"Meisterschafts- und Privatplätze, ausgewählt nach Streckenqualität, "
+"Rasencharakter und wie sauber sie mit Safari- und Erholungstagen "
+"harmonieren."
+
+msgid "Search"
+msgstr "Suche"
+
+msgid "Course, architect, or region"
+msgstr "Kurs, Architekt oder Region"
+
+msgid "Region"
+msgstr "Region"
+
+msgid "All regions"
+msgstr "Alle Regionen"
+
+msgid "All styles"
+msgstr "Alle Stile"
+
+msgid "Play Level"
+msgstr "Spielniveau"
+
+msgid "Championship"
+msgstr "Meisterschaft"
+
+msgid "Non-championship"
+msgstr "Nicht-Meisterschaft"
+
+msgid "All courses"
+msgstr "Alle Kurse"
+
+msgid "Clear Filters"
+msgstr "Filter löschen"
+
+msgid "Apply"
+msgstr "Anwenden"
+
+#, python-brace-format
+msgid "{count} course found"
+msgstr "{count} Kurs gefunden"
+
+#, python-brace-format
+msgid "{count} courses found"
+msgstr "{count} Kurse gefunden"
+
+msgid "Golf course guides"
+msgstr "Golfplatzführer"
+
+msgid "Golf image"
+msgstr "Golfbild"
+
+msgid "Open Course →"
+msgstr "Kurs öffnen →"
+
+msgid "Back to events"
+msgstr "Zurück zu den Ereignissen"
+
+msgid "Event image"
+msgstr "Veranstaltungsbild"
+
+msgid "Golf Event"
+msgstr "Golf-Event"
+
+msgid "Every"
+msgstr "Jeder"
+
+msgid "Event details"
+msgstr "Veranstaltungsdetails"
+
+msgid "Schedule"
+msgstr "Zeitplan"
+
+msgid "From"
+msgstr "Aus"
+
+msgid "Through"
+msgstr "Durch"
+
+msgid "Format"
+msgstr "Format"
+
+msgid "Duration"
+msgstr "Dauer"
+
+msgid "Course"
+msgstr "Kurs"
+
+msgid "Eligibility"
+msgstr "Teilnahmeberechtigung"
+
+msgid "Venue & access"
+msgstr "Veranstaltungsort und Zugang"
+
+msgid "Need to know"
+msgstr "Muss es wissen"
+
+msgid "Related events"
+msgstr "Verwandte Veranstaltungen"
+
+msgid ""
+"Add this event as an anchor date. We will confirm access, guest numbers, and"
+" the best surrounding golf, stay, and safari routing."
+msgstr ""
+"Fügen Sie dieses Ereignis als Ankerdatum hinzu. Wir bestätigen Ihnen den "
+"Zugang, die Gästezahlen und die besten umliegenden Golf-, Aufenthalts- und "
+"Safari-Routen."
+
+msgid ""
+"This event is not open for direct enquiry right now. Ask our team if a "
+"private arrangement is possible."
+msgstr ""
+"Diese Veranstaltung kann derzeit nicht direkt angefragt werden. Fragen Sie "
+"unser Team, ob eine private Vereinbarung möglich ist."
+
+msgid "Ask the team"
+msgstr "Fragen Sie das Team"
+
+msgid "Official event link"
+msgstr "Offizieller Event-Link"
+
+msgid "Upcoming Golf Events"
+msgstr "Kommende Golfveranstaltungen"
+
+msgid ""
+"A curated calendar of one-off and recurring golf events that can be built "
+"into a private AfroLink journey."
+msgstr ""
+"Ein kuratierter Kalender mit einmaligen und wiederkehrenden "
+"Golfveranstaltungen, die in eine private „BRAND_SHORT“-Reise integriert "
+"werden können."
+
+msgid "Promoted golf events"
+msgstr "Geförderte Golfveranstaltungen"
+
+msgid "Featured Event Image"
+msgstr "Ausgewähltes Eventbild"
+
+msgid "Featured Event"
+msgstr "Besondere Veranstaltung"
+
+msgid "View Featured Event →"
+msgstr "Empfohlene Veranstaltung anzeigen →"
+
+msgid "Event, course, or region"
+msgstr "Veranstaltung, Kurs oder Region"
+
+msgid "Event Type"
+msgstr "Ereignistyp"
+
+msgid "One-time"
+msgstr "Einmalig"
+
+msgid "Recurring"
+msgstr "Wiederkehrend"
+
+msgid "All types"
+msgstr "Alle Arten"
+
+msgid "To"
+msgstr "Zu"
+
+#, python-brace-format
+msgid "{count} event found"
+msgstr "{count} Ereignis gefunden"
+
+#, python-brace-format
+msgid "{count} events found"
+msgstr "{count} Ereignisse gefunden"
+
+msgid "Upcoming golf events"
+msgstr "Kommende Golfveranstaltungen"
+
+msgid "Event Image"
+msgstr "Ereignisbild"
+
+msgid "Private golf event"
+msgstr "Private Golfveranstaltung"
+
+msgid "View Event →"
+msgstr "Ereignis anzeigen →"
+
+msgid "Stories & News"
+msgstr "Geschichten und Neuigkeiten"
+
+msgid ""
+"Dispatches from our journeys across Kenya - notes on golf, recaps of events "
+"we have hosted, safari experiences from the field, lodge impressions, and "
+"news from the AfroLink team."
+msgstr ""
+"Berichte von unseren Reisen durch Kenia – Notizen zum Golfsport, Rückblicke "
+"auf von uns veranstaltete Veranstaltungen, Safari-Erlebnisse vor Ort, "
+"Eindrücke von Lodges und Neuigkeiten vom AfroLink-Team."
+
+msgid "Story, topic, or keyword"
+msgstr "Geschichte, Thema oder Schlüsselwort"
+
+msgid "Category"
+msgstr "Kategorie"
+
+msgid "All categories"
+msgstr "Alle Kategorien"
+
+msgid "Sort By"
+msgstr "Sortieren nach"
+
+msgid "Oldest first"
+msgstr "Älteste zuerst"
+
+msgid "Newest first"
+msgstr "Das Neueste zuerst"
+
+#, python-brace-format
+msgid "{count} story found"
+msgstr "{count} Geschichte gefunden"
+
+#, python-brace-format
+msgid "{count} stories found"
+msgstr "{count} Geschichten gefunden"
+
+msgid "Featured story image"
+msgstr "Ausgewähltes Story-Bild"
+
+msgid "min read"
+msgstr "Min. gelesen"
+
+msgid "Read The Story →"
+msgstr "Lesen Sie die Geschichte →"
+
+msgid "Journal stories"
+msgstr "Tagebuchgeschichten"
+
+msgid "Story image"
+msgstr "Story-Bild"
+
+msgid "AfroLink Adventures"
+msgstr "\"MARKE\""
+
+msgid "Journal consultation call to action"
+msgstr "Aufruf zum Handeln in der Zeitschriftenkonsultation"
+
+msgid ""
+"Bring us your dates, your pace, and the experience you want to protect."
+msgstr ""
+"Teilen Sie uns Ihre Daten, Ihr Tempo und die Erfahrung mit, die Sie schützen"
+" möchten."
+
+msgid "Request a consultation →"
+msgstr "Fordern Sie eine Beratung an →"
+
+msgid "Back to The Journal"
+msgstr "Zurück zum Tagebuch"
+
+msgid "Journal image"
+msgstr "Journalbild"
+
+msgid "By"
+msgstr "Von"
+
+msgid "Article body"
+msgstr "Artikeltext"
+
+#, python-format
+msgid "YouTube video: %(title)s"
+msgstr "YouTube-Video: %(title)s"
+
+msgid "Tags"
+msgstr "Schlagworte"
+
+msgid "Related articles"
+msgstr "Verwandte Artikel"
+
+msgid "Related Articles"
+msgstr "Verwandte Artikel"
+
+msgid "min"
+msgstr "min"
+
+msgid "Article consultation call to action"
+msgstr "Aufruf zur Artikelkonsultation zum Handeln"
+
+msgid "Want this thinking applied to your own route?"
+msgstr ""
+"Möchten Sie, dass dieser Gedanke auf Ihre eigene Route angewendet wird?"
+
+msgid "Back to journeys"
+msgstr "Zurück zu den Reisen"
+
+msgid "Day Journey"
+msgstr "Tagesreise"
+
+msgid "Full pricing in enquiry panel"
+msgstr "Vollständige Preise im Anfragefeld"
+
+msgid "Journey hero image"
+msgstr "Bild eines Reisehelden"
+
+msgid "Package Breakdown"
+msgstr "Paketaufschlüsselung"
+
+msgid ""
+"A day-by-day view of the stays and experiences that shape the route. Each "
+"item can be opened for deeper context before you add the journey to your "
+"inquiry."
+msgstr ""
+"Ein tagesaktueller Blick auf die Aufenthalte und Erlebnisse, die die Route "
+"prägen. Jedes Element kann für einen tieferen Kontext geöffnet werden, bevor"
+" Sie die Reise zu Ihrer Anfrage hinzufügen."
+
+msgid "Day"
+msgstr "Tag"
+
+msgid "Stay"
+msgstr "Bleiben"
+
+msgid "Concierge-selected accommodation pending"
+msgstr "Vom Concierge ausgewählte Unterkunft steht noch aus"
+
+msgid "Experiences"
+msgstr "Erfahrungen"
+
+msgid "Experience sequencing will be confirmed by the concierge team."
+msgstr "Die Reihenfolge der Erlebnisse wird vom Concierge-Team bestätigt."
+
+msgid ""
+"The full day-by-day sequence is being prepared. Enquire and the concierge "
+"team will confirm the routing."
+msgstr ""
+"Der komplette Tagesablauf ist in Vorbereitung. Erkundigen Sie sich und das "
+"Concierge-Team wird die Route bestätigen."
+
+msgid "Package inclusions and exclusions"
+msgstr "Paketeinschlüsse und -ausschlüsse"
+
+msgid "What Is Covered"
+msgstr "Was abgedeckt ist"
+
+msgid ""
+"A clear view of what this package price already carries, and what remains "
+"flexible or billed separately."
+msgstr ""
+"Eine klare Übersicht darüber, was dieser Paketpreis bereits beinhaltet und "
+"was flexibel bleibt oder separat abgerechnet wird."
+
+msgid "In the package"
+msgstr "Im Paket"
+
+msgid "Billed separately"
+msgstr "Wird separat in Rechnung gestellt"
+
+msgid "Not Included"
+msgstr "Nicht inbegriffen"
+
+msgid "Enquire about this journey"
+msgstr "Diese Reise anfragen"
+
+msgid "Private journey"
+msgstr "Private Reise"
+
+msgid "Enquire about this route and refine it with our team."
+msgstr ""
+"Erkundigen Sie sich nach dieser Route und verfeinern Sie sie mit unserem "
+"Team."
+
+msgid "Days"
+msgstr "Tage"
+
+msgid "Pricing"
+msgstr "Preise"
+
+msgid ""
+"Continue to a focused enquiry form for this package. You will confirm dates,"
+" guests, and a preferred consultation window. Nothing is booked until you "
+"refine the plan on a video consultation with our team."
+msgstr ""
+"Weiter zu einem gezielten Anfrageformular für dieses Paket. Sie bestätigen "
+"Termine, Gäste und ein bevorzugtes Beratungsfenster. Es ist nichts gebucht, "
+"bis Sie den Plan in einer Videoberatung mit unserem Team verfeinern."
+
+msgid "Enquire"
+msgstr "Anfragen"
+
+msgid "Signature Journeys"
+msgstr "Signature-Reisen"
+
+msgid ""
+"Curated golf, safari, and wellness routes that can be refined privately with"
+" our concierge team."
+msgstr ""
+"Kuratierte Golf-, Safari- und Wellnessrouten, die individuell mit unserem "
+"Concierge-Team verfeinert werden können."
+
+msgid "Start an enquiry"
+msgstr "Starten Sie eine Anfrage"
+
+msgid "Journey name or theme"
+msgstr "Name oder Thema der Reise"
+
+msgid "Up to 7 days"
+msgstr "Bis zu 7 Tage"
+
+msgid "8 - 12 days"
+msgstr "8 - 12 Tage"
+
+msgid "13+ days"
+msgstr "13+ Tage"
+
+msgid "Any length"
+msgstr "Beliebige Länge"
+
+msgid "Offers"
+msgstr "Angebote"
+
+msgid "Special offers only"
+msgstr "Nur Sonderangebote"
+
+msgid "All journeys"
+msgstr "Alle Reisen"
+
+msgid "Price: Low to High"
+msgstr "Preis: Niedrig bis hoch"
+
+msgid "Price: High to Low"
+msgstr "Preis: Hoch bis niedrig"
+
+msgid "Recommended"
+msgstr "Empfohlen"
+
+#, python-brace-format
+msgid "{count} journey found"
+msgstr "{count} Reise gefunden"
+
+#, python-brace-format
+msgid "{count} journeys found"
+msgstr "{count} Fahrten gefunden"
+
+msgid "Available journeys"
+msgstr "Verfügbare Fahrten"
+
+msgid "Journey image"
+msgstr "Reisebild"
+
+msgid "Explore Journey →"
+msgstr "Reise entdecken →"
+
+msgid "Back To Destinations"
+msgstr "Zurück zu den Zielen"
+
+msgid "Destination planning stats"
+msgstr "Statistiken zur Reisezielplanung"
+
+msgid "Golf"
+msgstr "Golf"
+
+msgid "Stays"
+msgstr "Bleibt"
+
+msgid "Safari destinations"
+msgstr "Safariziele"
+
+msgid "Wellness"
+msgstr "Wellness"
+
+msgid "Destination image"
+msgstr "Zielbild"
+
+msgid "Filter regional experiences"
+msgstr "Filtern Sie regionale Erlebnisse"
+
+msgid "Search this destination"
+msgstr "Dieses Ziel durchsuchen"
+
+msgid "All experiences"
+msgstr "Alle Erfahrungen"
+
+msgid "Regional experiences"
+msgstr "Regionale Erlebnisse"
+
+msgid "Stay image"
+msgstr "Bleiben Sie im Bild"
+
+msgid "Star Stay"
+msgstr "Star-Aufenthalt"
+
+msgid "Safari image"
+msgstr "Safari-Bild"
+
+msgid "Safari Destination"
+msgstr "Safari-Ziel"
+
+msgid "Open destination →"
+msgstr "Ziel öffnen →"
+
+msgid "Wellness image"
+msgstr "Wellness-Bild"
+
+msgid "Recovery Ritual"
+msgstr "Erholungsritual"
+
+msgid ""
+"A restorative counterpoint to tournament-grade play and safari movement."
+msgstr "Ein erholsamer Kontrapunkt zum Turnierspiel und zur Safari-Bewegung."
+
+msgid "Open Wellness →"
+msgstr "Öffnen Sie Wellness →"
+
+msgid "Enquire about this region"
+msgstr "Erkundigen Sie sich nach dieser Region"
+
+msgid "Planning around this region?"
+msgstr "Planen Sie in dieser Region?"
+
+msgid ""
+"Shortlist experiences above, or request a consultation and we will shape the"
+" route with you."
+msgstr ""
+"Nehmen Sie die oben aufgeführten Erlebnisse in die engere Wahl oder fordern "
+"Sie eine Beratung an, dann gestalten wir gemeinsam mit Ihnen die Route."
+
+msgid "Request consultation"
+msgstr "Beratung anfordern"
+
+msgid "Can't find something? Tell us →"
+msgstr "Sie können etwas nicht finden? Sag es uns →"
+
+msgid "Destinations"
+msgstr "Destinationen"
+
+msgid ""
+"Explore Kenyan golf, safari, wellness, and stay hubs arranged by geography "
+"for easier route planning."
+msgstr ""
+"Entdecken Sie kenianische Golf-, Safari-, Wellness- und Aufenthaltszentren, "
+"die nach geografischen Gesichtspunkten geordnet sind, um die Routenplanung "
+"zu erleichtern."
+
+msgid "Available destination hubs"
+msgstr "Verfügbare Ziel-Hubs"
+
+msgid "courses"
+msgstr "Kurse"
+
+msgid "safari destinations"
+msgstr "Safariziele"
+
+msgid "Open Destination →"
+msgstr "Ziel öffnen →"
+
+msgid "Safari destination"
+msgstr "Safari-Ziel"
+
+msgid "Safari imagery"
+msgstr "Safari-Bilder"
+
+msgid "Wildlife & experiences"
+msgstr "Tierwelt & Erlebnisse"
+
+msgid "Common wildlife"
+msgstr "Gemeinsame Tierwelt"
+
+msgid "Rare wildlife"
+msgstr "Seltene Tierwelt"
+
+msgid "Photography"
+msgstr "Fotografie"
+
+msgid "Typical duration"
+msgstr "Typische Dauer"
+
+msgid "Wildlife highlights"
+msgstr "Höhepunkte der Tierwelt"
+
+msgid "What makes this destination distinctive for game viewing."
+msgstr "Was dieses Reiseziel für Wildbeobachtungen besonders macht?"
+
+msgid "Big Five opportunities"
+msgstr "Big Five-Chancen"
+
+msgid ""
+"Chance to see lion, leopard, elephant, buffalo, and rhino depending on "
+"conditions."
+msgstr ""
+"Je nach Bedingungen besteht die Möglichkeit, Löwen, Leoparden, Elefanten, "
+"Büffel und Nashörner zu sehen."
+
+msgid "Birdwatching"
+msgstr "Vogelbeobachtung"
+
+msgid "Strong birdlife alongside the main game circuits."
+msgstr "Reichhaltige Vogelwelt entlang der Hauptspielstrecken."
+
+msgid "Seasonal migration"
+msgstr "Saisonale Migration"
+
+msgid "Timing windows when herds and movement are strongest."
+msgstr "Zeitfenster, in denen Herden und Bewegung am stärksten sind."
+
+msgid "Ways to experience it"
+msgstr "Möglichkeiten, es zu erleben"
+
+msgid "How guests usually move through the destination."
+msgstr "Wie sich Gäste normalerweise durch das Reiseziel bewegen."
+
+msgid "Game drives"
+msgstr "Pirschfahrten"
+
+msgid "Guided vehicle viewing on park or conservancy roads."
+msgstr "Geführte Fahrzeugbesichtigung auf Park- oder Schutzstraßen."
+
+msgid "Walking safaris"
+msgstr "Wandersafaris"
+
+msgid "Guided walks among plains game where permitted."
+msgstr ""
+"Geführte Wanderungen zwischen Wildtieren in der Ebene, sofern erlaubt."
+
+msgid "Night drives"
+msgstr "Nachtfahrten"
+
+msgid "After-dark predator and nocturnal wildlife viewing where allowed."
+msgstr ""
+"Nach Einbruch der Dunkelheit können Raubtiere und nächtliche Wildtiere "
+"beobachtet werden, sofern dies gestattet ist."
+
+msgid "Boat safaris"
+msgstr "Bootssafaris"
+
+msgid "Water-based viewing from lakes or channels."
+msgstr "Wasserbeobachtungen von Seen oder Kanälen aus."
+
+msgid "Balloon safaris"
+msgstr "Ballonsafaris"
+
+msgid "Optional aerial sunrise flights where operators run."
+msgstr ""
+"Optionale Sonnenaufgangsflüge aus der Luft, die von den Betreibern "
+"durchgeführt werden."
+
+msgid "Guided tours"
+msgstr "Geführte Touren"
+
+msgid "Professional guiding included in the destination experience."
+msgstr "Professionelle Führung im Reiseerlebnis inbegriffen."
+
+msgid "Self-drive allowed"
+msgstr "Selbstfahren erlaubt"
+
+msgid "Guests may self-drive where park rules permit."
+msgstr "Gäste können selbst fahren, sofern die Parkregeln dies zulassen."
+
+msgid "Driving time"
+msgstr "Fahrzeit"
+
+msgid "Park hours"
+msgstr "Öffnungszeiten des Parks"
+
+msgid "Peak / best season"
+msgstr "Haupt-/beste Jahreszeit"
+
+msgid "Green season"
+msgstr "Grüne Jahreszeit"
+
+msgid "Migration"
+msgstr "Migration"
+
+msgid "Best months"
+msgstr "Beste Monate"
+
+msgid "Access options"
+msgstr "Zugriffsmöglichkeiten"
+
+msgid "Transfer choices that can change the pacing of the day."
+msgstr "Transfermöglichkeiten, die den Tagesablauf verändern können."
+
+msgid "Internal flights available"
+msgstr "Inlandsflüge verfügbar"
+
+msgid "Light-aircraft access can shorten transfer time."
+msgstr "Der Zugang zu Kleinflugzeugen kann die Transferzeit verkürzen."
+
+msgid "Clothing"
+msgstr "Kleidung"
+
+msgid "Weather"
+msgstr "Wetter"
+
+msgid "Camera"
+msgstr "Kamera"
+
+msgid "Luggage & packing"
+msgstr "Gepäck und Verpackung"
+
+msgid "Park regulations"
+msgstr "Parkordnung"
+
+msgid ""
+"Save this safari destination to your shortlist. We will time wildlife days "
+"around your golf and stay plan."
+msgstr ""
+"Speichern Sie dieses Safariziel in Ihrer engeren Auswahl. Wir planen die "
+"Wildtiertage passend zu Ihrem Golf- und Aufenthaltsplan."
+
+msgid "Safari Destinations"
+msgstr "Safari-Ziele"
+
+msgid ""
+"Browse AfroLink safari destinations paired with private East African golf "
+"and wellness journeys."
+msgstr ""
+"Durchsuchen Sie „BRAND_SHORT“-Safariziele gepaart mit privaten Golf- und "
+"Wellnessreisen in Ostafrika."
+
+msgid ""
+"Parks, reserves, and conservancies chosen for wildlife density, access, and "
+"how cleanly they sit beside golf and recovery days."
+msgstr ""
+"Parks, Reservate und Schutzgebiete, die aufgrund ihrer Wildtierdichte, ihres"
+" Zugangs und ihrer Sauberkeit neben Golf- und Erholungstagen ausgewählt "
+"wurden."
+
+msgid "Destination, wildlife, or region"
+msgstr "Reiseziel, Tierwelt oder Region"
+
+msgid "Wildlife"
+msgstr "Tierwelt"
+
+msgid "Big Five"
+msgstr "Big Five"
+
+msgid "Specialty focus"
+msgstr "Spezialisierter Schwerpunkt"
+
+msgid "All wildlife"
+msgstr "Alle Wildtiere"
+
+msgid "Experience"
+msgstr "Erfahrung"
+
+#, python-brace-format
+msgid "{count} destination found"
+msgstr "{count} Ziel gefunden"
+
+#, python-brace-format
+msgid "{count} destinations found"
+msgstr "{count} Ziele gefunden"
+
+msgid "Wellness experience"
+msgstr "Wellness-Erlebnis"
+
+msgid "Wellness imagery"
+msgstr "Wellness-Bilder"
+
+msgid "Experience details"
+msgstr "Erleben Sie Details"
+
+msgid "Ideal for"
+msgstr "Ideal für"
+
+msgid "Age notes"
+msgstr "Altershinweise"
+
+msgid "Treatments"
+msgstr "Behandlungen"
+
+msgid "What you can book as part of this experience."
+msgstr "Was Sie im Rahmen dieses Erlebnisses buchen können."
+
+msgid "Massage"
+msgstr "Massage"
+
+msgid "Hands-on recovery treatments."
+msgstr "Praktische Erholungsbehandlungen."
+
+msgid "Hydrotherapy"
+msgstr "Hydrotherapie"
+
+msgid "Water-based recovery circuits."
+msgstr "Rückgewinnungskreisläufe auf Wasserbasis."
+
+msgid "Sauna"
+msgstr "Sauna"
+
+msgid "Dry heat recovery between treatments."
+msgstr "Trockene Wärmerückgewinnung zwischen den Behandlungen."
+
+msgid "Steam room"
+msgstr "Dampfbad"
+
+msgid "Humid heat as part of the spa circuit."
+msgstr "Feuchte Wärme als Teil des Spa-Zirkels."
+
+msgid "Yoga"
+msgstr "Yoga"
+
+msgid "Guided movement and stretch sessions."
+msgstr "Geführte Bewegungs- und Dehnübungen."
+
+msgid "Meditation"
+msgstr "Meditation"
+
+msgid "Breathwork or quiet practice time."
+msgstr "Atemarbeit oder ruhige Übungszeit."
+
+msgid "Fitness"
+msgstr "Fitness"
+
+msgid "Light active recovery options."
+msgstr "Leichte aktive Erholungsoptionen."
+
+msgid "Facilities"
+msgstr "Einrichtungen"
+
+msgid "Spaces available around the treatment itself."
+msgstr "Freie Räume rund um die Behandlung selbst."
+
+msgid "Swim or cool-down space on site."
+msgstr "Bade- oder Abkühlplatz vor Ort."
+
+msgid "Dedicated spa environment."
+msgstr "Spezielle Spa-Umgebung."
+
+msgid "Fitness space if you want light training."
+msgstr "Fitnessraum, wenn Sie leichtes Training wünschen."
+
+msgid "Relaxation lounge"
+msgstr "Entspannungslounge"
+
+msgid "Quiet seating before or after treatment."
+msgstr "Ruhiges Sitzen vor oder nach der Behandlung."
+
+msgid "Private treatment rooms"
+msgstr "Private Behandlungsräume"
+
+msgid "Enclosed rooms rather than open spa floors."
+msgstr "Geschlossene Räume statt offener Spa-Etagen."
+
+msgid "Arrival timing"
+msgstr "Zeitpunkt der Ankunft"
+
+msgid "Suitability"
+msgstr "Eignung"
+
+msgid "Medical considerations"
+msgstr "Medizinische Überlegungen"
+
+msgid ""
+"Add this wellness experience so we can place recovery days between golf and "
+"safari."
+msgstr ""
+"Fügen Sie dieses Wellness-Erlebnis hinzu, damit wir Erholungstage zwischen "
+"Golf und Safari legen können."
+
+msgid "Optional planning notes"
+msgstr "Optionale Planungshinweise"
+
+msgid ""
+"Share optional planning signals for a private AfroLink golf, safari, and "
+"wellness journey."
+msgstr ""
+"Teilen Sie optionale Planungssignale für eine private „BRAND_SHORT“ Golf-, "
+"Safari- und Wellnessreise."
+
+msgid ""
+"These signals help our team prepare — they are not a locked itinerary. You "
+"can skip this step and request a consultation directly."
+msgstr ""
+"Diese Signale helfen unserem Team bei der Vorbereitung – es handelt sich "
+"nicht um einen festgeschriebenen Reiseplan. Sie können diesen Schritt "
+"überspringen und direkt eine Beratung anfordern."
+
+msgid "Skip to enquiry form →"
+msgstr "Weiter zum Anfrageformular →"
+
+msgid "01 · Planning intent"
+msgstr "01 · Planungsabsicht"
+
+msgid "What should lead the route?"
+msgstr "Was soll den Weg weisen?"
+
+msgid "Balanced Golf & Safari"
+msgstr "Ausgewogenes Golf & Safari"
+
+msgid "Strong rounds, private game viewing, and calm transfer logic."
+msgstr "Starke Runden, private Spielbesichtigungen und ruhige Transferlogik."
+
+msgid "Golf-First Routing"
+msgstr "Golf-First-Routing"
+
+msgid ""
+"Championship courses, tee-time quality, and recovery after demanding rounds."
+msgstr ""
+"Meisterschaftsplätze, Qualität der Abschlagzeiten und Erholung nach "
+"anspruchsvollen Runden."
+
+msgid "Safari-Led Routing"
+msgstr "Safari-geführtes Routing"
+
+msgid ""
+"Wildlife timing, guide quality, and private access over rushed transitions."
+msgstr ""
+"Timing für die Tierwelt, Qualität des Reiseführers und privater Zugang bei "
+"übereilten Übergängen."
+
+msgid "Wellness & Recovery"
+msgstr "Wellness & Erholung"
+
+msgid "Privacy, lodge rhythm, spa recovery, and slower mornings."
+msgstr "Privatsphäre, Lodge-Rhythmus, Spa-Erholung und langsamere Morgen."
+
+msgid "02 · Route frame"
+msgstr "02 · Routenrahmen"
+
+msgid "Set the practical outline"
+msgstr "Legen Sie den praktischen Rahmen fest"
+
+msgid "Journey Length"
+msgstr "Reiselänge"
+
+msgid "10 days / balanced signature route"
+msgstr "10 Tage / ausgewogene Signaturroute"
+
+msgid "7 days / focused escape"
+msgstr "7 Tage / konzentrierte Flucht"
+
+msgid "12 days / slower private rhythm"
+msgstr "12 Tage / langsamerer Privatrhythmus"
+
+msgid "15 days / complete odyssey"
+msgstr "15 Tage / komplette Odyssee"
+
+msgid "21 days / extended expedition"
+msgstr "21 Tage / verlängerte Expedition"
+
+msgid "Manual length / choose my days"
+msgstr "Manuelle Länge / Meine Tage auswählen"
+
+msgid "Manual Days"
+msgstr "Manuelle Tage"
+
+msgid "Regional Anchor"
+msgstr "Regionaler Anker"
+
+msgid "Select a region"
+msgstr "Wählen Sie eine Region aus"
+
+msgid "Preferred Pace"
+msgstr "Bevorzugtes Tempo"
+
+msgid "Measured and private"
+msgstr "Maßvoll und privat"
+
+msgid "Active with full days"
+msgstr "Aktiv mit ganzen Tagen"
+
+msgid "Slow luxury with recovery time"
+msgstr "Langsamer Luxus mit Erholungszeit"
+
+msgid "Stay Preference"
+msgstr "Aufenthaltspräferenz"
+
+msgid "Best available by region"
+msgstr "Am besten verfügbar nach Region"
+
+msgid "Classic luxury lodges"
+msgstr "Klassische Luxus-Lodges"
+
+msgid "Private villas where possible"
+msgstr "Private Villen, wo möglich"
+
+msgid "03 · Priority signals"
+msgstr "03 · Vorrangsignale"
+
+msgid "Optional course and safari focus"
+msgstr "Optionaler Kurs und Safari-Schwerpunkt"
+
+msgid "Golf Priority"
+msgstr "Golf-Priorität"
+
+msgid "Let AfroLink recommend"
+msgstr "Lassen Sie sich von AfroLink weiterempfehlen"
+
+msgid "Safari Priority"
+msgstr "Safari-Priorität"
+
+msgid "Continue with these notes"
+msgstr "Fahren Sie mit diesen Notizen fort"
+
+msgid "Planner guidance"
+msgstr "Planerführung"
+
+msgid "A brief we work from"
+msgstr "Ein Brief, nach dem wir arbeiten"
+
+msgid "not a locked itinerary"
+msgstr "kein gesperrter Reiseplan"
+
+msgid "Nothing is booked until your video consultation confirms the plan."
+msgstr "Es wird nichts gebucht, bis Ihre Videoberatung den Plan bestätigt."
+
+msgid "Skip anytime and request a consultation with only the essentials."
+msgstr ""
+"Überspringen Sie jederzeit und fordern Sie eine Beratung nur mit dem "
+"Wesentlichen an."
+
+msgid "We email consultation details within two hours of your enquiry."
+msgstr ""
+"Wir senden Ihnen die Beratungsdetails innerhalb von zwei Stunden nach Ihrer "
+"Anfrage per E-Mail zu."
+
+msgid "Request consultation without notes →"
+msgstr "Beratung ohne Notizen anfordern →"
+
+msgid "Enquiry received"
+msgstr "Anfrage erhalten"
+
+msgid ""
+"Your AfroLink enquiry has been received. We will email consultation details "
+"within two hours."
+msgstr ""
+"Ihre „BRAND_SHORT“-Anfrage ist eingegangen. Wir senden Ihnen die "
+"Beratungsdetails innerhalb von zwei Stunden per E-Mail zu."
+
+msgid "We have your request."
+msgstr "Wir haben Ihr Anliegen."
+
+#, python-format
+msgid ""
+"Thank you, %(name)s. Your enquiry is with the AfroLink concierge team. "
+"Nothing is booked yet — the next step is a video consultation to refine and "
+"confirm the plan together."
+msgstr ""
+"Vielen Dank, %(name)s. Ihre Anfrage richtet sich an das Concierge-Team von "
+"AfroLink. Noch ist nichts gebucht – der nächste Schritt ist eine "
+"Videoberatung, um gemeinsam den Plan zu verfeinern und zu bestätigen."
+
+#, python-format
+msgid ""
+"We will email <strong>%(email)s</strong> within two hours with your "
+"consultation time and joining details."
+msgstr ""
+"Wir senden <strong>%(email)s</strong> innerhalb von zwei Stunden per E-Mail "
+"Ihre Beratungszeit und Ihre Beitrittsdetails."
+
+msgid "What happens next"
+msgstr "Was passiert als nächstes?"
+
+msgid "We review your brief"
+msgstr "Wir prüfen Ihr Briefing"
+
+msgid "dates, guests, shortlist or signature route, and any notes you shared."
+msgstr ""
+"Termine, Gäste, Auswahlliste oder Signaturroute sowie alle von Ihnen "
+"geteilten Notizen."
+
+msgid "You receive consultation details"
+msgstr "Sie erhalten Beratungsdetails"
+
+msgid "by email within two hours, including time and how to join."
+msgstr ""
+"per E-Mail innerhalb von zwei Stunden, inklusive Uhrzeit und "
+"Teilnahmebedingungen."
+
+msgid "We refine on the call"
+msgstr "Wir verfeinern den Anruf"
+
+msgid "availability, routing, and lodging. Only then is anything confirmed."
+msgstr "Verfügbarkeit, Route und Unterkunft. Erst dann ist alles bestätigt."
+
+msgid "Enquiry type"
+msgstr "Anfragetyp"
+
+msgid "Guests"
+msgstr "Gäste"
+
+msgid "Target start"
+msgstr "Zielstart"
+
+msgid "Flexible"
+msgstr "Flexibel"
+
+msgid "Preferred language"
+msgstr "Bevorzugte Sprache"
+
+msgid "Preferred consultation window"
+msgstr "Bevorzugtes Beratungsfenster"
+
+msgid "To be confirmed by email"
+msgstr "Wird per E-Mail bestätigt"
+
+msgid "Shortlist / journey"
+msgstr "Auswahlliste / Reise"
+
+msgid "To be refined on the call"
+msgstr "Wird beim Anruf präzisiert"
+
+msgid "Your notes"
+msgstr "Ihre Notizen"
+
+msgid ""
+"Meeting links are sent by email once scheduled — you will not find a join "
+"link on this page."
+msgstr ""
+"Meeting-Links werden nach der Planung per E-Mail verschickt. Auf dieser "
+"Seite finden Sie keinen Beitrittslink."
+
+msgid "Enquiry"
+msgstr "Anfrage"
+
+msgid ""
+"Confirm your AfroLink enquiry details and request a private concierge video "
+"consultation."
+msgstr ""
+"Bestätigen Sie Ihre „BRAND_SHORT“-Anfragedetails und fordern Sie eine "
+"private Concierge-Videoberatung an."
+
+msgid "Request consultation for your shortlist"
+msgstr "Fordern Sie eine Beratung für Ihre Shortlist an"
+
+msgid ""
+"Confirm a few travel details. We will refine availability and routing on "
+"your consultation — nothing is booked yet."
+msgstr ""
+"Bestätigen Sie einige Reisedetails. Wir werden die Verfügbarkeit und Route "
+"nach Ihrem Beratungsgespräch verfeinern – es ist noch nichts gebucht."
+
+msgid ""
+"Review your shortlist, confirm the essentials, and request a video "
+"consultation. We email details within two hours."
+msgstr ""
+"Überprüfen Sie Ihre Auswahlliste, bestätigen Sie das Wesentliche und fordern"
+" Sie eine Videoberatung an. Wir senden Ihnen die Details innerhalb von zwei "
+"Stunden per E-Mail zu."
+
+msgid ""
+"Share the essentials so we can prepare your consultation. Optional planning "
+"notes can be added later."
+msgstr ""
+"Teilen Sie uns das Wesentliche mit, damit wir Ihre Beratung vorbereiten "
+"können. Optionale Planungshinweise können später hinzugefügt werden."
+
+msgid "Traveler details"
+msgstr "Angaben zum Reisenden"
+
+msgid "Confirm the essentials"
+msgstr "Bestätigen Sie das Wesentliche"
+
+msgid ""
+"Founders reply within two hours with consultation details. Nothing is booked"
+" until you confirm together."
+msgstr ""
+"Gründer antworten innerhalb von zwei Stunden mit Beratungsdetails. Bis Sie "
+"gemeinsam bestätigen, ist nichts gebucht."
+
+msgid "Full Name"
+msgstr "Vollständiger Name"
+
+msgid "Email"
+msgstr "E-Mail"
+
+msgid "Phone / WhatsApp"
+msgstr "Telefon / WhatsApp"
+
+msgid "Preferred contact"
+msgstr "Bevorzugter Kontakt"
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "Target Start Date"
+msgstr "Geplantes Startdatum"
+
+msgid "Date flexibility"
+msgstr "Terminflexibilität"
+
+msgid "Fixed dates"
+msgstr "Feste Termine"
+
+msgid "Flexible by a few days"
+msgstr "Flexibel um ein paar Tage"
+
+msgid "Flexible within the month"
+msgstr "Flexibel innerhalb des Monats"
+
+msgid "Fully flexible"
+msgstr "Völlig flexibel"
+
+msgid "Select flexibility"
+msgstr "Wählen Sie Flexibilität"
+
+msgid "Budget band (soft)"
+msgstr "Budgetband (weich)"
+
+msgid "Under $15,000"
+msgstr "Unter 15.000 $"
+
+msgid "Open / discuss on the call"
+msgstr "Öffnen/besprechen Sie den Anruf"
+
+msgid "Prefer to discuss"
+msgstr "Lieber diskutieren"
+
+msgid "Premium Charter"
+msgstr "Premium-Charter"
+
+msgid "Standard Luxury"
+msgstr "Standard-Luxus"
+
+msgid ""
+"Standard Luxury: top lodges and clubs with private transfers. Premium "
+"Charter: adds helicopter or charter flights where they meaningfully protect "
+"time and access."
+msgstr ""
+"Standard-Luxus: Top-Lodges und Clubs mit privaten Transfers. Premium-"
+"Charter: Fügt Helikopter- oder Charterflüge hinzu, bei denen Zeit und Zugang"
+" sinnvoll gespart werden."
+
+msgid "Preferred consultation date"
+msgstr "Gewünschter Beratungstermin"
+
+msgid "Preferred window (East Africa Time)"
+msgstr "Bevorzugtes Fenster (Ostafrikanische Zeit)"
+
+msgid "Morning (09:00–12:00 EAT)"
+msgstr "Vormittag (09:00–12:00 Uhr ESSEN)"
+
+msgid "Evening (17:00–20:00 EAT)"
+msgstr "Abend (17:00–20:00 Uhr ESSEN)"
+
+msgid "Afternoon (12:00–17:00 EAT)"
+msgstr "Nachmittag (12:00–17:00 Uhr ESSEN)"
+
+msgid ""
+"This is a preference only. We confirm the exact time and join link by email "
+"within two hours."
+msgstr ""
+"Dies ist nur eine Präferenz. Wir bestätigen die genaue Uhrzeit und den "
+"Beitrittslink per E-Mail innerhalb von zwei Stunden."
+
+msgid "Preferred Language"
+msgstr "Bevorzugte Sprache"
+
+msgid ""
+"I acknowledge the 22kg golf bag luggage limit and that excess bags may need "
+"advance handling."
+msgstr ""
+"Ich nehme zur Kenntnis, dass das Gepäcklimit für Golftaschen 22 kg beträgt "
+"und dass überschüssige Taschen möglicherweise vorab abgefertigt werden "
+"müssen."
+
+msgid "This itinerary can be customized or extended at an additional cost."
+msgstr ""
+"Diese Reiseroute kann gegen Aufpreis individuell angepasst oder verlängert "
+"werden."
+
+msgid ""
+"Tell us about any preferences, changes, accessibility needs, accommodation "
+"preferences, dietary requirements, or anything else you'd like us to "
+"consider."
+msgstr ""
+"Teilen Sie uns Ihre Vorlieben, Änderungen, Zugänglichkeitsbedürfnisse, "
+"Unterkunftswünsche, Ernährungsbedürfnisse oder alles andere mit, was wir "
+"berücksichtigen sollen."
+
+msgid "Additional Requirements"
+msgstr "Zusätzliche Anforderungen"
+
+msgid "Or message us on WhatsApp"
+msgstr "Oder schreiben Sie uns eine Nachricht auf WhatsApp"
+
+msgid "Enquiry summary"
+msgstr "Zusammenfassung der Anfrage"
+
+msgid "Selected journey"
+msgstr "Ausgewählte Reise"
+
+msgid "Your shortlist"
+msgstr "Ihre Auswahlliste"
+
+msgid "Planning notes"
+msgstr "Planungshinweise"
+
+msgid "Review"
+msgstr "Rezension"
+
+msgid "Package"
+msgstr "Paket"
+
+msgid "Safari"
+msgstr "Safari"
+
+msgid "Event"
+msgstr "Ereignis"
+
+msgid "Remove from custom package"
+msgstr "Aus benutzerdefiniertem Paket entfernen"
+
+msgid "Remove"
+msgstr "Entfernen"
+
+msgid "Focus"
+msgstr "Fokus"
+
+msgid "Pace"
+msgstr "Tempo"
+
+msgid "Stay style"
+msgstr "Bleiben Sie stilvoll"
+
+msgid ""
+"We will refine sequencing, seasonality, and access on your consultation. "
+"Nothing is confirmed until then."
+msgstr ""
+"Im Rahmen Ihrer Beratung verfeinern wir die Reihenfolge, die Saisonalität "
+"und den Zugang. Bis dahin ist nichts bestätigt."
+
+msgid "No experiences shortlisted yet."
+msgstr "Es wurden noch keine Erlebnisse in die engere Auswahl genommen."
+
+msgid "Browse Journeys →"
+msgstr "Durchsuchen Sie Reisen →"
+
+msgid "Optional planning notes →"
+msgstr "Optionale Planungshinweise →"
+
+msgid "Start your enquiry"
+msgstr "Starten Sie Ihre Anfrage"
+
+msgid ""
+"Enquire on a signature journey, build a shortlist, or request a video "
+"consultation with AfroLink."
+msgstr ""
+"Erkundigen Sie sich nach einer Signature Journey, erstellen Sie eine "
+"Auswahlliste oder fordern Sie eine Videoberatung mit „BRAND_SHORT“ an."
+
+msgid "Concierge enquiry"
+msgstr "Concierge-Anfrage"
+
+msgid "How would you like to begin?"
+msgstr "Wie möchten Sie beginnen?"
+
+msgid ""
+"Every path ends in a video consultation with our team. Nothing is confirmed "
+"until that call."
+msgstr ""
+"Jeder Weg endet in einer Videoberatung mit unserem Team. Bis zu diesem Anruf"
+" ist nichts bestätigt."
+
+msgid "01 · Signature"
+msgstr "01 · Unterschrift"
+
+msgid "Enquire on a signature journey"
+msgstr "Erkundigen Sie sich nach einer Signature-Reise"
+
+msgid ""
+"Start from a proven AfroLink route, then note any changes before we refine "
+"it together on a consultation."
+msgstr ""
+"Beginnen Sie mit einer bewährten „BRAND_SHORT“-Route und notieren Sie sich "
+"dann alle Änderungen, bevor wir sie gemeinsam in einem Beratungsgespräch "
+"verfeinern."
+
+msgid "Browse journeys"
+msgstr "Durchsuchen Sie Reisen"
+
+msgid "02 · Shortlist"
+msgstr "02 · Auswahlliste"
+
+msgid "Build a custom shortlist"
+msgstr "Erstellen Sie eine benutzerdefinierte Auswahlliste"
+
+msgid ""
+"Add golf, safari, stays, wellness, or events to a shortlist. When you are "
+"ready, request a consultation."
+msgstr ""
+"Fügen Sie einer Auswahlliste Golf, Safari, Aufenthalte, Wellness oder "
+"Veranstaltungen hinzu. Wenn Sie bereit sind, fordern Sie eine Beratung an."
+
+msgid "Start shortlisting"
+msgstr "Beginnen Sie mit der Auswahl"
+
+msgid "03 · Consultation"
+msgstr "03 · Beratung"
+
+msgid ""
+"Share a few essentials now. Optional planning notes can come later — we will"
+" email consultation details within two hours."
+msgstr ""
+"Teilen Sie jetzt ein paar wichtige Dinge. Optionale Planungshinweise können "
+"später erfolgen – wir senden Ihnen die Beratungsdetails innerhalb von zwei "
+"Stunden per E-Mail zu."
+
+msgid "Continue to enquiry"
+msgstr "Weiter zur Anfrage"
+
+msgid "Prefer to sketch preferences first?"
+msgstr "Bevorzugen Sie es, zuerst Ihre Vorlieben zu skizzieren?"
+
+msgid "Add optional planning notes"
+msgstr "Fügen Sie optionale Planungsnotizen hinzu"
+
+msgid "Signature Itinerary"
+msgstr "Signatur-Reiseplan"
+
+#, python-format
+msgid ""
+"A %(days)s-day executive journey structured around precise routing, "
+"championship golf, safari access, and recovery time between signature "
+"experiences."
+msgstr ""
+"Eine %(days)s-taegige Executive-Reise mit praezisem Routing, Championship-"
+"Golf und Safari-Zugang – als ein zusammenhaengendes System geplant."
+
+msgid "Inquiry portfolio action"
+msgstr "Anfrage-Portfolio-Aktion"
+
+msgid "Add To Inquiry Portfolio"
+msgstr "Zum Anfrageportfolio hinzufügen"
+
+msgid "Day-by-day build"
+msgstr "Täglicher Aufbau"
+
+msgid "Chronological itinerary timeline"
+msgstr "Chronologischer Reiseverlauf"
+
+msgid "Private accommodation assignment pending"
+msgstr "Zuteilung einer Privatunterkunft steht noch aus"
+
+msgid "Simultaneous Experiences"
+msgstr "Gleichzeitige Erfahrungen"
+
+msgid ""
+"Golf, safari, or wellness sequencing will be assigned by the concierge team."
+msgstr ""
+"Golf-, Safari- oder Wellness-Sequenzen werden vom Concierge-Team zugewiesen."
+
+msgid ""
+"The day-by-day timeline for this package is being prepared. Add it to your "
+"inquiry portfolio and the concierge team will confirm the full sequence."
+msgstr ""
+"Der tägliche Zeitplan für dieses Paket wird derzeit vorbereitet. Fügen Sie "
+"es Ihrem Anfrageportfolio hinzu und das Concierge-Team wird den gesamten "
+"Ablauf bestätigen."
+
+msgid "Signature Itineraries"
+msgstr "Signature-Reisepläne"
+
+msgid "Start with a proven route."
+msgstr "Beginnen Sie mit einer bewährten Route."
+
+msgid ""
+"Browse signature packages, then add one to your inquiry portfolio or rebuild"
+" the journey as a custom plan."
+msgstr ""
+"Durchsuchen Sie Signaturpakete, fügen Sie dann eines zu Ihrem "
+"Anfrageportfolio hinzu oder erstellen Sie die Reise als individuellen Plan "
+"neu."
+
+msgid "Available signature packages"
+msgstr "Verfügbare Signaturpakete"
+
+msgid ""
+"A structured private itinerary with day-by-day golf, safari, wellness, "
+"accommodation, and concierge sequencing."
+msgstr ""
+"Eine strukturierte private Reiseroute mit täglichem Golf, Safari, Wellness, "
+"Unterkunft und Concierge-Sequenzplanung."
+
+msgid "View Journey →"
+msgstr "Reise ansehen →"
+
+msgid "Unable to add this item to your shortlist."
+msgstr "Dieser Artikel kann nicht zu Ihrer Auswahlliste hinzugefügt werden."
+
+msgid "This event is not currently open for direct inquiries."
+msgstr "Diese Veranstaltung ist derzeit nicht für direkte Anfragen geöffnet."
+
+#, python-format
+msgid "%(label)s added to your shortlist."
+msgstr "%(label)s wurde zu Ihrer Auswahlliste hinzugefügt."
+
+msgid "Complete enquiry"
+msgstr "Komplette Anfrage"
+
+msgid ""
+"Nothing is booked until you have had a video consultation and the plan is "
+"confirmed."
+msgstr ""
+"Erst nach einer Videoberatung und der Bestätigung des Plans ist eine Buchung"
+" erfolgt."
+
+msgid "Item removed from your shortlist."
+msgstr "Artikel aus Ihrer Auswahlliste entfernt."
+
+msgid "Item could not be removed."
+msgstr "Artikel konnte nicht entfernt werden."
+
+msgid "Please enter your name."
+msgstr "Bitte geben Sie Ihren Namen ein."
+
+msgid "Please tell us what you are looking for."
+msgstr "Bitte teilen Sie uns mit, was Sie suchen."
+
+msgid "Please share a little more detail (at least 10 characters)."
+msgstr "Bitte geben Sie etwas mehr Details an (mindestens 10 Zeichen)."
+
+msgid "Please keep your request under 4000 characters."
+msgstr "Bitte halten Sie Ihre Anfrage unter 4000 Zeichen."
+
+msgid "Please keep additional requirements under 4000 characters."
+msgstr "Bitte halten Sie die zusätzlichen Anforderungen unter 4000 Zeichen."
+
+msgid "Please enter your email address."
+msgstr "Bitte geben Sie Ihre E-Mail-Adresse ein."
+
+msgid "Please enter a valid email address."
+msgstr "Bitte geben Sie eine gültige E-Mail-Adresse ein."
+
+msgid "Please correct the highlighted fields."
+msgstr "Bitte korrigieren Sie die markierten Felder."
+
+msgid "Thank you — we received your inquiry and will be in touch shortly."
+msgstr ""
+"Vielen Dank – wir haben Ihre Anfrage erhalten und werden uns in Kürze bei "
+"Ihnen melden."
+
+msgid "AfroLink Adventures Admin"
+msgstr "«MARKE» Admin"
+
+msgid ""
+"Luxury golf, safari, and wellness journeys across Africa, crafted by "
+"AfroLink Adventures."
+msgstr ""
+"Luxuriöse Golf-, Safari- und Wellnessreisen durch Afrika – gestaltet von "
+"AfroLink Adventures."
+
+msgid "Primary navigation"
+msgstr "Hauptnavigation"
+
+msgid "Menu"
+msgstr "Menü"
+
+msgid "Close menu"
+msgstr "Menü schließen"
+
+msgid "Journeys"
+msgstr "Reisen"
+
+msgid "Destination links"
+msgstr "Destinationen-Links"
+
+msgid "All Destinations"
+msgstr "Alle Destinationen"
+
+msgid "Events"
+msgstr "Events"
+
+msgid "About Us"
+msgstr "Über uns"
+
+msgid "The Journal"
+msgstr "Das Journal"
+
+msgid "Language"
+msgstr "Sprache"
+
+msgid "Complete enquiry for your shortlist"
+msgstr "Anfrage für Ihre Shortlist abschließen"
+
+msgid "Start an enquiry or request a consultation"
+msgstr "Anfrage starten oder Beratung anfordern"
+
+msgid "Close message"
+msgstr "Nachricht schließen"
+
+msgid ""
+"Private golf, safari, and wellness journeys designed with local expertise, "
+"discreet service, and a long-term respect for place."
+msgstr ""
+"Private Golf-, Safari- und Wellnessreisen, die mit lokalem Fachwissen, "
+"diskretem Service und langfristigem Respekt vor dem Ort gestaltet werden."
+
+msgid "Social media"
+msgstr "Soziale Medien"
+
+msgid "Explore"
+msgstr "Erkunden"
+
+msgid "Regional Hubs"
+msgstr "Regionale Hubs"
+
+msgid "Golf Events"
+msgstr "Golfveranstaltungen"
+
+msgid "Safari Extensions"
+msgstr "Safari-Erweiterungen"
+
+msgid "Signature journeys"
+msgstr "Signature-Reisen"
+
+msgid "Sustainability"
+msgstr "Nachhaltigkeit"
+
+msgid ""
+"We prioritize owner-led lodges, conservation-minded partners, and itinerary "
+"design that keeps value connected to local communities."
+msgstr ""
+"Wir legen Wert auf inhabergeführte Lodges, umweltbewusste Partner und eine "
+"Reiseroutengestaltung, die den Wert mit den lokalen Gemeinschaften "
+"verbindet."
+
+msgid "All rights reserved."
+msgstr "Alle Rechte vorbehalten."
+
+msgid "Privacy"
+msgstr "Datenschutz"
+
+msgid "Terms"
+msgstr "AGB"
+
+msgid "Legal Notice"
+msgstr "Impressum"
+
+msgid "Explore Signature Journeys"
+msgstr "Entdecken Sie Signature Journeys"
+
+msgid "The Afrolink Approach"
+msgstr "Der Afrolink-Ansatz"
+
+msgid ""
+"Expert-Led. Personally Curated. We reject generic, automated booking "
+"platforms and begin every journey with direct founder-led planning. From "
+"tee-sheet strategy and safari access windows to lodge pacing, transfers, and"
+" golf-bag handling, every movement is designed as one accountable system for"
+" a stress-free East African experience."
+msgstr ""
+"Von Experten geleitet. Persönlich kuratiert. Wir lehnen generische, "
+"automatisierte Buchungsplattformen ab und beginnen jede Reise mit einer "
+"direkten, vom Gründer geleiteten Planung. Von der Abschlagsstrategie und den"
+" Zugangsfenstern zur Safari bis hin zum Tempo der Lodges, Transfers und dem "
+"Umgang mit Golftaschen ist jede Bewegung als ein verantwortungsvolles System"
+" für ein stressfreies Ostafrika-Erlebnis konzipiert."
+
+msgid "The Vision"
+msgstr "Die Vision"
+
+msgid ""
+"Define your travel windows, golf handicap, and the specific wildlife "
+"encounters on your bucket list."
+msgstr ""
+"Definieren Sie Ihre Reisefenster, Ihr Golf-Handicap und die spezifischen "
+"Begegnungen mit der Tierwelt auf Ihrer Wunschliste."
+
+msgid "The Architecture"
+msgstr "Die Architektur"
+
+msgid ""
+"Collaborate directly with our founders to draft a realistic, day-by-day "
+"itinerary tailored entirely to your pace."
+msgstr ""
+"Arbeiten Sie direkt mit unseren Gründern zusammen, um einen realistischen "
+"Tagesablauf zu entwerfen, der ganz auf Ihr Tempo zugeschnitten ist."
+
+msgid "The Arrival"
+msgstr "Die Ankunft"
+
+msgid ""
+"Approve the routing, and we finalize every regional logistic. You simply "
+"arrive in East Africa."
+msgstr ""
+"Genehmigen Sie die Routenplanung und wir schließen jede regionale Logistik "
+"ab. Sie kommen einfach in Ostafrika an."
+
+msgid "Design Your Itinerary"
+msgstr "Gestalten Sie Ihre Reiseroute"
+
+msgid ""
+"Start from a signature journey or build a shortlist of golf, safari, and "
+"stays — then refine everything on a consultation."
+msgstr ""
+"Beginnen Sie mit einer einzigartigen Reise oder erstellen Sie eine "
+"Auswahlliste für Golf, Safari und Aufenthalte – und verfeinern Sie dann "
+"alles in einer Beratung."
+
+msgid "Speak With Our Team"
+msgstr "Sprechen Sie mit unserem Team"
+
+msgid ""
+"Request a private video consultation in German or English. We email "
+"consultation details within two hours — nothing is booked until you confirm "
+"together."
+msgstr ""
+"Fordern Sie eine private Videoberatung auf Deutsch oder Englisch an. Wir "
+"senden Ihnen die Beratungsdetails innerhalb von zwei Stunden per E-Mail zu. "
+"Die Buchung erfolgt erst, wenn Sie dies gemeinsam bestätigen."
+
+msgid "Featured journeys"
+msgstr "Ausgewählte Reisen"
+
+msgid "Journey Image"
+msgstr "Reisebild"
+
+msgid "Featured journeys are being prepared."
+msgstr "Ausgewählte Reisen sind in Vorbereitung."
+
+msgid ""
+"Add active BasePackage records in the backend to feature live journeys here."
+msgstr ""
+"Fügen Sie im Backend aktive BasePackage-Datensätze hinzu, um hier Live-"
+"Reisen anzubieten."
+
+msgid "View All Journeys →"
+msgstr "Alle Reisen anzeigen →"
+
+msgid "Special Offers"
+msgstr "Sonderangebote"
+
+msgid ""
+"Limited-time promotional journeys with clear savings. Customize or extend "
+"any itinerary with the concierge team."
+msgstr ""
+"Zeitlich begrenzte Werbereisen mit deutlichen Ersparnissen. Passen Sie Ihre "
+"Reiseroute individuell an oder verlängern Sie sie mit dem Concierge-Team."
+
+msgid "Special offers"
+msgstr "Sonderangebote"
+
+msgid "View Offer →"
+msgstr "Angebot ansehen →"
+
+msgid "Destination hubs"
+msgstr "Ziel-Hubs"
+
+msgid "Region Image"
+msgstr "Regionsbild"
+
+msgid "Destination Hub"
+msgstr "Ziel-Hub"
+
+msgid "Open Region →"
+msgstr "Region öffnen →"
+
+msgid "Regions are being prepared."
+msgstr "Regionen werden vorbereitet."
+
+msgid ""
+"Add active Region records in the backend to feature destination hubs here."
+msgstr ""
+"Fügen Sie hier im Backend aktive Regionseinträge hinzu, um Ziel-Hubs zu "
+"ermöglichen."
+
+msgid "View All Regions →"
+msgstr "Alle Regionen anzeigen →"
+
+msgid "Events are being prepared."
+msgstr "Veranstaltungen werden vorbereitet."
+
+msgid ""
+"Add active GolfEvent records in the backend to publish upcoming and "
+"recurring golf events."
+msgstr ""
+"Fügen Sie im Backend aktive GolfEvent-Datensätze hinzu, um bevorstehende und"
+" wiederkehrende Golf-Events zu veröffentlichen."
+
+msgid "View Events →"
+msgstr "Ereignisse anzeigen →"
+
+msgid "Guest Experiences"
+msgstr "Gasterlebnisse"
+
+msgid ""
+"Rated 4.7/5 by 214 guests for discreet golf, safari, and transfer planning."
+msgstr ""
+"Von 214 Gästen mit 4,7/5 für diskretes Golfen, Safari und Transferplanung "
+"bewertet."
+
+msgid "Guest experiences"
+msgstr "Gästeerlebnisse"
+
+msgid ""
+"Every tee time was confirmed before we landed. No scrambling, no surprises, "
+"the coordination was genuinely impressive."
+msgstr ""
+"Jede Abschlagszeit wurde vor unserer Landung bestätigt. Kein Gerangel, keine"
+" Überraschungen, die Koordination war wirklich beeindruckend."
+
+msgid "United Kingdom - Coastal Golf Circuit, Mar 2024"
+msgstr "Vereinigtes Königreich – Coastal Golf Circuit, März 2024"
+
+msgid ""
+"Our guide repositioned us three times before the crossing happened. That "
+"kind of knowledge is not something you find by accident."
+msgstr ""
+"Unser Führer hat uns vor der Überfahrt dreimal neu positioniert. Solches "
+"Wissen findet man nicht zufällig."
+
+msgid "Canada - Maasai Mara Safari, Jul 2025"
+msgstr "Kanada – Masai Mara Safari, Juli 2025"
+
+msgid ""
+"The transfers were on time, the lodges were excellent, and we never once had"
+" to think about logistics. Exactly what I needed."
+msgstr ""
+"Die Transfers verliefen pünktlich, die Lodges waren ausgezeichnet und wir "
+"mussten uns nie Gedanken über die Logistik machen. Genau das, was ich "
+"brauchte."
+
+msgid "Germany - Golf & Safari Combination, Oct 2024"
+msgstr "Deutschland – Golf- und Safari-Kombination, Okt. 2024"
+
+msgid "Partner and accreditation logos"
+msgstr "Partner- und Akkreditierungslogos"
+
+msgid "Trusted Local & Travel Partners"
+msgstr "Vertrauenswürdige lokale und Reisepartner"
+
+msgid "Partner logos pending"
+msgstr "Partnerlogos stehen noch aus"
+
+msgid "Chat on WhatsApp"
+msgstr "Chatten Sie auf WhatsApp"
+
+msgid "Personal Concierge"
+msgstr "Persönlicher Concierge"
+
+msgid "Can't find what you're looking for?"
+msgstr "Sie können nicht finden, was Sie suchen?"
+
+msgid "Close inquiry form"
+msgstr "Anfrageformular schließen"
+
+msgid ""
+"Share the destination, golf course, safari package, accommodation, or "
+"experience you could not find. Our team will follow up by email."
+msgstr ""
+"Teilen Sie das Reiseziel, den Golfplatz, das Safari-Paket, die Unterkunft "
+"oder das Erlebnis mit, das Sie nicht finden konnten. Unser Team wird sich "
+"per E-Mail bei Ihnen melden."
+
+msgid "Full name"
+msgstr "Vollständiger Name"
+
+msgid "Your name"
+msgstr "Ihr Name"
+
+msgid "What are you looking for?"
+msgstr "Wonach suchst du?"
+
+msgid "e.g. A 5-night safari near Masai Mara with two rounds of golf…"
+msgstr ""
+"z.B. Eine 5-tägige Safari in der Nähe der Masai Mara mit zwei Runden Golf…"
+
+msgid "Email address"
+msgstr "E-Mail-Adresse"
+
+msgid "you@example.com"
+msgstr "you@example.com"
+
+msgid "Submit"
+msgstr "Einreichen"
+
+msgid "Inquiry received"
+msgstr "Anfrage erhalten"
+
+msgid "Close"
+msgstr "Schließen"
+
+msgid ""
+"Tell us about the destination, golf course, safari package, stay, or "
+"experience you had in mind — we will help you find it."
+msgstr ""
+"Teilen Sie uns das Reiseziel, den Golfplatz, das Safari-Paket, den "
+"Aufenthalt oder das Erlebnis mit, das Sie sich vorgestellt haben – wir "
+"helfen Ihnen, es zu finden."
+
+msgid "Make an Inquiry"
+msgstr "Stellen Sie eine Anfrage"
+
+msgid ""
+"Adding items only builds a shortlist. Nothing is booked until you have had a"
+" video consultation with our experts and the plan is confirmed."
+msgstr ""
+"Durch das Hinzufügen von Elementen wird nur eine Auswahlliste erstellt. Erst"
+" nach einer Videoberatung mit unseren Experten und der Bestätigung des Plans"
+" ist die Buchung abgeschlossen."
+
+msgid "Complete your enquiry"
+msgstr "Vervollständigen Sie Ihre Anfrage"
+
+#, python-format
+msgid ""
+"\n"
+"                            %(counter)s item shortlisted — nothing is confirmed yet.\n"
+"                        "
+msgid_plural ""
+"\n"
+"                            %(counter)s items shortlisted — nothing is confirmed yet.\n"
+"                        "
+msgstr[0] ""
+"\n"
+"                            %(counter)s Eintrag auf der Shortlist – noch nichts bestätigt.\n"
+"                        "
+msgstr[1] ""
+"\n"
+"                            %(counter)s Einträge auf der Shortlist – noch nichts bestätigt.\n"
+"                        "
+
+msgid "Enquiry progress"
+msgstr "Fortschritt der Anfrage"
+
+msgid "Journey selected"
+msgstr "Reise ausgewählt"
+
+msgid "Enquiry details"
+msgstr "Anfragedetails"
+
+msgid "Consultation requested"
+msgstr "Beratung erbeten"
+
+msgid "Original price"
+msgstr "Originalpreis"
+
+msgid "Promotions"
+msgstr "Angebote"
+
+msgid "Dismiss this promotion"
+msgstr "Dieses Angebot schließen"
+
+msgid ""
+"Legal notice and publisher information for the AfroLink Adventures website."
+msgstr ""
+"Rechtliche Hinweise und Herausgeberinformationen für die Website AfroLink "
+"Adventures."
+
+msgid "Legal"
+msgstr "Rechtliches"
+
+msgid ""
+"Publisher and responsibility details for the AfroLink Adventures website, "
+"including how to reach us about legal or content matters."
+msgstr ""
+"Angaben zum Herausgeber und Verantwortlichen für die „BRAND“-Website, "
+"einschließlich der Art und Weise, wie Sie uns in rechtlichen oder "
+"inhaltlichen Fragen erreichen können."
+
+msgid "Last updated"
+msgstr "Zuletzt aktualisiert"
+
+msgid "Publisher"
+msgstr "Herausgeber"
+
+msgid ""
+"This website is published by AfroLink Adventures, a specialist travel "
+"practice focused on private golf, safari, and wellness journeys across East "
+"Africa."
+msgstr ""
+"Diese Website wird von AfroLink Adventures herausgegeben, einem "
+"spezialisierten Reisebüro, das sich auf private Golf-, Safari- und "
+"Wellnessreisen durch Ostafrika konzentriert."
+
+msgid "Contact"
+msgstr "Kontakt"
+
+msgid ""
+"For legal notices, privacy requests, or formal correspondence related to "
+"this website, use the inquiry form on this site and mark the subject "
+"clearly. Guests already in planning may also write through their assigned "
+"founder contact."
+msgstr ""
+"Für rechtliche Hinweise, Datenschutzanfragen oder formelle Korrespondenz im "
+"Zusammenhang mit dieser Website verwenden Sie das Anfrageformular auf dieser"
+" Website und markieren Sie den Betreff deutlich. Gäste, die sich bereits in "
+"der Planung befinden, können sich auch gerne an den ihnen zugewiesenen "
+"Gründerkontakt wenden."
+
+msgid "Start an inquiry"
+msgstr "Starten Sie eine Anfrage"
+
+msgid "About AfroLink"
+msgstr "Über „BRAND_SHORT“"
+
+msgid "Purpose of the site"
+msgstr "Zweck der Website"
+
+msgid ""
+"The site presents destinations, experiences, journal writing, and enquiry "
+"tools. It is not an automated booking engine. Availability, access, and "
+"final routing are confirmed through human planning after an enquiry."
+msgstr ""
+"Die Website präsentiert Reiseziele, Erlebnisse, Tagebuchschreib- und "
+"Anfragetools. Es handelt sich nicht um eine automatisierte Buchungsmaschine."
+" Verfügbarkeit, Zugang und endgültige Streckenführung werden nach einer "
+"Anfrage durch eine menschliche Planung bestätigt."
+
+msgid "Content responsibility"
+msgstr "Inhaltliche Verantwortung"
+
+msgid ""
+"We take care to keep destination and experience information accurate. "
+"Descriptions may still change as lodges renovate, tee-sheet policies evolve,"
+" or conservation access shifts. If you notice an error, tell us and we will "
+"review it promptly."
+msgstr ""
+"Wir achten darauf, dass die Ziel- und Erlebnisinformationen korrekt bleiben."
+" Die Beschreibungen können sich noch ändern, wenn die Lodges renoviert "
+"werden, sich die Abschlagrichtlinien ändern oder sich der Zugang zu "
+"Naturschutzgebieten verschiebt. Wenn Ihnen ein Fehler auffällt, teilen Sie "
+"uns dies mit und wir werden ihn umgehend überprüfen."
+
+msgid "External links"
+msgstr "Externe Links"
+
+msgid ""
+"Links to partner or third-party sites are provided for convenience. We are "
+"not responsible for the content, policies, or availability of external "
+"websites after you leave AfroLink pages."
+msgstr ""
+"Zur Vereinfachung werden Links zu Websites von Partnern oder Drittanbietern "
+"bereitgestellt. Wir sind nicht verantwortlich für den Inhalt, die "
+"Richtlinien oder die Verfügbarkeit externer Websites, nachdem Sie die "
+"AfroLink-Seiten verlassen."
+
+msgid "Copyright"
+msgstr "Copyright"
+
+msgid ""
+"Unless otherwise noted, text, design, and selected imagery on this website "
+"are protected. Reproduction for commercial use requires prior written "
+"permission from AfroLink Adventures."
+msgstr ""
+"Sofern nicht anders angegeben, sind Text, Design und ausgewählte Bilder auf "
+"dieser Website geschützt. Eine Vervielfältigung für kommerzielle Zwecke "
+"bedarf der vorherigen schriftlichen Genehmigung von AfroLink Adventures."
+
+msgid "Dispute notes"
+msgstr "Streitnotizen"
+
+msgid ""
+"Website use and enquiry correspondence are governed by the terms published "
+"on this site and any written proposal later issued for a specific journey. "
+"Confirmed travel arrangements may also be subject to partner terms and the "
+"law of the place where services are delivered."
+msgstr ""
+"Die Nutzung der Website und die Korrespondenz mit Anfragen unterliegen den "
+"auf dieser Website veröffentlichten Bedingungen und allen später für eine "
+"bestimmte Reise erstellten schriftlichen Angeboten. Bestätigte "
+"Reisearrangements können auch den Bedingungen des Partners und dem Recht des"
+" Ortes unterliegen, an dem die Leistungen erbracht werden."
+
+msgid "Related pages:"
+msgstr "Verwandte Seiten:"
+
+msgid ""
+"How AfroLink Adventures collects, uses, and protects personal information "
+"shared through our website and enquiry process."
+msgstr ""
+"Wie „BRAND“ personenbezogene Daten erhebt, nutzt und schützt, die über "
+"unsere Website und unseren Anfrageprozess weitergegeben werden."
+
+msgid ""
+"This notice explains how AfroLink Adventures handles personal information "
+"when you browse our site, start a planner brief, or submit an enquiry for a "
+"private journey."
+msgstr ""
+"In dieser Mitteilung wird erläutert, wie „BRAND“ mit personenbezogenen Daten"
+" umgeht, wenn Sie auf unserer Website surfen, einen Reiseplaner starten oder"
+" eine Anfrage für eine private Reise stellen."
+
+msgid "Who we are"
+msgstr "Wer wir sind"
+
+msgid ""
+"AfroLink Adventures designs private golf, safari, and wellness journeys "
+"across East Africa. For privacy questions related to this website or an "
+"enquiry, contact us through our inquiry form or your assigned founder "
+"contact."
+msgstr ""
+"AfroLink Adventures konzipiert private Golf-, Safari- und Wellnessreisen "
+"durch Ostafrika. Bei Fragen zum Datenschutz im Zusammenhang mit dieser "
+"Website oder einer Anfrage kontaktieren Sie uns über unser Anfrageformular "
+"oder Ihren zugewiesenen Gründerkontakt."
+
+msgid "Information we collect"
+msgstr "Informationen, die wir sammeln"
+
+msgid "Depending on how you use the site, we may collect:"
+msgstr ""
+"Abhängig davon, wie Sie die Website nutzen, können wir Folgendes erfassen:"
+
+msgid ""
+"Contact and travel-planning details you submit in the planner or enquiry "
+"forms, such as name, email, preferred language, party size, dates, and "
+"journey preferences."
+msgstr ""
+"Kontakt- und Reiseplanungsdetails, die Sie im Planer oder in den "
+"Anfrageformularen angeben, wie z. B. Name, E-Mail-Adresse, bevorzugte "
+"Sprache, Gruppengröße, Daten und Reisepräferenzen."
+
+msgid ""
+"Custom package selections stored in your browser session while you build an "
+"enquiry."
+msgstr ""
+"Benutzerdefinierte Paketauswahlen werden in Ihrer Browsersitzung "
+"gespeichert, während Sie eine Anfrage erstellen."
+
+msgid ""
+"Basic technical data needed to operate the site securely, such as device "
+"type, browser information, and approximate location derived from IP address."
+msgstr ""
+"Grundlegende technische Daten, die für den sicheren Betrieb der Website "
+"erforderlich sind, wie z. B. Gerätetyp, Browserinformationen und der aus der"
+" IP-Adresse abgeleitete ungefähre Standort."
+
+msgid ""
+"Communication you send us by email or during a consultation about your "
+"itinerary."
+msgstr ""
+"Mitteilung, die Sie uns per E-Mail oder im Rahmen einer Beratung zu Ihrer "
+"Reiseroute senden."
+
+msgid "How we use information"
+msgstr "Wie wir Informationen nutzen"
+
+msgid ""
+"To respond to enquiries and prepare route briefs, quotes, and itineraries."
+msgstr ""
+"Um auf Anfragen zu antworten und Routenbeschreibungen, Kostenvoranschläge "
+"und Reiserouten zu erstellen."
+
+msgid ""
+"To coordinate with lodges, courses, guides, and transfer partners needed to "
+"deliver a journey you ask us to plan."
+msgstr ""
+"Um die Koordination mit Lodges, Kursen, Reiseführern und Transferpartnern zu"
+" koordinieren, die Sie für die Durchführung einer Reise benötigen, bitten "
+"Sie uns um die Planung."
+
+msgid ""
+"To improve the clarity and performance of our website and enquiry flow."
+msgstr ""
+"Um die Klarheit und Leistung unserer Website und des Anfrageablaufs zu "
+"verbessern."
+
+msgid ""
+"To meet legal, accounting, and operational obligations tied to travel "
+"arrangements."
+msgstr ""
+"Zur Erfüllung rechtlicher, buchhalterischer und betrieblicher "
+"Verpflichtungen im Zusammenhang mit Reisearrangements."
+
+msgid "Sharing"
+msgstr "Teilen"
+
+msgid ""
+"We do not sell personal information. We share details only where necessary "
+"to plan or deliver your journey — for example with accommodation, golf, "
+"safari, wellness, or transport partners — or where required by law. Partners"
+" receive only what they need to fulfil their part of the arrangement."
+msgstr ""
+"Wir verkaufen keine persönlichen Daten. Wir geben Daten nur dann weiter, "
+"wenn dies für die Planung oder Durchführung Ihrer Reise erforderlich ist – "
+"beispielsweise an Unterkunfts-, Golf-, Safari-, Wellness- oder "
+"Transportpartner – oder wenn dies gesetzlich vorgeschrieben ist. Partner "
+"erhalten nur das, was sie zur Erfüllung ihres Teils der Vereinbarung "
+"benötigen."
+
+msgid "Retention"
+msgstr "Zurückbehaltung"
+
+msgid ""
+"Enquiry and planning records are kept for as long as needed to manage your "
+"request, complete a booking, and meet ordinary business and legal retention "
+"requirements. Session-based package selections expire with your browser "
+"session unless converted into an enquiry."
+msgstr ""
+"Anfrage- und Planungsunterlagen werden so lange aufbewahrt, wie es für die "
+"Bearbeitung Ihrer Anfrage, den Abschluss einer Buchung und die Erfüllung "
+"üblicher geschäftlicher und gesetzlicher Aufbewahrungspflichten erforderlich"
+" ist. Sitzungsbasierte Paketauswahlen laufen mit Ihrer Browsersitzung ab, "
+"sofern sie nicht in eine Anfrage umgewandelt werden."
+
+msgid "Your choices"
+msgstr "Ihre Entscheidungen"
+
+msgid ""
+"You may ask us to access, correct, or delete personal information we hold "
+"about you, or to limit how it is used for marketing or follow-up, subject to"
+" any legal retention duties. To make a request, use the inquiry form and "
+"mark the message as a privacy request."
+msgstr ""
+"Sie können uns auffordern, auf die von uns über Sie gespeicherten "
+"personenbezogenen Daten zuzugreifen, sie zu korrigieren oder zu löschen oder"
+" deren Nutzung für Marketing- oder Nachverfolgungszwecke einzuschränken, "
+"vorbehaltlich etwaiger gesetzlicher Aufbewahrungspflichten. Um eine Anfrage "
+"zu stellen, verwenden Sie das Anfrageformular und markieren Sie die "
+"Nachricht als Datenschutzanfrage."
+
+msgid "Cookies and similar tools"
+msgstr "Cookies und ähnliche Tools"
+
+msgid ""
+"We use essential session tools so the site and enquiry cart can function. If"
+" we introduce analytics or additional cookies, we will update this notice "
+"and, where required, ask for consent."
+msgstr ""
+"Wir verwenden wesentliche Sitzungstools, damit die Website und der "
+"Anfragekorb funktionieren. Wenn wir Analyse- oder zusätzliche Cookies "
+"einführen, werden wir diesen Hinweis aktualisieren und bei Bedarf um "
+"Zustimmung bitten."
+
+msgid ""
+"Terms for using the AfroLink Adventures website and submitting planning "
+"enquiries for private journeys."
+msgstr ""
+"Bedingungen für die Nutzung der AfroLink Adventures-Website und das "
+"Einreichen von Planungsanfragen für Privatreisen."
+
+msgid ""
+"These terms govern use of the AfroLink Adventures website and the enquiry "
+"process for privately planned golf, safari, and wellness journeys."
+msgstr ""
+"Diese Bedingungen regeln die Nutzung der Website AfroLink Adventures und den"
+" Anfrageprozess für privat geplante Golf-, Safari- und Wellnessreisen."
+
+msgid "Website use"
+msgstr "Nutzung der Website"
+
+msgid ""
+"Content on this site is provided for information and enquiry purposes. "
+"Images, itineraries, availability notes, and pricing cues are illustrative "
+"unless confirmed in writing as part of a formal proposal for your travel "
+"dates."
+msgstr ""
+"Der Inhalt dieser Website wird zu Informations- und Anfragezwecken "
+"bereitgestellt. Bilder, Reiserouten, Verfügbarkeitshinweise und "
+"Preishinweise dienen nur zur Veranschaulichung, sofern sie nicht schriftlich"
+" im Rahmen eines formellen Angebots für Ihre Reisedaten bestätigt werden."
+
+msgid "Enquiries are not bookings"
+msgstr "Anfragen sind keine Buchungen"
+
+msgid ""
+"Submitting a planner brief or inquiry starts a conversation. It does not "
+"create a confirmed reservation, guarantee tee times, lodge inventory, park "
+"access, or event entry. A journey becomes binding only when both parties "
+"accept a written proposal and any required deposit or payment terms."
+msgstr ""
+"Das Einreichen eines Planerbriefs oder einer Anfrage löst ein Gespräch aus. "
+"Es stellt keine bestätigte Reservierung dar, garantiert keine "
+"Abschlagszeiten, kein Lodge-Inventar, keinen Zugang zum Park oder Zutritt zu"
+" einer Veranstaltung. Eine Reise wird erst verbindlich, wenn beide Parteien "
+"ein schriftliches Angebot und etwaige erforderliche Anzahlungen oder "
+"Zahlungsbedingungen akzeptieren."
+
+msgid "Proposals and pricing"
+msgstr "Vorschläge und Preise"
+
+msgid ""
+"Quotes reflect the scope discussed at the time of preparation: regions, "
+"nights, courses, safari windows, wellness services, transfers, and guest "
+"count. Partner rates, park fees, fuel, and taxes can change. We will flag "
+"material changes before confirmation wherever practical."
+msgstr ""
+"Die Angebote spiegeln den zum Zeitpunkt der Vorbereitung besprochenen Umfang"
+" wider: Regionen, Nächte, Kurse, Safari-Fenster, Wellness-Leistungen, "
+"Transfers und Gästezahl. Partnertarife, Parkgebühren, Kraftstoff und Steuern"
+" können sich ändern. Sofern möglich, werden wir wesentliche Änderungen vor "
+"der Bestätigung kennzeichnen."
+
+msgid "Partner terms"
+msgstr "Partnerbedingungen"
+
+msgid ""
+"Lodges, golf clubs, safari operators, wellness providers, and carriers apply"
+" their own house rules, dress codes, cancellation windows, and liability "
+"terms. Those partner conditions form part of any confirmed arrangement and "
+"will be shared or summarised before payment where they materially affect "
+"your journey."
+msgstr ""
+"Lodges, Golfclubs, Safari-Veranstalter, Wellness-Anbieter und "
+"Transportunternehmen wenden ihre eigenen Hausregeln, Kleidervorschriften, "
+"Stornierungsfristen und Haftungsbedingungen an. Diese Partnerbedingungen "
+"sind Teil jeder bestätigten Vereinbarung und werden vor der Zahlung "
+"mitgeteilt oder zusammengefasst, sofern sie sich wesentlich auf Ihre Reise "
+"auswirken."
+
+msgid "Guest responsibilities"
+msgstr "Pflichten der Gäste"
+
+msgid ""
+"Provide accurate passport, timing, medical, and preference information "
+"needed for planning."
+msgstr ""
+"Geben Sie genaue Pass-, Zeit-, medizinische und Präferenzinformationen an, "
+"die für die Planung erforderlich sind."
+
+msgid ""
+"Arrange visas, vaccinations, travel insurance, and international flights "
+"unless we expressly agree otherwise in writing."
+msgstr ""
+"Sorgen Sie für Visa, Impfungen, Reiseversicherungen und internationale "
+"Flüge, sofern wir nicht ausdrücklich schriftlich etwas anderes vereinbaren."
+
+msgid ""
+"Follow lodge, course, and park guidance, including conservation and safety "
+"rules on safari."
+msgstr ""
+"Befolgen Sie die Richtlinien der Lodge, des Golfplatzes und des Parks, "
+"einschließlich der Naturschutz- und Sicherheitsregeln auf der Safari."
+
+msgid "Changes and cancellations"
+msgstr "Änderungen und Stornierungen"
+
+msgid ""
+"Once a journey is confirmed, change and cancellation terms depend on the "
+"proposal and the partners involved. Weather, park closures, aircraft "
+"schedules, and medical events can force adjustments. We work to protect the "
+"quality of the route, but refunds and credits follow the confirmed "
+"commercial terms and supplier policies."
+msgstr ""
+"Sobald eine Reise bestätigt ist, hängen die Änderungs- und "
+"Stornierungsbedingungen vom Angebot und den beteiligten Partnern ab. Wetter,"
+" Parkschließungen, Flugpläne und medizinische Ereignisse können Anpassungen "
+"erzwingen. Wir arbeiten daran, die Qualität der Route zu schützen, "
+"Rückerstattungen und Gutschriften unterliegen jedoch den bestätigten "
+"Geschäftsbedingungen und Lieferantenrichtlinien."
+
+msgid "Limitation of liability"
+msgstr "Haftungsbeschränkung"
+
+msgid ""
+"AfroLink Adventures plans and coordinates specialist travel. We are not "
+"liable for losses caused by events outside reasonable control, including "
+"weather, wildlife behaviour, transport disruption, political events, or "
+"supplier failure, except where liability cannot be limited by applicable "
+"law. Nothing on this site creates a warranty beyond what is expressly "
+"confirmed in writing."
+msgstr ""
+"AfroLink Adventures plant und koordiniert Fachreisen. Wir haften nicht für "
+"Verluste, die durch Ereignisse verursacht werden, die außerhalb angemessener"
+" Kontrolle liegen, einschließlich Wetter, Wildtierverhalten, "
+"Transportunterbrechungen, politische Ereignisse oder Lieferantenversagen, es"
+" sei denn, die Haftung kann durch geltendes Recht nicht eingeschränkt "
+"werden. Nichts auf dieser Website begründet eine Garantie, die über die "
+"ausdrücklich schriftliche Bestätigung hinausgeht."
+
+msgid "Intellectual property"
+msgstr "Geistiges Eigentum"
+
+msgid ""
+"Website text, branding, photography, and itinerary frameworks belong to "
+"AfroLink Adventures or our licensors. You may not copy or reuse them for "
+"commercial purposes without prior written consent."
+msgstr ""
+"Website-Texte, Branding, Fotografie und Reiserouten sind Eigentum von "
+"„BRAND“ oder unseren Lizenzgebern. Sie dürfen sie ohne vorherige "
+"schriftliche Zustimmung nicht kopieren oder für kommerzielle Zwecke "
+"weiterverwenden."

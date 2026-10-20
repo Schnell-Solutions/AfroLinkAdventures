@@ -1,0 +1,559 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block meta_title %}{% trans 'Golf Courses' %} | AfroLink Adventures{% endblock %}
+{% block meta_description %}{% trans 'Browse AfroLink championship and private golf courses across East Africa, filtered by region, style, and play character.' %}{% endblock %}
+{% block body_class %}courses-body{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/listing-filters.css' %}">
+<style>
+    .course-list,
+    .course-list * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    body.courses-body .course-list {
+        --course-card-gap: clamp(32px, 4vw, 44px);
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        padding: var(--space-page);
+    }
+
+    body.courses-body:not(.home-body),
+    body.courses-body:not(.home-body) .site-main,
+    body.courses-body:not(.home-body) .content-frame {
+        background: #FFFFFF;
+    }
+
+    .course-list__header {
+        display: grid;
+        gap: 8px;
+        max-width: 700px;
+        margin-bottom: 28px;
+    }
+
+    .course-list__title {
+        color: #0A0A0A;
+        font-size: clamp(1.75rem, 3.4vw, 3.1rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.1;
+        text-transform: uppercase;
+    }
+
+    .course-list__copy {
+        color: #5F574C;
+        font-size: 0.92rem;
+        line-height: 1.65;
+    }
+
+    .course-list__rule {
+        display: none;
+    }
+
+    .course-filters {
+        display: grid;
+        grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr)) auto;
+        gap: clamp(18px, 3vw, 28px);
+        align-items: end;
+        margin-bottom: 24px;
+        padding: 0;
+        border: 0;
+        background: #FFFFFF;
+    }
+
+    .filter-field {
+        display: grid;
+        gap: 7px;
+    }
+
+    .filter-field label {
+        color: #7A6A55;
+        font-size: 0.64rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .filter-field input {
+        min-height: 44px;
+        width: 100%;
+        border: 0;
+        border-bottom: 1px solid #D5CAB8;
+        background: transparent;
+        color: #0A0A0A;
+        padding: 0 8px 10px;
+        font: inherit;
+        font-size: 0.88rem;
+    }
+
+    .filter-field input:focus {
+        border-color: #0A0A0A;
+        outline: 0;
+    }
+
+    .filter-field input::placeholder {
+        color: #9C9081;
+    }
+
+    .custom-select {
+        position: relative;
+    }
+
+    .custom-select__trigger {
+        width: 100%;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        border: 0;
+        border-bottom: 1px solid #D5CAB8;
+        background: transparent;
+        color: #0A0A0A;
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.88rem;
+        padding: 0 8px 10px;
+        text-align: left;
+    }
+
+    .custom-select__trigger:focus-visible,
+    .custom-select.is-open .custom-select__trigger {
+        border-color: #0A0A0A;
+        outline: 0;
+    }
+
+    .custom-select__chevron {
+        width: 14px;
+        height: 9px;
+        flex: none;
+        color: #7A6A55;
+        transition: transform var(--ease-standard), color var(--ease-standard);
+    }
+
+    .custom-select.is-open .custom-select__chevron {
+        color: #0A0A0A;
+        transform: rotate(180deg);
+    }
+
+    .custom-select__menu {
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        z-index: 15;
+        width: 100%;
+        display: grid;
+        gap: 2px;
+        padding: 5px;
+        border: 1px solid #DED8CC;
+        border-radius: var(--radius-media);
+        background: #FFFFFF;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(6px);
+        transition: opacity var(--ease-standard), transform var(--ease-standard);
+    }
+
+    .custom-select.is-open .custom-select__menu {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    .custom-select__option {
+        width: 100%;
+        min-height: 38px;
+        border: 0;
+        border-radius: calc(var(--radius-media) - 2px);
+        background: transparent;
+        color: #0A0A0A;
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.84rem;
+        padding: 0 8px;
+        text-align: left;
+    }
+
+    .custom-select__option:hover,
+    .custom-select__option:focus-visible {
+        background: #F7F4ED;
+        color: #0A0A0A;
+        outline: 0;
+    }
+
+    .custom-select__option.is-selected {
+        background: #0A0A0A;
+        color: #FFFFFF;
+    }
+
+    .filter-actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        align-self: end;
+        justify-self: end;
+        min-height: 44px;
+    }
+
+    .filter-submit {
+        min-height: 44px;
+        border: 1px solid #0A0A0A;
+        border-radius: var(--radius-media);
+        background: #0A0A0A;
+        color: #FFFFFF;
+        cursor: pointer;
+        padding: 0 20px;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        transition: background-color var(--ease-standard), color var(--ease-standard);
+    }
+
+    .filter-submit:hover {
+        background: transparent;
+        color: #0A0A0A;
+    }
+
+    .filter-clear {
+        min-height: 36px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-media);
+        background: #F7F4ED;
+        color: #7A6A55;
+        padding: 0 12px;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        transition: background-color var(--ease-standard), color var(--ease-standard);
+    }
+
+    .filter-clear:hover {
+        background: #0A0A0A;
+        color: #FFFFFF;
+    }
+
+    .result-summary {
+        margin: -8px 0 16px;
+        color: #7A6A55;
+        font-size: 0.78rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+    }
+
+    .result-summary[hidden] {
+        display: none !important;
+        margin: 0;
+    }
+
+    body.courses-body .course-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--course-card-gap);
+    }
+
+    .content-card {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        gap: 14px;
+        background: transparent;
+    }
+
+    .content-card__media {
+        aspect-ratio: 16 / 10;
+        overflow: hidden;
+        border-radius: var(--radius-media);
+        background: #E7DFD1;
+    }
+
+    .content-card__media img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        transition: transform 400ms ease;
+    }
+
+    .content-card:hover .content-card__media img {
+        transform: scale(1.03);
+    }
+
+    .content-card__placeholder {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        place-items: center;
+        color: #7A6A55;
+        font-size: 0.66rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .content-card__body {
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .content-label {
+        color: #7A6A55;
+        font-size: 0.66rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .content-title {
+        color: #0A0A0A;
+        font-size: clamp(1.05rem, 1.7vw, 1.35rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.18;
+        text-transform: uppercase;
+    }
+
+    .content-copy {
+        color: #5F574C;
+        font-size: 0.84rem;
+        line-height: 1.55;
+    }
+
+    .content-link {
+        width: fit-content;
+        margin-top: auto;
+        padding-bottom: 3px;
+        border-bottom: 1px solid currentColor;
+        color: #0A0A0A;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .content-link:hover {
+        color: #9A7A43;
+    }
+
+    .empty-state {
+        display: none;
+    }
+
+    @media (max-width: 1100px) {
+        .course-filters {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .course-filters .filter-field--search {
+            grid-column: 1 / -1;
+        }
+    }
+
+    @media (max-width: 980px) {
+        body.courses-body .course-list {
+            --course-card-gap: 40px;
+        }
+
+        .course-filters {
+            margin-bottom: 20px;
+        }
+
+        body.courses-body .course-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 44px;
+        }
+    }
+
+    @media (max-width: 720px) {
+        body.courses-body .course-list {
+            --course-card-gap: 44px;
+            padding: 24px 0 56px;
+        }
+
+        .course-list__header {
+            margin-bottom: 24px;
+        }
+
+        .course-filters {
+            grid-template-columns: 1fr;
+            margin-bottom: 18px;
+        }
+
+        body.courses-body .course-grid {
+            grid-template-columns: 1fr;
+            gap: 48px;
+        }
+
+        .filter-actions {
+            justify-self: start;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<article class="course-list" data-listing-root>
+    <header class="course-list__header">
+        <h1 class="course-list__title">{% trans 'Golf Courses' %}</h1>
+        <p class="course-list__copy">
+            {% trans 'Championship and private courses selected for routing quality, turf character, and how cleanly they pair with safari and recovery days.' %}
+        </p>
+    </header>
+
+    <hr class="course-list__rule" aria-hidden="true">
+
+    <form class="course-filters" method="get" action="{% url 'destination_cms:course_list' %}" data-listing-filter>
+        <div class="filter-field filter-field--search">
+            <label for="filter-q">{% trans 'Search' %}</label>
+            <input
+                type="search"
+                id="filter-q"
+                name="q"
+                value="{{ filters.q }}"
+                placeholder="{% trans 'Course, architect, or region' %}"
+            >
+        </div>
+
+        <div class="filter-field">
+            <label id="filter-region-label">{% trans 'Region' %}</label>
+            <div class="custom-select" data-custom-select>
+                <input type="hidden" name="region" value="{{ filters.region }}" data-custom-select-input>
+                <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="filter-region-label">
+                    <span data-custom-select-label>
+                        {% if filters.region %}
+                            {% for region in filter_regions %}
+                                {% if filters.region == region.slug %}
+                                    {% if request.LANGUAGE_CODE == 'de' and region.name_de %}{{ region.name_de }}{% else %}{{ region.name_en }}{% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            {% trans 'All regions' %}
+                        {% endif %}
+                    </span>
+                    <svg class="custom-select__chevron" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                        <path d="M1.25 1.5L7 7.25L12.75 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div class="custom-select__menu" role="listbox" aria-labelledby="filter-region-label">
+                    <button class="custom-select__option {% if not filters.region %}is-selected{% endif %}" type="button" role="option" data-value="" aria-selected="{% if not filters.region %}true{% else %}false{% endif %}">{% trans 'All regions' %}</button>
+                    {% for region in filter_regions %}
+                        <button class="custom-select__option {% if filters.region == region.slug %}is-selected{% endif %}" type="button" role="option" data-value="{{ region.slug }}" aria-selected="{% if filters.region == region.slug %}true{% else %}false{% endif %}">
+                            {% if request.LANGUAGE_CODE == 'de' and region.name_de %}{{ region.name_de }}{% else %}{{ region.name_en }}{% endif %}
+                        </button>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-field">
+            <label id="filter-style-label">{% trans 'Style' %}</label>
+            <div class="custom-select" data-custom-select>
+                <input type="hidden" name="style" value="{{ filters.style }}" data-custom-select-input>
+                <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="filter-style-label">
+                    <span data-custom-select-label>
+                        {% if filters.style %}
+                            {% for value, label in course_styles %}
+                                {% if filters.style == value %}{{ label }}{% endif %}
+                            {% endfor %}
+                        {% else %}
+                            {% trans 'All styles' %}
+                        {% endif %}
+                    </span>
+                    <svg class="custom-select__chevron" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                        <path d="M1.25 1.5L7 7.25L12.75 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div class="custom-select__menu" role="listbox" aria-labelledby="filter-style-label">
+                    <button class="custom-select__option {% if not filters.style %}is-selected{% endif %}" type="button" role="option" data-value="" aria-selected="{% if not filters.style %}true{% else %}false{% endif %}">{% trans 'All styles' %}</button>
+                    {% for value, label in course_styles %}
+                        <button class="custom-select__option {% if filters.style == value %}is-selected{% endif %}" type="button" role="option" data-value="{{ value }}" aria-selected="{% if filters.style == value %}true{% else %}false{% endif %}">{{ label }}</button>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-field">
+            <label id="filter-championship-label">{% trans 'Play Level' %}</label>
+            <div class="custom-select" data-custom-select>
+                <input type="hidden" name="championship" value="{{ filters.championship }}" data-custom-select-input>
+                <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="filter-championship-label">
+                    <span data-custom-select-label>
+                        {% if filters.championship == 'yes' %}
+                            {% trans 'Championship' %}
+                        {% elif filters.championship == 'no' %}
+                            {% trans 'Non-championship' %}
+                        {% else %}
+                            {% trans 'All courses' %}
+                        {% endif %}
+                    </span>
+                    <svg class="custom-select__chevron" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                        <path d="M1.25 1.5L7 7.25L12.75 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div class="custom-select__menu" role="listbox" aria-labelledby="filter-championship-label">
+                    <button class="custom-select__option {% if not filters.championship %}is-selected{% endif %}" type="button" role="option" data-value="" aria-selected="{% if not filters.championship %}true{% else %}false{% endif %}">{% trans 'All courses' %}</button>
+                    <button class="custom-select__option {% if filters.championship == 'yes' %}is-selected{% endif %}" type="button" role="option" data-value="yes" aria-selected="{% if filters.championship == 'yes' %}true{% else %}false{% endif %}">{% trans 'Championship' %}</button>
+                    <button class="custom-select__option {% if filters.championship == 'no' %}is-selected{% endif %}" type="button" role="option" data-value="no" aria-selected="{% if filters.championship == 'no' %}true{% else %}false{% endif %}">{% trans 'Non-championship' %}</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-actions">
+            <a class="filter-clear" href="{% url 'destination_cms:course_list' %}" data-filter-clear hidden>{% trans 'Clear Filters' %}</a>
+            <noscript>
+                <button type="submit" class="filter-submit">{% trans 'Apply' %}</button>
+            </noscript>
+        </div>
+    </form>
+
+    <p class="result-summary" data-filter-summary data-singular="{% trans '{count} course found' %}" data-plural="{% trans '{count} courses found' %}" hidden></p>
+
+    <section class="course-grid" aria-label="{% trans 'Golf course guides' %}" data-filter-grid>
+        {% for course in courses %}
+            <article
+                class="content-card"
+                data-filter-item
+                data-search="{{ course.name }} {{ course.holes_and_par }} {{ course.signature_features }} {{ course.architect_designer }} {% if request.LANGUAGE_CODE == 'de' and course.region.name_de %}{{ course.region.name_de }}{% else %}{{ course.region.name_en }}{% endif %}"
+                data-region="{{ course.region.slug }}"
+                data-style="{{ course.course_style }}"
+                data-championship="{% if course.is_championship %}yes{% else %}no{% endif %}"
+                data-sort-title="{{ course.name }}"
+            >
+                <div class="content-card__media">
+                    {% with image=course.gallery_images.all.0 %}
+                        {% if image %}
+                            <img src="{{ image.image_url }}" alt="{% if request.LANGUAGE_CODE == 'de' and image.caption_de %}{{ image.caption_de }}{% elif image.caption_en %}{{ image.caption_en }}{% else %}{{ course.name }}{% endif %}">
+                        {% elif course.get_hero_image_url %}
+                            <img src="{{ course.get_hero_image_url }}" alt="{{ course.name }}">
+                        {% else %}
+                            <div class="content-card__placeholder">{% trans 'Golf image' %}</div>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                <div class="content-card__body">
+                    <span class="content-label">{{ course.holes_and_par|default:"Golf guide" }}</span>
+                    <h2 class="content-title">{{ course.name }}</h2>
+                    <p class="content-copy">{{ course.signature_features|truncatewords:22 }}</p>
+                    <a class="content-link" href="{% url 'destination_cms:course_detail' course.slug %}">{% trans 'Open Course →' %}</a>
+                    {% include "includes/quick_shortlist.html" with interest_type="golf_course" object_id=course.pk %}
+                </div>
+            </article>
+        {% endfor %}
+    </section>
+
+    {% include "includes/filter_empty.html" %}
+</article>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/listing-filters.js' %}" defer></script>
+{% endblock %}

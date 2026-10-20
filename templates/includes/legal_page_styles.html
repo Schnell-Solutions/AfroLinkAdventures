@@ -1,0 +1,124 @@
+<style>
+    .legal-page,
+    .legal-page * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    .legal-page {
+        display: grid;
+        gap: var(--space-section);
+        padding: var(--space-page);
+    }
+
+    body.legal-body:not(.home-body),
+    body.legal-body:not(.home-body) .site-main,
+    body.legal-body:not(.home-body) .content-frame {
+        background: #FFFFFF;
+    }
+
+    .legal-header {
+        display: grid;
+        gap: 12px;
+        max-width: 720px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #DED8CC;
+    }
+
+    .legal-kicker {
+        color: #7A6A55;
+        font-size: 0.64rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .legal-title {
+        color: #0A0A0A;
+        font-size: clamp(1.55rem, 2.8vw, 2.25rem) !important;
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.15;
+        text-transform: uppercase;
+        margin: 0;
+    }
+
+    .legal-lede {
+        max-width: 62ch;
+        color: #5F574C;
+        font-size: 0.95rem;
+        line-height: 1.7;
+    }
+
+    .legal-meta {
+        color: #7A6A55;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .legal-sections {
+        display: grid;
+        gap: var(--space-section);
+        max-width: 720px;
+    }
+
+    .legal-section {
+        display: grid;
+        gap: 12px;
+        padding-top: clamp(20px, 3vw, 28px);
+        border-top: 1px solid #DED8CC;
+    }
+
+    .legal-section:first-child {
+        padding-top: 0;
+        border-top: 0;
+    }
+
+    .legal-section__title {
+        margin: 0;
+        color: #0A0A0A;
+        font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.25;
+        text-transform: uppercase;
+    }
+
+    .legal-section p,
+    .legal-section li {
+        color: #5F574C;
+        font-size: 0.92rem;
+        line-height: 1.7;
+    }
+
+    .legal-section p {
+        margin: 0;
+    }
+
+    .legal-section ul {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding: 0 0 0 1.1rem;
+    }
+
+    .legal-section a {
+        color: #0A0A0A;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
+    .legal-section a:hover {
+        color: #9A7A43;
+    }
+
+    .legal-footer-note {
+        max-width: 720px;
+        padding-top: 8px;
+        border-top: 1px solid #DED8CC;
+        color: #7A6A55;
+        font-size: 0.82rem;
+        line-height: 1.6;
+    }
+</style>

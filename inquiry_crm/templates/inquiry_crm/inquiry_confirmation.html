@@ -1,0 +1,281 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block meta_title %}{% trans 'Enquiry received' %} | AfroLink Adventures{% endblock %}
+{% block meta_description %}{% trans 'Your AfroLink enquiry has been received. We will email consultation details within two hours.' %}{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/inquiry-ux.css' %}">
+<style>
+    .confirmation-page,
+    .confirmation-page * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    .confirmation-page {
+        min-height: 64vh;
+        padding: var(--space-page);
+    }
+
+    body.confirmation-body:not(.home-body),
+    body.confirmation-body:not(.home-body) .site-main,
+    body.confirmation-body:not(.home-body) .content-frame {
+        background: #FFFFFF;
+    }
+
+    .confirmation-panel {
+        width: min(100%, 920px);
+        margin: 0 auto;
+    }
+
+    .eyebrow {
+        margin-bottom: 18px;
+        color: #9A7A43;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+    }
+
+    .confirmation-title {
+        color: #0A0A0A;
+        font-size: clamp(2.2rem, 5vw, 4.2rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.05;
+        text-transform: uppercase;
+    }
+
+    .confirmation-copy {
+        max-width: 640px;
+        margin-top: 20px;
+        color: #5F574C;
+        font-size: 1rem;
+        line-height: 1.75;
+    }
+
+    .confirmation-promise {
+        max-width: 640px;
+        margin-top: 18px;
+        padding: 16px 18px;
+        border-left: 2px solid #9A7A43;
+        color: #0A0A0A;
+        font-size: 0.95rem;
+        line-height: 1.65;
+        background: #F7F4ED;
+    }
+
+    .next-steps {
+        margin-top: clamp(28px, 4vw, 40px);
+        display: grid;
+        gap: 14px;
+    }
+
+    .next-steps__title {
+        margin: 0;
+        color: #0A0A0A;
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+    }
+
+    .next-steps__list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 0;
+        border-top: 1px solid #DED8CC;
+    }
+
+    .next-steps__list li {
+        display: grid;
+        grid-template-columns: 28px minmax(0, 1fr);
+        gap: 12px;
+        padding: 14px 0;
+        border-bottom: 1px solid #DED8CC;
+        color: #5F574C;
+        font-size: 0.92rem;
+        line-height: 1.55;
+    }
+
+    .next-steps__list strong {
+        color: #0A0A0A;
+        font-weight: 600;
+    }
+
+    .step-num {
+        color: #9A7A43;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+    }
+
+    .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-card);
+        margin-top: var(--space-section);
+    }
+
+    .summary-card {
+        border: 1px solid #DED8CC;
+        padding: 22px;
+    }
+
+    .summary-label {
+        display: block;
+        margin-bottom: 10px;
+        color: #7A6A55;
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .summary-value {
+        color: #0A0A0A;
+        font-family: var(--font-heading);
+        font-size: 1.35rem;
+        line-height: 1.2;
+    }
+
+    .summary-card--wide {
+        grid-column: 1 / -1;
+    }
+
+    .summary-card--wide .summary-value {
+        font-family: var(--font-body);
+        font-size: 1rem;
+        line-height: 1.55;
+        white-space: pre-wrap;
+    }
+
+    .confirmation-note {
+        margin-top: 28px;
+        color: #6E6254;
+        font-size: 0.85rem;
+        line-height: 1.55;
+    }
+
+    @media (max-width: 720px) {
+        .summary-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block body_class %}confirmation-body{% endblock %}
+
+{% block content %}
+<article class="confirmation-page">
+    <section class="confirmation-panel" aria-labelledby="confirmation-title">
+        {% if inquiry.package_shortlist.exists %}
+            {% include "includes/inquiry_progress.html" with flow="package" step="received" %}
+        {% else %}
+            {% include "includes/inquiry_progress.html" with flow="custom" step="received" %}
+        {% endif %}
+
+        <p class="eyebrow">{% trans 'Enquiry received' %}</p>
+        <h1 id="confirmation-title" class="confirmation-title">{% trans 'We have your request.' %}</h1>
+        <p class="confirmation-copy">
+            {% blocktrans with name=inquiry.lead.full_name %}Thank you, {{ name }}. Your enquiry is with the AfroLink concierge team. Nothing is booked yet — the next step is a video consultation to refine and confirm the plan together.{% endblocktrans %}
+        </p>
+
+        <p class="confirmation-promise">
+            {% blocktrans with email=inquiry.lead.email %}We will email <strong>{{ email }}</strong> within two hours with your consultation time and joining details.{% endblocktrans %}
+        </p>
+
+        <div class="next-steps">
+            <h2 class="next-steps__title">{% trans 'What happens next' %}</h2>
+            <ol class="next-steps__list">
+                <li>
+                    <span class="step-num">01</span>
+                    <span><strong>{% trans 'We review your brief' %}</strong> — {% trans 'dates, guests, shortlist or signature route, and any notes you shared.' %}</span>
+                </li>
+                <li>
+                    <span class="step-num">02</span>
+                    <span><strong>{% trans 'You receive consultation details' %}</strong> — {% trans 'by email within two hours, including time and how to join.' %}</span>
+                </li>
+                <li>
+                    <span class="step-num">03</span>
+                    <span><strong>{% trans 'We refine on the call' %}</strong> — {% trans 'availability, routing, and lodging. Only then is anything confirmed.' %}</span>
+                </li>
+            </ol>
+        </div>
+
+        <div class="summary-grid">
+            <div class="summary-card">
+                <span class="summary-label">{% trans 'Enquiry type' %}</span>
+                <span class="summary-value">{{ inquiry.get_inquiry_type_display }}</span>
+            </div>
+            <div class="summary-card">
+                <span class="summary-label">{% trans 'Guests' %}</span>
+                <span class="summary-value">{{ inquiry.guest_count }}</span>
+            </div>
+            <div class="summary-card">
+                <span class="summary-label">{% trans 'Target start' %}</span>
+                <span class="summary-value">
+                    {% if inquiry.target_start_date %}
+                        {{ inquiry.target_start_date|date:"M j, Y" }}
+                    {% else %}
+                        {% trans 'Flexible' %}
+                    {% endif %}
+                </span>
+            </div>
+            <div class="summary-card">
+                <span class="summary-label">{% trans 'Accommodation' %}</span>
+                <span class="summary-value">{{ inquiry.get_accommodation_tier_display }}</span>
+            </div>
+            <div class="summary-card">
+                <span class="summary-label">{% trans 'Preferred language' %}</span>
+                <span class="summary-value">{{ inquiry.lead.get_preferred_language_display }}</span>
+            </div>
+            <div class="summary-card">
+                <span class="summary-label">{% trans 'Preferred consultation window' %}</span>
+                <span class="summary-value">
+                    {% if inquiry.preferred_consultation_date %}
+                        {{ inquiry.preferred_consultation_date|date:"M j, Y" }}
+                        {% if inquiry.preferred_consultation_window %}
+                            · {{ inquiry.get_preferred_consultation_window_display }}
+                        {% endif %}
+                    {% else %}
+                        {% for consultation in inquiry.consultations.all %}
+                            {{ consultation.scheduled_time|date:"M j, Y H:i" }}
+                        {% empty %}
+                            {% trans 'To be confirmed by email' %}
+                        {% endfor %}
+                    {% endif %}
+                </span>
+            </div>
+            <div class="summary-card summary-card--wide">
+                <span class="summary-label">{% trans 'Shortlist / journey' %}</span>
+                <span class="summary-value">
+                    {% for package_link in inquiry.package_shortlist.all %}
+                        {% if request.LANGUAGE_CODE == 'de' %}{{ package_link.base_package.title_de }}{% else %}{{ package_link.base_package.title_en }}{% endif %}{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        {% for interest in inquiry.interests.all %}
+                            {{ interest.title_snapshot }}{% if not forloop.last %}, {% endif %}
+                        {% empty %}
+                            {% trans 'To be refined on the call' %}
+                        {% endfor %}
+                    {% endfor %}
+                </span>
+            </div>
+            {% if inquiry.additional_requirements %}
+                <div class="summary-card summary-card--wide">
+                    <span class="summary-label">{% trans 'Your notes' %}</span>
+                    <span class="summary-value">{{ inquiry.additional_requirements }}</span>
+                </div>
+            {% endif %}
+        </div>
+
+        <p class="confirmation-note">
+            {% trans 'Meeting links are sent by email once scheduled — you will not find a join link on this page.' %}
+        </p>
+    </section>
+</article>
+{% endblock %}

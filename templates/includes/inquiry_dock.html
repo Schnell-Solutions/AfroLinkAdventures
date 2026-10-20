@@ -1,0 +1,21 @@
+{% load i18n %}
+{% with inquiry_count=request.session.inquiry_cart|length %}
+    {% if inquiry_count %}
+        {% if '/custom-package/' not in request.path and '/inquiry/intake/' not in request.path and '/inquiry/confirmation/' not in request.path %}
+            <aside class="inquiry-dock" aria-label="{% trans 'Complete your enquiry' %}">
+                <div class="inquiry-dock__inner">
+                    <p class="inquiry-dock__copy">
+                        {% blocktrans count counter=inquiry_count %}
+                            {{ counter }} item shortlisted — nothing is confirmed yet.
+                        {% plural %}
+                            {{ counter }} items shortlisted — nothing is confirmed yet.
+                        {% endblocktrans %}
+                    </p>
+                    <a class="inquiry-dock__cta" href="{% url 'inquiry_crm:custom_package' %}">
+                        {% trans 'Request consultation' %} →
+                    </a>
+                </div>
+            </aside>
+        {% endif %}
+    {% endif %}
+{% endwith %}

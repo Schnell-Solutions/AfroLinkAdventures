@@ -1,0 +1,126 @@
+{% load i18n %}
+<div
+    class="inquiry-modal"
+    data-experience-inquiry-modal
+    hidden
+    aria-hidden="true"
+>
+    <div class="inquiry-modal__backdrop" data-experience-inquiry-close tabindex="-1"></div>
+    <div
+        class="inquiry-modal__dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="experience-inquiry-title"
+        tabindex="-1"
+        data-experience-inquiry-dialog
+    >
+        <div class="inquiry-modal__header">
+            <div>
+                <p class="inquiry-modal__kicker">{% trans 'Personal Concierge' %}</p>
+                <h2 class="inquiry-modal__title" id="experience-inquiry-title">
+                    {% trans "Can't find what you're looking for?" %}
+                </h2>
+            </div>
+            <button
+                type="button"
+                class="inquiry-modal__close"
+                data-experience-inquiry-close
+                aria-label="{% trans 'Close inquiry form' %}"
+            >
+                &times;
+            </button>
+        </div>
+
+        <p class="inquiry-modal__intro">
+            {% trans 'Share the destination, golf course, safari package, accommodation, or experience you could not find. Our team will follow up by email.' %}
+        </p>
+
+        <p class="inquiry-modal__notice" role="note">
+            {% trans 'This itinerary can be customized or extended at an additional cost.' %}
+        </p>
+
+        <form
+            class="inquiry-modal__form"
+            data-experience-inquiry-form
+            action="{% url 'inquiry_crm:submit_experience_inquiry' %}"
+            method="post"
+            novalidate
+        >
+            {% csrf_token %}
+            <input type="hidden" name="page_url" value="" data-experience-inquiry-page-url>
+            <input type="hidden" name="context_label" value="" data-experience-inquiry-context>
+
+            <div class="inquiry-modal__field">
+                <label for="experience-inquiry-name">{% trans 'Full name' %}</label>
+                <input
+                    id="experience-inquiry-name"
+                    type="text"
+                    name="full_name"
+                    required
+                    autocomplete="name"
+                    placeholder="{% trans 'Your name' %}"
+                    data-experience-inquiry-name
+                >
+                <p class="inquiry-modal__error" data-field-error="full_name" hidden></p>
+            </div>
+
+            <div class="inquiry-modal__field inquiry-modal__field--full">
+                <label for="experience-inquiry-message">{% trans 'What are you looking for?' %}</label>
+                <textarea
+                    id="experience-inquiry-message"
+                    name="message"
+                    rows="5"
+                    required
+                    maxlength="4000"
+                    placeholder="{% trans 'e.g. A 5-night safari near Masai Mara with two rounds of golf…' %}"
+                    data-experience-inquiry-message
+                ></textarea>
+                <p class="inquiry-modal__error" data-field-error="message" hidden></p>
+            </div>
+
+            {% trans "Tell us about any preferences, changes, accessibility needs, accommodation preferences, dietary requirements, or anything else you'd like us to consider." as additional_requirements_placeholder %}
+            <div class="inquiry-modal__field inquiry-modal__field--full">
+                <label for="experience-inquiry-additional">{% trans 'Additional Requirements' %}</label>
+                <textarea
+                    id="experience-inquiry-additional"
+                    name="additional_requirements"
+                    rows="4"
+                    maxlength="4000"
+                    placeholder="{{ additional_requirements_placeholder }}"
+                    data-experience-inquiry-additional
+                ></textarea>
+                <p class="inquiry-modal__error" data-field-error="additional_requirements" hidden></p>
+            </div>
+
+            <div class="inquiry-modal__field">
+                <label for="experience-inquiry-email">{% trans 'Email address' %}</label>
+                <input
+                    id="experience-inquiry-email"
+                    type="email"
+                    name="email"
+                    required
+                    autocomplete="email"
+                    placeholder="{% trans 'you@example.com' %}"
+                    data-experience-inquiry-email
+                >
+                <p class="inquiry-modal__error" data-field-error="email" hidden></p>
+            </div>
+
+            <p class="inquiry-modal__form-error" data-form-error hidden></p>
+
+            <div class="inquiry-modal__actions">
+                <button type="submit" class="inquiry-modal__submit" data-experience-inquiry-submit>
+                    {% trans 'Submit' %}
+                </button>
+            </div>
+        </form>
+
+        <div class="inquiry-modal__success" data-experience-inquiry-success hidden>
+            <p class="inquiry-modal__success-title">{% trans 'Inquiry received' %}</p>
+            <p class="inquiry-modal__success-copy" data-experience-inquiry-success-message></p>
+            <button type="button" class="inquiry-modal__submit" data-experience-inquiry-close>
+                {% trans 'Close' %}
+            </button>
+        </div>
+    </div>
+</div>

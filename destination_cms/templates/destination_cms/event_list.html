@@ -1,0 +1,764 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block meta_title %}Upcoming Golf Events | AfroLink Adventures{% endblock %}
+{% block meta_description %}View upcoming and recurring Kenya golf events available for private AfroLink travel planning.{% endblock %}
+{% block body_class %}events-body{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/listing-filters.css' %}">
+<style>
+    .event-list,
+    .event-list * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    .event-list {
+        --events-card-gap: clamp(32px, 4vw, 44px);
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        padding: var(--space-page);
+    }
+
+    body.events-body:not(.home-body),
+    body.events-body:not(.home-body) .site-main,
+    body.events-body:not(.home-body) .content-frame {
+        background: #FFFFFF;
+    }
+
+    .event-list__header {
+        display: grid;
+        gap: 8px;
+        max-width: 700px;
+        margin-bottom: 28px;
+    }
+
+    .event-list__title {
+        color: #0A0A0A;
+        font-size: clamp(1.75rem, 3.4vw, 3.1rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.1;
+        text-transform: uppercase;
+    }
+
+    .event-list__copy {
+        color: #5F574C;
+        font-size: 0.92rem;
+        line-height: 1.65;
+    }
+
+    .event-list__rule {
+        display: none;
+    }
+
+    .promoted-events {
+        display: grid;
+        gap: var(--events-card-gap);
+        margin-bottom: 40px;
+    }
+
+    .promoted-event {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(300px, 1fr);
+        overflow: hidden;
+        border-radius: var(--radius-panel);
+        background: #0A0A0A;
+        color: #FAF7F0 !important;
+    }
+
+    .promoted-event,
+    .promoted-event h1,
+    .promoted-event h2,
+    .promoted-event h3,
+    .promoted-event p,
+    .promoted-event a,
+    .promoted-event div,
+    .promoted-event span {
+        color: #FAF7F0 !important;
+    }
+
+    .promoted-event__media {
+        position: relative;
+        min-height: clamp(180px, 16vw, 240px);
+        background: #1A1A1A;
+    }
+
+    .promoted-event__media img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+    }
+
+    .promoted-event__placeholder {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        color: rgba(250, 247, 240, 0.62) !important;
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .promoted-event__body {
+        display: grid;
+        align-content: center;
+        gap: 12px;
+        padding: clamp(22px, 3vw, 34px);
+    }
+
+    .promoted-event__badge,
+    .promoted-event__meta {
+        font-size: 0.68rem;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .promoted-event__badge {
+        width: fit-content;
+        border-radius: 999px;
+        background: #F4A62C;
+        color: #0A0A0A !important;
+        padding: 8px 12px;
+    }
+
+    .promoted-event__meta {
+        color: rgba(250, 247, 240, 0.68) !important;
+    }
+
+    .promoted-event__title {
+        color: #FAF7F0 !important;
+        font-size: clamp(1.45rem, 2.4vw, 2.1rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.15;
+        text-transform: uppercase;
+    }
+
+    .promoted-event__copy {
+        color: rgba(250, 247, 240, 0.74) !important;
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+
+    .promoted-event__link {
+        width: fit-content;
+        margin-top: 6px;
+        padding-bottom: 3px;
+        border-bottom: 1px solid rgba(250, 247, 240, 0.5);
+        color: #FAF7F0 !important;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        transition: border-color var(--ease-standard), color var(--ease-standard);
+    }
+
+    .promoted-event__link:hover {
+        border-color: #C79A55;
+        color: #C79A55 !important;
+    }
+
+    .event-filters {
+        display: grid;
+        grid-template-columns: minmax(0, 1.6fr) repeat(4, minmax(0, 1fr)) auto;
+        gap: clamp(18px, 3vw, 28px);
+        align-items: end;
+        margin-bottom: 24px;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: #FFFFFF;
+    }
+
+    .filter-field {
+        display: grid;
+        gap: 7px;
+    }
+
+    .filter-field label {
+        color: #7A6A55;
+        font-size: 0.64rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .filter-field input,
+    .filter-field select {
+        min-height: 44px;
+        width: 100%;
+        border: 0;
+        border-bottom: 1px solid #D5CAB8;
+        background: transparent;
+        color: #0A0A0A;
+        padding: 0 8px 10px;
+        font: inherit;
+        font-size: 0.88rem;
+    }
+
+    .custom-select {
+        position: relative;
+    }
+
+    .custom-select__trigger {
+        width: 100%;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        border: 0;
+        border-bottom: 1px solid #D5CAB8;
+        background: transparent;
+        color: #0A0A0A;
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.88rem;
+        padding: 0 8px 10px;
+        text-align: left;
+    }
+
+    .custom-select__trigger:focus-visible,
+    .custom-select.is-open .custom-select__trigger {
+        border-color: #0A0A0A;
+        outline: 0;
+    }
+
+    .custom-select__chevron {
+        width: 14px;
+        height: 9px;
+        flex: none;
+        color: #7A6A55;
+        transition: transform var(--ease-standard), color var(--ease-standard);
+    }
+
+    .custom-select.is-open .custom-select__chevron {
+        color: #0A0A0A;
+        transform: rotate(180deg);
+    }
+
+    .custom-select__menu {
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        z-index: 15;
+        width: 100%;
+        display: grid;
+        gap: 2px;
+        padding: 5px;
+        border: 1px solid #DED8CC;
+        border-radius: var(--radius-media);
+        background: #FFFFFF;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(6px);
+        transition: opacity var(--ease-standard), transform var(--ease-standard);
+    }
+
+    .custom-select.is-open .custom-select__menu {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    .custom-select__option {
+        width: 100%;
+        min-height: 38px;
+        border: 0;
+        border-radius: calc(var(--radius-media) - 2px);
+        background: transparent;
+        color: #0A0A0A;
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.84rem;
+        padding: 0 8px;
+        text-align: left;
+    }
+
+    .custom-select__option:hover,
+    .custom-select__option:focus-visible {
+        background: #F7F4ED;
+        color: #0A0A0A;
+        outline: 0;
+    }
+
+    .custom-select__option.is-selected {
+        background: #0A0A0A;
+        color: #FFFFFF;
+    }
+
+    .filter-field input:focus,
+    .filter-field select:focus {
+        border-color: #0A0A0A;
+        outline: 0;
+    }
+
+    .filter-field input::placeholder {
+        color: #9C9081;
+    }
+
+    .filter-actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        align-self: end;
+        justify-self: end;
+        min-height: 44px;
+    }
+
+    .filter-actions:empty {
+        display: none;
+    }
+
+    .filter-submit {
+        min-height: 44px;
+        border: 1px solid #0A0A0A;
+        border-radius: var(--radius-media);
+        background: #0A0A0A;
+        color: #FFFFFF;
+        cursor: pointer;
+        padding: 0 20px;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        transition: background-color var(--ease-standard), color var(--ease-standard);
+    }
+
+    .filter-submit:hover {
+        background: transparent;
+        color: #0A0A0A;
+    }
+
+    .filter-clear {
+        min-height: 36px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-media);
+        background: #F7F4ED;
+        color: #7A6A55;
+        padding: 0 12px;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    .filter-clear:hover {
+        background: #0A0A0A;
+        color: #FFFFFF;
+    }
+
+    .result-summary {
+        margin: -8px 0 16px;
+        color: #7A6A55;
+        font-size: 0.78rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+    }
+
+    .result-summary[hidden] {
+        display: none !important;
+        margin: 0;
+    }
+
+    .event-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--events-card-gap);
+    }
+
+    .event-card {
+        display: grid;
+        gap: 18px;
+        background: transparent;
+    }
+
+    .event-card__media {
+        aspect-ratio: 16 / 10;
+        border-radius: var(--radius-media);
+        overflow: hidden;
+        background: #E7DFD1;
+    }
+
+    .event-card__media img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        transition: transform 400ms ease;
+    }
+
+    .event-card:hover .event-card__media img {
+        transform: scale(1.03);
+    }
+
+    .event-card__placeholder {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        place-items: center;
+        color: #8A7B63;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+    }
+
+    .event-card__body {
+        display: grid;
+        align-content: space-between;
+        gap: 16px;
+    }
+
+    .event-card__meta {
+        color: #7A6A55;
+        font-size: 0.66rem;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+    }
+
+    .event-card__title {
+        max-width: 520px;
+        margin-top: 8px;
+        color: #0A0A0A;
+        font-size: clamp(1.25rem, 2.2vw, 1.8rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.15;
+        text-transform: uppercase;
+    }
+
+    .event-card__summary {
+        max-width: 540px;
+        margin-top: 12px;
+        color: #5F574C;
+        font-size: 0.86rem;
+        line-height: 1.55;
+    }
+
+    .event-card__footer {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 24px;
+    }
+
+    .event-card__note {
+        color: #5F574C;
+        font-size: 0.82rem;
+        line-height: 1.4;
+    }
+
+    .event-card__link {
+        width: fit-content;
+        padding-bottom: 3px;
+        border-bottom: 1px solid currentColor;
+        color: #0A0A0A;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        transition: color var(--ease-standard);
+        white-space: nowrap;
+    }
+
+    .event-card__link:hover {
+        color: #9A7A43;
+    }
+
+    .empty-state {
+        display: none;
+    }
+
+    @media (max-width: 1100px) {
+        .event-filters {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .event-filters .filter-field--search {
+            grid-column: 1 / -1;
+        }
+    }
+
+    @media (max-width: 980px) {
+        .promoted-event {
+            grid-template-columns: 1fr;
+        }
+
+        .promoted-event__media {
+            min-height: clamp(180px, 34vw, 240px);
+        }
+    }
+
+    @media (max-width: 860px) {
+        .event-list {
+            --events-card-gap: 40px;
+        }
+
+        .promoted-events {
+            margin-bottom: 48px;
+        }
+
+        .event-filters {
+            margin-bottom: 20px;
+        }
+
+        .event-grid {
+            grid-template-columns: 1fr;
+            gap: 44px;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .event-list {
+            --events-card-gap: 44px;
+            padding: 24px 0 56px;
+        }
+
+        .event-list__header {
+            margin-bottom: 24px;
+        }
+
+        .promoted-events {
+            margin-bottom: 52px;
+        }
+
+        .event-filters {
+            grid-template-columns: 1fr;
+            margin-bottom: 18px;
+        }
+
+        .event-grid {
+            gap: 48px;
+        }
+
+        .filter-actions {
+            justify-self: start;
+        }
+    }
+
+    @media (max-width: 560px) {
+        .event-card__footer {
+            align-items: start;
+            flex-direction: column;
+            gap: 12px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<article class="event-list" data-listing-root>
+    <header class="event-list__header">
+        <h1 class="event-list__title">{% trans 'Upcoming Golf Events' %}</h1>
+        <p class="event-list__copy">
+            {% trans 'A curated calendar of one-off and recurring golf events that can be built into a private AfroLink journey.' %}
+        </p>
+    </header>
+
+    {% if promoted_events %}
+        <section class="promoted-events" data-filter-featured aria-label="{% trans 'Promoted golf events' %}">
+            {% for event in promoted_events %}
+                <article class="promoted-event">
+                    <div class="promoted-event__media">
+                        {% if event.image_url %}
+                            <img src="{{ event.image_url }}" alt="{% if request.LANGUAGE_CODE == 'de' and event.title_de %}{{ event.title_de }}{% else %}{{ event.title_en }}{% endif %}">
+                        {% else %}
+                            <div class="promoted-event__placeholder">{% trans 'Featured Event Image' %}</div>
+                        {% endif %}
+                    </div>
+                    <div class="promoted-event__body">
+                        <p class="promoted-event__badge">{% trans 'Featured Event' %}</p>
+                        <p class="promoted-event__meta">
+                            {% if event.is_recurring %}
+                                {% trans 'Every' %} {{ event.get_recurrence_weekday_display }}
+                            {% else %}
+                                {{ event.event_date|date:"M j, Y" }}
+                            {% endif %}
+                            {% if event.start_time %} / {{ event.start_time|time:"g:i A" }}{% endif %}
+                        </p>
+                        <h2 class="promoted-event__title">
+                            {% if request.LANGUAGE_CODE == 'de' and event.title_de %}{{ event.title_de }}{% else %}{{ event.title_en }}{% endif %}
+                        </h2>
+                        <p class="promoted-event__copy">
+                            {% if request.LANGUAGE_CODE == 'de' and event.summary_de %}
+                                {{ event.summary_de|truncatewords:22 }}
+                            {% else %}
+                                {{ event.summary_en|truncatewords:22 }}
+                            {% endif %}
+                        </p>
+                        <a class="promoted-event__link" href="{% url 'destination_cms:event_detail' event.slug %}">{% trans 'View Featured Event →' %}</a>
+                    </div>
+                </article>
+            {% endfor %}
+        </section>
+    {% endif %}
+
+    <hr class="event-list__rule" aria-hidden="true">
+
+    <form class="event-filters" method="get" action="{% url 'destination_cms:event_list' %}" data-listing-filter>
+        <div class="filter-field filter-field--search">
+            <label for="filter-q">{% trans 'Search' %}</label>
+            <input
+                type="search"
+                id="filter-q"
+                name="q"
+                value="{{ filters.q }}"
+                placeholder="{% trans 'Event, course, or region' %}"
+            >
+        </div>
+
+        <div class="filter-field">
+            <label id="filter-region-label">{% trans 'Region' %}</label>
+            <div class="custom-select" data-custom-select>
+                <input type="hidden" name="region" value="{{ filters.region }}" data-custom-select-input>
+                <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="filter-region-label">
+                    <span data-custom-select-label>
+                        {% if filters.region %}
+                            {% for region in filter_regions %}
+                                {% if filters.region == region.slug %}
+                                    {% if request.LANGUAGE_CODE == 'de' and region.name_de %}{{ region.name_de }}{% else %}{{ region.name_en }}{% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            {% trans 'All regions' %}
+                        {% endif %}
+                    </span>
+                    <svg class="custom-select__chevron" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                        <path d="M1.25 1.5L7 7.25L12.75 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div class="custom-select__menu" role="listbox" aria-labelledby="filter-region-label">
+                    <button class="custom-select__option {% if not filters.region %}is-selected{% endif %}" type="button" role="option" data-value="" aria-selected="{% if not filters.region %}true{% else %}false{% endif %}">{% trans 'All regions' %}</button>
+                    {% for region in filter_regions %}
+                        <button class="custom-select__option {% if filters.region == region.slug %}is-selected{% endif %}" type="button" role="option" data-value="{{ region.slug }}" aria-selected="{% if filters.region == region.slug %}true{% else %}false{% endif %}">
+                            {% if request.LANGUAGE_CODE == 'de' and region.name_de %}{{ region.name_de }}{% else %}{{ region.name_en }}{% endif %}
+                        </button>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-field">
+            <label id="filter-type-label">{% trans 'Event Type' %}</label>
+            <div class="custom-select" data-custom-select>
+                <input type="hidden" name="type" value="{{ filters.type }}" data-custom-select-input>
+                <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="filter-type-label">
+                    <span data-custom-select-label>
+                        {% if filters.type == 'one_time' %}
+                            {% trans 'One-time' %}
+                        {% elif filters.type == 'recurring' %}
+                            {% trans 'Recurring' %}
+                        {% else %}
+                            {% trans 'All types' %}
+                        {% endif %}
+                    </span>
+                    <svg class="custom-select__chevron" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                        <path d="M1.25 1.5L7 7.25L12.75 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div class="custom-select__menu" role="listbox" aria-labelledby="filter-type-label">
+                    <button class="custom-select__option {% if not filters.type %}is-selected{% endif %}" type="button" role="option" data-value="" aria-selected="{% if not filters.type %}true{% else %}false{% endif %}">{% trans 'All types' %}</button>
+                    <button class="custom-select__option {% if filters.type == 'one_time' %}is-selected{% endif %}" type="button" role="option" data-value="one_time" aria-selected="{% if filters.type == 'one_time' %}true{% else %}false{% endif %}">{% trans 'One-time' %}</button>
+                    <button class="custom-select__option {% if filters.type == 'recurring' %}is-selected{% endif %}" type="button" role="option" data-value="recurring" aria-selected="{% if filters.type == 'recurring' %}true{% else %}false{% endif %}">{% trans 'Recurring' %}</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-field">
+            <label for="filter-date-from">{% trans 'From' %}</label>
+            <input type="date" id="filter-date-from" name="date_from" value="{{ filters.date_from|date:'Y-m-d' }}" data-auto-filter-change>
+        </div>
+
+        <div class="filter-field">
+            <label for="filter-date-to">{% trans 'To' %}</label>
+            <input type="date" id="filter-date-to" name="date_to" value="{{ filters.date_to|date:'Y-m-d' }}" data-auto-filter-change>
+        </div>
+
+        <div class="filter-actions">
+            <a class="filter-clear" href="{% url 'destination_cms:event_list' %}" data-filter-clear hidden>{% trans 'Clear Filters' %}</a>
+            <noscript>
+                <button type="submit" class="filter-submit">{% trans 'Apply' %}</button>
+            </noscript>
+        </div>
+    </form>
+
+    <p class="result-summary" data-filter-summary data-singular="{% trans '{count} event found' %}" data-plural="{% trans '{count} events found' %}" hidden></p>
+
+    <section class="event-grid" aria-label="{% trans 'Upcoming golf events' %}" data-filter-grid>
+        {% for event in regular_events %}
+            <article
+                class="event-card"
+                data-filter-item
+                data-is-promoted="{% if event.is_promoted %}true{% else %}false{% endif %}"
+                data-search="{% if request.LANGUAGE_CODE == 'de' and event.title_de %}{{ event.title_de }}{% else %}{{ event.title_en }}{% endif %} {% if request.LANGUAGE_CODE == 'de' and event.summary_de %}{{ event.summary_de }}{% else %}{{ event.summary_en }}{% endif %} {% if event.golf_course %}{{ event.golf_course.name }}{% endif %} {% if event.region %}{% if request.LANGUAGE_CODE == 'de' and event.region.name_de %}{{ event.region.name_de }}{% else %}{{ event.region.name_en }}{% endif %}{% endif %}"
+                {% if event.region %}data-region="{{ event.region.slug }}"{% endif %}
+                data-type="{% if event.is_recurring %}recurring{% else %}one_time{% endif %}"
+                data-recurring="{% if event.is_recurring %}true{% else %}false{% endif %}"
+                data-date="{{ event.event_date|date:'Y-m-d' }}"
+                data-sort-date="{{ event.event_date|date:'Y-m-d' }}"
+                data-sort-title="{% if request.LANGUAGE_CODE == 'de' and event.title_de %}{{ event.title_de }}{% else %}{{ event.title_en }}{% endif %}"
+            >
+                <div class="event-card__media">
+                    {% if event.image_url %}
+                        <img src="{{ event.image_url }}" alt="{% if request.LANGUAGE_CODE == 'de' and event.title_de %}{{ event.title_de }}{% else %}{{ event.title_en }}{% endif %}">
+                    {% else %}
+                        <div class="event-card__placeholder">{% trans 'Event Image' %}</div>
+                    {% endif %}
+                </div>
+                <div class="event-card__body">
+                    <div>
+                        <p class="event-card__meta">
+                            {% if event.is_recurring %}
+                                {% trans 'Every' %} {{ event.get_recurrence_weekday_display }}
+                            {% else %}
+                                {{ event.event_date|date:"M j, Y" }}
+                            {% endif %}
+                            {% if event.start_time %} · {{ event.start_time|time:"g:i A" }}{% endif %}
+                        </p>
+                        <h2 class="event-card__title">
+                            {% if request.LANGUAGE_CODE == 'de' and event.title_de %}{{ event.title_de }}{% else %}{{ event.title_en }}{% endif %}
+                        </h2>
+                        <p class="event-card__summary">
+                            {% if request.LANGUAGE_CODE == 'de' and event.summary_de %}
+                                {{ event.summary_de|truncatewords:28 }}
+                            {% else %}
+                                {{ event.summary_en|truncatewords:28 }}
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="event-card__footer">
+                        <p class="event-card__note">
+                            {% if event.golf_course %}{{ event.golf_course.name }}{% elif event.region %}{{ event.region.name_en }}{% else %}{% trans 'Private golf event' %}{% endif %}
+                        </p>
+                        <a class="event-card__link" href="{% url 'destination_cms:event_detail' event.slug %}">
+                            {% trans 'View Event →' %}
+                        </a>
+                        {% if event.accepts_inquiries %}
+                            {% include "includes/quick_shortlist.html" with interest_type="golf_event" object_id=event.pk %}
+                        {% endif %}
+                    </div>
+                </div>
+            </article>
+        {% endfor %}
+    </section>
+
+    {% include "includes/filter_empty.html" %}
+</article>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/listing-filters.js' %}" defer></script>
+{% endblock %}

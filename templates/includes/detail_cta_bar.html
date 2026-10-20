@@ -1,0 +1,21 @@
+{% load i18n %}
+{# Slim mobile sticky bar for experience shortlist CTAs. Journey detail uses its own bar. #}
+<div class="detail-cta-bar" data-detail-cta-bar hidden>
+    <div class="detail-cta-bar__meta">
+        <p class="detail-cta-bar__label">{% trans 'Shortlist' %}</p>
+        <p class="detail-cta-bar__value">
+            {% if sticky_value %}
+                {{ sticky_value }}
+            {% else %}
+                {% trans 'Save for consultation' %}
+            {% endif %}
+        </p>
+    </div>
+    <button type="button" class="detail-cta-bar__btn" data-detail-cta-mirror>
+        {% if sticky_action %}
+            {{ sticky_action }}
+        {% else %}
+            {% trans 'Add' %}
+        {% endif %}
+    </button>
+</div>

@@ -1,0 +1,47 @@
+{% load i18n %}
+{% load cms_extras %}
+{% if promotional_banners %}
+<aside
+    class="promo-banner"
+    data-promo-banner
+    data-rotate-ms="7000"
+    aria-label="{% trans 'Promotions' %}"
+>
+    <div class="promo-banner__viewport">
+        {% for banner in promotional_banners %}
+            {% with bg_image=banner.background_image_url|css_bg_image %}
+            <div
+                class="promo-banner__slide{% if bg_image %} promo-banner__slide--media{% endif %}{% if forloop.first %} is-active{% endif %}"
+                data-promo-slide
+                data-promo-id="{{ banner.id }}"
+                data-dismissible="{% if banner.is_dismissible %}true{% else %}false{% endif %}"
+                {% if bg_image %}style="--promo-image: {{ bg_image }}"{% endif %}
+                {% if not forloop.first %}hidden{% endif %}
+            >
+                <a
+                    class="promo-banner__link"
+                    href="{{ banner.cta_url }}"
+                    data-promo-link
+                >
+                    <span class="promo-banner__title">{{ banner.title }}</span>
+                    <span class="promo-banner__cta">
+                        {{ banner.cta_text|default:_('View Offer') }}
+                        <span aria-hidden="true">→</span>
+                    </span>
+                </a>
+                {% if banner.is_dismissible %}
+                    <button
+                        type="button"
+                        class="promo-banner__dismiss"
+                        data-promo-dismiss
+                        aria-label="{% trans 'Dismiss this promotion' %}"
+                    >
+                        &times;
+                    </button>
+                {% endif %}
+            </div>
+            {% endwith %}
+        {% endfor %}
+    </div>
+</aside>
+{% endif %}

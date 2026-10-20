@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block meta_title %}{% trans 'Legal Notice' %} | AfroLink Adventures{% endblock %}
+{% block meta_description %}{% trans 'Legal notice and publisher information for the AfroLink Adventures website.' %}{% endblock %}
+{% block body_class %}legal-body{% endblock %}
+
+{% block extra_head %}
+{% include "includes/legal_page_styles.html" %}
+{% endblock %}
+
+{% block content %}
+<article class="legal-page">
+    <header class="legal-header">
+        <p class="legal-kicker">{% trans 'Legal' %}</p>
+        <h1 class="legal-title">{% trans 'Legal Notice' %}</h1>
+        <p class="legal-lede">
+            {% trans 'Publisher and responsibility details for the AfroLink Adventures website, including how to reach us about legal or content matters.' %}
+        </p>
+        <p class="legal-meta">{% trans 'Last updated' %}: {% now "F Y" %}</p>
+    </header>
+
+    <div class="legal-sections">
+        <section class="legal-section">
+            <h2 class="legal-section__title">{% trans 'Publisher' %}</h2>
+            <p>
+                {% trans 'This website is published by AfroLink Adventures, a specialist travel practice focused on private golf, safari, and wellness journeys across East Africa.' %}
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2 class="legal-section__title">{% trans 'Contact' %}</h2>
+            <p>
+                {% trans 'For legal notices, privacy requests, or formal correspondence related to this website, use the inquiry form on this site and mark the subject clearly. Guests already in planning may also write through their assigned founder contact.' %}
+            </p>
+            <ul>
+                <li><a href="{% url 'inquiry_crm:custom_planner' %}">{% trans 'Start an inquiry' %}</a></li>
+                <li><a href="/about/">{% trans 'About AfroLink' %}</a></li>
+            </ul>
+        </section>
+
+        <section class="legal-section">
+            <h2 class="legal-section__title">{% trans 'Purpose of the site' %}</h2>
+            <p>
+                {% trans 'The site presents destinations, experiences, journal writing, and enquiry tools. It is not an automated booking engine. Availability, access, and final routing are confirmed through human planning after an enquiry.' %}
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2 class="legal-section__title">{% trans 'Content responsibility' %}</h2>
+            <p>
+                {% trans 'We take care to keep destination and experience information accurate. Descriptions may still change as lodges renovate, tee-sheet policies evolve, or conservation access shifts. If you notice an error, tell us and we will review it promptly.' %}
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2 class="legal-section__title">{% trans 'External links' %}</h2>
+            <p>
+                {% trans 'Links to partner or third-party sites are provided for convenience. We are not responsible for the content, policies, or availability of external websites after you leave AfroLink pages.' %}
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2 class="legal-section__title">{% trans 'Copyright' %}</h2>
+            <p>
+                {% trans 'Unless otherwise noted, text, design, and selected imagery on this website are protected. Reproduction for commercial use requires prior written permission from AfroLink Adventures.' %}
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2 class="legal-section__title">{% trans 'Dispute notes' %}</h2>
+            <p>
+                {% trans 'Website use and enquiry correspondence are governed by the terms published on this site and any written proposal later issued for a specific journey. Confirmed travel arrangements may also be subject to partner terms and the law of the place where services are delivered.' %}
+            </p>
+        </section>
+    </div>
+
+    <p class="legal-footer-note">
+        {% trans 'Related pages:' %}
+        <a href="{% url 'privacy' %}">{% trans 'Privacy' %}</a>
+        ·
+        <a href="{% url 'terms' %}">{% trans 'Terms' %}</a>
+    </p>
+</article>
+{% endblock %}

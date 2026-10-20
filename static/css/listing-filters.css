@@ -1,0 +1,15 @@
+/* Shared listing filter empty state — base styles live in experience-inquiry.css */
+
+[data-filter-item][hidden],
+[data-filter-featured][hidden],
+[data-filter-summary][hidden],
+[data-filter-clear][hidden] {
+    display: none !important;
+}
+
+[data-filter-summary] {
+    color: #7A6A55;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}

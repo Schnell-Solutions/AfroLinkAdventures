@@ -1,0 +1,15 @@
+<script>
+(function () {
+    document.querySelectorAll('[data-faq-accordion]').forEach(function (root) {
+        var items = root.querySelectorAll('details');
+        items.forEach(function (item) {
+            item.addEventListener('toggle', function () {
+                if (!item.open) return;
+                items.forEach(function (other) {
+                    if (other !== item) other.open = false;
+                });
+            });
+        });
+    });
+})();
+</script>

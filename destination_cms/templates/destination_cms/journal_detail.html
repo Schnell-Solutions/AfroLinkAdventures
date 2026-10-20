@@ -1,0 +1,515 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load markdown_extras %}
+
+{% block meta_title %}{% if article.meta_title %}{{ article.meta_title }}{% elif request.LANGUAGE_CODE == 'de' and article.title_de %}{{ article.title_de }} | The Journal{% else %}{{ article.title_en }} | The Journal{% endif %}{% endblock %}
+{% block meta_description %}{% if article.meta_description %}{{ article.meta_description }}{% elif request.LANGUAGE_CODE == 'de' and article.excerpt_de %}{{ article.excerpt_de }}{% else %}{{ article.excerpt_en }}{% endif %}{% endblock %}
+{% block body_class %}article-detail-body{% endblock %}
+
+{% block extra_head %}
+<style>
+    .article-page,
+    .article-page * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    body.article-detail-body:not(.home-body),
+    body.article-detail-body:not(.home-body) .site-main,
+    body.article-detail-body:not(.home-body) .content-frame {
+        background: #FFFFFF;
+    }
+
+    .article-page {
+        display: grid;
+        gap: var(--space-section);
+        padding: var(--space-page);
+    }
+
+    .article-hero {
+        display: grid;
+        gap: 0;
+    }
+
+    .article-media {
+        width: 100%;
+        aspect-ratio: 21 / 9;
+        max-height: min(62vh, 560px);
+        overflow: hidden;
+        border-radius: var(--radius-media);
+        background: #E7DFD1;
+    }
+
+    .article-media img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+    }
+
+    .article-media__placeholder {
+        width: 100%;
+        height: 100%;
+        min-height: 240px;
+        display: grid;
+        place-items: center;
+        color: #7A6A55;
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+    }
+
+    .article-header {
+        display: grid;
+        gap: 16px;
+        max-width: 760px;
+        margin: 0 auto;
+        width: 100%;
+        padding-top: clamp(8px, 2vw, 18px);
+    }
+
+    .article-kicker {
+        color: #9A7A43;
+        font-size: 0.68rem;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+    }
+
+    .article-title {
+        color: #0A0A0A;
+        font-size: clamp(1.9rem, 4.2vw, 3.4rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.08;
+        text-transform: uppercase;
+    }
+
+    .article-excerpt {
+        color: #5F574C;
+        font-size: clamp(1rem, 1.4vw, 1.12rem);
+        line-height: 1.65;
+        max-width: 640px;
+    }
+
+    .article-byline {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 18px;
+        color: #7A6A55;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding-top: 4px;
+        border-top: 1px solid #DED8CC;
+    }
+
+    .article-body {
+        max-width: 760px;
+        margin: 0 auto;
+        width: 100%;
+        padding: clamp(8px, 2vw, 18px) 0 clamp(18px, 3vw, 28px);
+    }
+
+    .article-body > *:first-child {
+        margin-top: 0;
+    }
+
+    .article-body h2,
+    .article-body h3,
+    .article-body h4 {
+        color: #0A0A0A !important;
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.2;
+        text-transform: uppercase;
+        margin: 2.1em 0 0.7em;
+    }
+
+    .article-body h2 {
+        font-size: clamp(1.25rem, 2vw, 1.55rem);
+    }
+
+    .article-body h3 {
+        font-size: clamp(1.1rem, 1.6vw, 1.25rem);
+    }
+
+    .article-body h4 {
+        font-size: 1.05rem;
+    }
+
+    .article-body p,
+    .article-body li {
+        color: #312B23 !important;
+        font-size: clamp(1rem, 1.25vw, 1.08rem);
+        line-height: 1.85;
+    }
+
+    .article-body p {
+        margin: 0 0 1.25em;
+    }
+
+    .article-video {
+        margin: 0 0 1.75em;
+        border-radius: var(--radius-media);
+        overflow: hidden;
+        background: #0A0A0A;
+    }
+
+    .article-video__frame {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: #0A0A0A;
+    }
+
+    .article-video__frame iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        display: block;
+    }
+
+    .article-body ul,
+    .article-body ol {
+        margin: 0 0 1.4em;
+        padding-left: 1.25em;
+        display: grid;
+        gap: 0.55em;
+    }
+
+    .article-body blockquote {
+        margin: 1.8em 0;
+        padding: 0.2em 0 0.2em 1.1em;
+        border-left: 2px solid #9A7A43;
+        color: #5F574C !important;
+        font-size: clamp(1.05rem, 1.4vw, 1.18rem);
+        line-height: 1.7;
+        font-style: italic;
+    }
+
+    .article-body blockquote p {
+        color: inherit !important;
+        margin: 0;
+    }
+
+    .article-body a {
+        color: #0A0A0A;
+        border-bottom: 1px solid #C9B89A;
+        text-decoration: none;
+    }
+
+    .article-body a:hover {
+        color: #9A7A43;
+        border-color: #9A7A43;
+    }
+
+    .article-body table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.6em 0 2em;
+        font-size: 0.92rem;
+    }
+
+    .article-body th,
+    .article-body td {
+        border-bottom: 1px solid #DED8CC;
+        padding: 12px 10px;
+        text-align: left;
+        vertical-align: top;
+        color: #312B23 !important;
+    }
+
+    .article-body th {
+        color: #7A6A55 !important;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .article-body hr {
+        border: 0;
+        border-top: 1px solid #DED8CC;
+        margin: 2.2em 0;
+    }
+
+    .article-body code {
+        font-size: 0.9em;
+        background: #F7F4ED;
+        padding: 0.12em 0.35em;
+    }
+
+    .article-body pre {
+        overflow-x: auto;
+        background: #F7F4ED;
+        padding: 16px;
+        margin: 1.4em 0;
+        border-radius: var(--radius-media);
+    }
+
+    .article-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        max-width: 760px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .article-tag {
+        color: #7A6A55;
+        font-size: 0.66rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 8px 12px;
+        background: #F7F4ED;
+        border-radius: var(--radius-media);
+    }
+
+    .article-related {
+        display: grid;
+        gap: var(--space-section);
+        padding-top: var(--space-section);
+        border-top: 1px solid #DED8CC;
+    }
+
+    .article-related__title {
+        color: #0A0A0A;
+        font-size: clamp(1.2rem, 2vw, 1.6rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+    }
+
+    .article-related__grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-card);
+    }
+
+    .article-related-card {
+        display: grid;
+        gap: 14px;
+    }
+
+    .article-related-card__media {
+        aspect-ratio: 16 / 10;
+        overflow: hidden;
+        border-radius: var(--radius-media);
+        background: #E7DFD1;
+    }
+
+    .article-related-card__media img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        transition: transform 400ms ease;
+    }
+
+    .article-related-card:hover .article-related-card__media img {
+        transform: scale(1.03);
+    }
+
+    .article-related-card__meta {
+        color: #7A6A55;
+        font-size: 0.64rem;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .article-related-card__title {
+        color: #0A0A0A;
+        font-size: clamp(1rem, 1.5vw, 1.2rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.2;
+        text-transform: uppercase;
+    }
+
+    .article-related-card__link {
+        width: fit-content;
+        margin-top: 4px;
+        padding-bottom: 2px;
+        border-bottom: 1px solid currentColor;
+        color: #0A0A0A;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .article-related-card__link:hover {
+        color: #9A7A43;
+    }
+
+    .article-cta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        border-top: 1px solid #DED8CC;
+        padding-top: clamp(22px, 3vw, 32px);
+    }
+
+    .article-cta__title {
+        max-width: 640px;
+        color: #0A0A0A;
+        font-size: clamp(1.15rem, 2vw, 1.55rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.25;
+        text-transform: uppercase;
+    }
+
+    .article-link {
+        flex: none;
+        border-bottom: 1px solid currentColor;
+        color: #0A0A0A;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding-bottom: 3px;
+        white-space: nowrap;
+    }
+
+    .article-link:hover {
+        color: #9A7A43;
+    }
+
+    @media (max-width: 900px) {
+        .article-media {
+            aspect-ratio: 16 / 10;
+            max-height: none;
+        }
+
+        .article-related__grid {
+            grid-template-columns: 1fr;
+        }
+
+        .article-cta {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .article-byline {
+            flex-direction: column;
+            gap: 6px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<article class="article-page">
+    <a class="back-link" href="{% url 'journal' %}">← {% trans 'Back to The Journal' %}</a>
+
+    <section class="article-hero" aria-labelledby="article-title">
+        <div class="article-media">
+            {% if article.hero_image_url %}
+                <img src="{{ article.hero_image_url }}" alt="{% if request.LANGUAGE_CODE == 'de' and article.title_de %}{{ article.title_de }}{% else %}{{ article.title_en }}{% endif %}">
+            {% else %}
+                <div class="article-media__placeholder">{% trans 'Journal image' %}</div>
+            {% endif %}
+        </div>
+
+        <header class="article-header">
+            {% if article.category_en or article.category_de %}
+                <p class="article-kicker">
+                    {% if request.LANGUAGE_CODE == 'de' and article.category_de %}{{ article.category_de }}{% else %}{{ article.category_en }}{% endif %}
+                </p>
+            {% endif %}
+            <h1 id="article-title" class="article-title">
+                {% if request.LANGUAGE_CODE == 'de' and article.title_de %}{{ article.title_de }}{% else %}{{ article.title_en }}{% endif %}
+            </h1>
+            {% if article.excerpt_en or article.excerpt_de %}
+                <p class="article-excerpt">
+                    {% if request.LANGUAGE_CODE == 'de' and article.excerpt_de %}{{ article.excerpt_de }}{% else %}{{ article.excerpt_en }}{% endif %}
+                </p>
+            {% endif %}
+            <div class="article-byline">
+                {% if article.author %}
+                    <span>{% trans 'By' %} {{ article.author }}</span>
+                {% endif %}
+                <span>{{ article.published_at|date:"F j, Y" }}</span>
+                <span>{{ article.reading_time_minutes }} {% trans 'min read' %}</span>
+            </div>
+        </header>
+    </section>
+
+    <section class="article-body" aria-label="{% trans 'Article body' %}">
+        {% with embed_url=article.get_youtube_embed_url %}
+            {% if embed_url %}
+                <figure class="article-video">
+                    <div class="article-video__frame">
+                        <iframe
+                            src="{{ embed_url }}"
+                            title="{% blocktrans with title=article.title_en %}YouTube video: {{ title }}{% endblocktrans %}"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen
+                            loading="lazy"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                        ></iframe>
+                    </div>
+                </figure>
+            {% endif %}
+        {% endwith %}
+        {% if request.LANGUAGE_CODE == 'de' and article.body_de %}
+            {{ article.body_de|render_markdown }}
+        {% else %}
+            {{ article.body_en|render_markdown }}
+        {% endif %}
+    </section>
+
+    {% if article.get_tag_list %}
+        <div class="article-tags" aria-label="{% trans 'Tags' %}">
+            {% for tag in article.get_tag_list %}
+                <span class="article-tag">{{ tag }}</span>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if related_articles %}
+        <section class="article-related" aria-label="{% trans 'Related articles' %}">
+            <h2 class="article-related__title">{% trans 'Related Articles' %}</h2>
+            <div class="article-related__grid">
+                {% for related in related_articles %}
+                    <article class="article-related-card">
+                        <div class="article-related-card__media">
+                            {% if related.hero_image_url %}
+                                <img src="{{ related.hero_image_url }}" alt="{% if request.LANGUAGE_CODE == 'de' and related.title_de %}{{ related.title_de }}{% else %}{{ related.title_en }}{% endif %}">
+                            {% endif %}
+                        </div>
+                        <div>
+                            <p class="article-related-card__meta">
+                                {% if request.LANGUAGE_CODE == 'de' and related.category_de %}{{ related.category_de }}{% else %}{{ related.category_en }}{% endif %}
+                                · {{ related.reading_time_minutes }} {% trans 'min' %}
+                            </p>
+                            <h3 class="article-related-card__title">
+                                {% if request.LANGUAGE_CODE == 'de' and related.title_de %}{{ related.title_de }}{% else %}{{ related.title_en }}{% endif %}
+                            </h3>
+                            <a class="article-related-card__link" href="{% url 'destination_cms:journal_detail' related.slug %}">
+                                {% trans 'Read The Story →' %}
+                            </a>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+
+    <section class="article-cta" aria-label="{% trans 'Article consultation call to action' %}">
+        <h2 class="article-cta__title">{% trans 'Want this thinking applied to your own route?' %}</h2>
+        <a class="article-link" href="{% url 'inquiry_crm:consultation' %}">{% trans 'Request a consultation →' %}</a>
+    </section>
+</article>
+{% endblock %}

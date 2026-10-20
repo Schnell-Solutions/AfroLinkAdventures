@@ -1,0 +1,394 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block meta_title %}{% if accommodation.meta_title %}{{ accommodation.meta_title }}{% else %}{{ accommodation.name }} | Stay | AfroLink Adventures{% endif %}{% endblock %}
+{% block meta_description %}{% if accommodation.meta_description %}{{ accommodation.meta_description }}{% else %}{{ accommodation.overview|default:accommodation.description_en|truncatewords:36 }}{% endif %}{% endblock %}
+{% block body_class %}accommodation-detail-body{% endblock %}
+
+{% block extra_head %}
+{% include "destination_cms/includes/experience_detail_styles.html" %}
+<style>
+    body.accommodation-detail-body:not(.home-body),
+    body.accommodation-detail-body:not(.home-body) .site-main,
+    body.accommodation-detail-body:not(.home-body) .content-frame {
+        background: #FFFFFF;
+    }
+
+    .accommodation-detail-body .xp-media {
+        position: relative;
+    }
+
+    .accommodation-detail-body .xp-media::after {
+        content: "";
+        position: absolute;
+        inset: auto 0 0 0;
+        height: 28%;
+        background: linear-gradient(to top, rgba(10, 10, 10, 0.18), transparent);
+        pointer-events: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="xp-page">
+    <div class="xp-main">
+        <a class="back-link" href="{% url 'destination_cms:region_hub' accommodation.region.slug %}">← {% trans 'Back to region' %}</a>
+
+        <header class="xp-hero">
+            <div class="xp-hero__copy">
+                <p class="xp-kicker">{% trans 'Accommodation' %}</p>
+                <h1 class="xp-title">{{ accommodation.name }}</h1>
+                <p class="xp-location">
+                    {{ accommodation.region.name_en }}
+                    {% if accommodation.property_type %} · {{ accommodation.get_property_type_display }}{% endif %}
+                    {% if accommodation.star_rating %} · {{ accommodation.star_rating }}★{% endif %}
+                </p>
+                {% if accommodation.overview %}
+                    <p class="xp-lede">{{ accommodation.overview }}</p>
+                {% elif accommodation.description_en %}
+                    <p class="xp-lede">{{ accommodation.description_en }}</p>
+                {% endif %}
+            </div>
+            <div class="xp-media">
+                {% if hero_image_url %}
+                    <img src="{{ hero_image_url }}" alt="{{ accommodation.name }}">
+                {% else %}
+                    <div class="xp-media__placeholder">{% trans 'Stay imagery' %}</div>
+                {% endif %}
+            </div>
+        </header>
+
+        {% if accommodation.overview or accommodation.description_en %}
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Overview' %}</h2>
+            <div class="xp-prose">{% firstof accommodation.overview accommodation.description_en %}</div>
+            {% if accommodation.style or accommodation.atmosphere or accommodation.ideal_guests %}
+            <div class="xp-grid" style="margin-top:18px;">
+                {% if accommodation.style %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Style' %}</span>
+                    <div class="xp-fact__value">{{ accommodation.style }}</div>
+                </div>
+                {% endif %}
+                {% if accommodation.atmosphere %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Atmosphere' %}</span>
+                    <div class="xp-fact__value">{{ accommodation.atmosphere }}</div>
+                </div>
+                {% endif %}
+                {% if accommodation.ideal_guests or accommodation.best_for %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Ideal guests' %}</span>
+                    <div class="xp-fact__value">{% firstof accommodation.ideal_guests accommodation.best_for %}</div>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+        </section>
+        {% endif %}
+
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Rooms & amenities' %}</h2>
+            <div class="xp-grid">
+                {% if accommodation.room_style %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Room style' %}</span>
+                    <div class="xp-fact__value">{{ accommodation.room_style }}</div>
+                </div>
+                {% endif %}
+                {% if accommodation.occupancy %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Occupancy' %}</span>
+                    <div class="xp-fact__value">{{ accommodation.occupancy }}</div>
+                </div>
+                {% endif %}
+                {% if accommodation.bed_types %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Beds' %}</span>
+                    <div class="xp-fact__value">{{ accommodation.bed_types }}</div>
+                </div>
+                {% endif %}
+                {% if accommodation.room_size %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Room size' %}</span>
+                    <div class="xp-fact__value">{{ accommodation.room_size }}</div>
+                </div>
+                {% endif %}
+                {% if accommodation.room_view %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'View' %}</span>
+                    <div class="xp-fact__value">{{ accommodation.room_view }}</div>
+                </div>
+                {% endif %}
+            </div>
+            {% if accommodation.get_room_categories %}
+            <ul class="xp-list" style="margin-top:14px;">
+                {% for category in accommodation.get_room_categories %}<li>{{ category }}</li>{% endfor %}
+            </ul>
+            {% endif %}
+
+            {% if accommodation.has_balcony or accommodation.has_pool or accommodation.has_gym or accommodation.has_spa or accommodation.has_restaurant or accommodation.has_bar or accommodation.has_concierge or accommodation.has_wifi or accommodation.has_business_centre %}
+            <div class="xp-amenity-block">
+                <div class="xp-amenity-group">
+                    <div class="xp-amenity-group__label">{% trans 'Property amenities' %}</div>
+                    <p class="xp-amenity-group__hint">{% trans 'Shared facilities available during your stay.' %}</p>
+                    <ul class="xp-amenity-list">
+                        {% if accommodation.has_balcony %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Balcony / terrace' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Private outdoor space from the room or suite.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if accommodation.has_pool %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Pool' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Swimming and lounge space on property.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if accommodation.has_gym %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Gym' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Fitness facilities for light training.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if accommodation.has_spa %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Spa' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'On-site wellness treatments.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if accommodation.has_restaurant %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Restaurant' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Dining on property.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if accommodation.has_bar %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Bar' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Evening drinks and lounge service.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if accommodation.has_concierge %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Concierge' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Help with transfers, tee times, and safari timing.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if accommodation.has_wifi %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Wi-Fi' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Internet access in rooms and public areas.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if accommodation.has_business_centre %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Business centre' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Workspace support if needed.' %}</span>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if accommodation.dining_wellness or accommodation.restaurants %}
+            <div class="xp-prose" style="margin-top:16px;">{% firstof accommodation.restaurants accommodation.dining_wellness %}</div>
+            {% endif %}
+        </section>
+
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Logistics' %}</h2>
+            <div class="xp-grid">
+                {% if accommodation.location_access %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Location' %}</span>
+                    <div class="xp-fact__value">{{ accommodation.location_access }}</div>
+                </div>
+                {% endif %}
+                {% if accommodation.distance_from_airport %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Airport access' %}</span>
+                    <div class="xp-fact__value">{{ accommodation.distance_from_airport }}</div>
+                </div>
+                {% endif %}
+                {% if accommodation.check_in_time %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Check-in' %}</span>
+                    <div class="xp-fact__value">{{ accommodation.check_in_time }}</div>
+                </div>
+                {% endif %}
+                {% if accommodation.check_out_time %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Check-out' %}</span>
+                    <div class="xp-fact__value">{{ accommodation.check_out_time }}</div>
+                </div>
+                {% endif %}
+            </div>
+
+            {% if accommodation.breakfast_included or accommodation.private_dining or accommodation.early_check_in or accommodation.late_check_out or accommodation.family_friendly or accommodation.adults_only %}
+            <div class="xp-amenity-block">
+                <div class="xp-amenity-group">
+                    <div class="xp-amenity-group__label">{% trans 'Stay policies' %}</div>
+                    <p class="xp-amenity-group__hint">{% trans 'Practical options that affect how the stay is planned.' %}</p>
+                    <ul class="xp-amenity-list">
+                        {% if accommodation.breakfast_included %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Breakfast included' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Morning meal is part of the stay.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if accommodation.private_dining %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Private dining' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'In-suite or private table dining available.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if accommodation.early_check_in %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Early check-in' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Possible when rooms and timing allow.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if accommodation.late_check_out %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Late check-out' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Possible when departure timing allows.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if accommodation.family_friendly %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Family friendly' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Suitable for travelling with children.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if accommodation.adults_only %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Adults only' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Restricted to adult guests.' %}</span>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+        </section>
+
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Policies & preparation' %}</h2>
+            <div class="xp-grid">
+                {% if accommodation.smoking_policy %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Smoking' %}</span>
+                    <div class="xp-fact__value">{{ accommodation.smoking_policy }}</div>
+                </div>
+                {% endif %}
+                {% if accommodation.pet_policy %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Pets' %}</span>
+                    <div class="xp-fact__value">{{ accommodation.pet_policy }}</div>
+                </div>
+                {% endif %}
+                {% if accommodation.accessibility_notes %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Accessibility' %}</span>
+                    <div class="xp-fact__value">{{ accommodation.accessibility_notes }}</div>
+                </div>
+                {% endif %}
+                {% if accommodation.dietary_options %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Dietary' %}</span>
+                    <div class="xp-fact__value">{{ accommodation.dietary_options }}</div>
+                </div>
+                {% endif %}
+            </div>
+            {% if accommodation.get_need_to_know %}
+            <ul class="xp-list" style="margin-top:16px;">
+                {% for note in accommodation.get_need_to_know %}<li>{{ note }}</li>{% endfor %}
+            </ul>
+            {% endif %}
+        </section>
+
+        {% if included_items or optional_items %}
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Included & optional' %}</h2>
+            <div class="xp-split">
+                {% if included_items %}
+                <div>
+                    <p class="xp-fact__label">{% trans 'Included' %}</p>
+                    <ul class="xp-list">{% for item in included_items %}<li>{{ item.label }}</li>{% endfor %}</ul>
+                </div>
+                {% endif %}
+                {% if optional_items %}
+                <div>
+                    <p class="xp-fact__label">{% trans 'Optional extras' %}</p>
+                    <ul class="xp-list">{% for item in optional_items %}<li>{{ item.label }}</li>{% endfor %}</ul>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+        {% endif %}
+
+        {% if accommodation.gallery_images.all %}
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Gallery' %}</h2>
+            <div class="xp-gallery">
+                {% for image in accommodation.gallery_images.all %}
+                <figure>
+                    <img src="{{ image.image_url }}" alt="{{ image.caption_en|default:accommodation.name }}">
+                    {% if image.caption_en %}<figcaption>{{ image.caption_en }}</figcaption>{% endif %}
+                </figure>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        {% if faqs %}
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'FAQ' %}</h2>
+            <div class="xp-faq" data-faq-accordion>
+                {% for faq in faqs %}
+                <details name="stay-faq" {% if forloop.first %}open{% endif %}>
+                    <summary>{{ faq.question }}</summary>
+                    <p>{{ faq.answer }}</p>
+                </details>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        {% if related_cards %}
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Related experiences' %}</h2>
+            <div class="xp-related">
+                {% for card in related_cards %}
+                <a href="{{ card.url }}">
+                    <div class="xp-related__media">{% if card.image_url %}<img src="{{ card.image_url }}" alt="{{ card.title }}">{% endif %}</div>
+                    {% if card.label %}<div class="xp-related__label">{{ card.label }}</div>{% endif %}
+                    <div class="xp-related__title">{{ card.title }}</div>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+    </div>
+
+    <aside class="xp-aside" data-detail-cta-panel>
+        <div class="xp-cta">
+            <div class="xp-cta__eyebrow">{% trans 'Shortlist' %}</div>
+            <h2 class="xp-cta__title">{% trans 'Add to shortlist' %}</h2>
+            <p class="xp-cta__copy">{% trans 'Add this stay as an anchor night. We will match it to your golf and safari sequence.' %}</p>
+            <form method="post" action="{% url 'inquiry_crm:add_interest_to_inquiry_list' %}">
+                {% csrf_token %}
+                <input type="hidden" name="interest_type" value="accommodation">
+                <input type="hidden" name="object_id" value="{{ accommodation.pk }}">
+                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                <button class="xp-cta__btn" type="submit">{% trans 'Add to shortlist' %} →</button>
+            </form>
+            {% include "includes/inquiry_commitment_note.html" with compact=True %}
+        </div>
+    </aside>
+</div>
+{% include "includes/detail_cta_bar.html" %}
+{% include "destination_cms/includes/experience_faq_accordion.html" %}
+{% endblock %}

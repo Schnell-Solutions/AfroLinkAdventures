@@ -1,0 +1,97 @@
+/* Slim mobile sticky CTA — pairs with [data-detail-cta-panel] in-flow panel */
+
+.detail-cta-bar {
+    display: none;
+}
+
+@media (max-width: 960px) {
+    .detail-cta-bar {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 45;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 12px;
+        min-height: 64px;
+        padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+        background: #111111;
+        border-top: 1px solid #2A2A2A;
+        color: #F5F0E8;
+        transform: translateY(0);
+        opacity: 1;
+        transition: transform 220ms ease, opacity 220ms ease;
+    }
+
+    .detail-cta-bar[hidden] {
+        display: none !important;
+    }
+
+    .detail-cta-bar.is-away {
+        transform: translateY(110%);
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .detail-cta-bar__meta {
+        display: grid;
+        gap: 2px;
+        min-width: 0;
+    }
+
+    .detail-cta-bar__label {
+        margin: 0;
+        color: #D4CBC0;
+        font-size: 0.62rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .detail-cta-bar__value,
+    .detail-cta-bar__price {
+        margin: 0;
+        color: #FFFFFF;
+        font-size: 0.92rem;
+        font-weight: 500;
+        line-height: 1.25;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .detail-cta-bar__price s {
+        margin-left: 6px;
+        color: #A8A093;
+        font-size: 0.78rem;
+        font-weight: 400;
+    }
+
+    .detail-cta-bar__btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        min-height: 44px;
+        padding: 0 18px;
+        border: 1px solid #FFFFFF;
+        background: #FFFFFF;
+        color: #0A0A0A;
+        font-family: inherit;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-decoration: none;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+
+    .detail-cta-bar__btn:hover,
+    .detail-cta-bar__btn:focus-visible {
+        background: transparent;
+        color: #FFFFFF;
+    }
+}

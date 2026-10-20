@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block meta_title %}{% trans 'Terms' %} | AfroLink Adventures{% endblock %}
+{% block meta_description %}{% trans 'Terms for using the AfroLink Adventures website and submitting planning enquiries for private journeys.' %}{% endblock %}
+{% block body_class %}legal-body{% endblock %}
+
+{% block extra_head %}
+{% include "includes/legal_page_styles.html" %}
+{% endblock %}
+
+{% block content %}
+<article class="legal-page">
+    <header class="legal-header">
+        <p class="legal-kicker">{% trans 'Legal' %}</p>
+        <h1 class="legal-title">{% trans 'Terms' %}</h1>
+        <p class="legal-lede">
+            {% trans 'These terms govern use of the AfroLink Adventures website and the enquiry process for privately planned golf, safari, and wellness journeys.' %}
+        </p>
+        <p class="legal-meta">{% trans 'Last updated' %}: {% now "F Y" %}</p>
+    </header>
+
+    <div class="legal-sections">
+        <section class="legal-section">
+            <h2 class="legal-section__title">{% trans 'Website use' %}</h2>
+            <p>
+                {% trans 'Content on this site is provided for information and enquiry purposes. Images, itineraries, availability notes, and pricing cues are illustrative unless confirmed in writing as part of a formal proposal for your travel dates.' %}
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2 class="legal-section__title">{% trans 'Enquiries are not bookings' %}</h2>
+            <p>
+                {% trans 'Submitting a planner brief or inquiry starts a conversation. It does not create a confirmed reservation, guarantee tee times, lodge inventory, park access, or event entry. A journey becomes binding only when both parties accept a written proposal and any required deposit or payment terms.' %}
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2 class="legal-section__title">{% trans 'Proposals and pricing' %}</h2>
+            <p>
+                {% trans 'Quotes reflect the scope discussed at the time of preparation: regions, nights, courses, safari windows, wellness services, transfers, and guest count. Partner rates, park fees, fuel, and taxes can change. We will flag material changes before confirmation wherever practical.' %}
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2 class="legal-section__title">{% trans 'Partner terms' %}</h2>
+            <p>
+                {% trans 'Lodges, golf clubs, safari operators, wellness providers, and carriers apply their own house rules, dress codes, cancellation windows, and liability terms. Those partner conditions form part of any confirmed arrangement and will be shared or summarised before payment where they materially affect your journey.' %}
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2 class="legal-section__title">{% trans 'Guest responsibilities' %}</h2>
+            <ul>
+                <li>{% trans 'Provide accurate passport, timing, medical, and preference information needed for planning.' %}</li>
+                <li>{% trans 'Arrange visas, vaccinations, travel insurance, and international flights unless we expressly agree otherwise in writing.' %}</li>
+                <li>{% trans 'Follow lodge, course, and park guidance, including conservation and safety rules on safari.' %}</li>
+            </ul>
+        </section>
+
+        <section class="legal-section">
+            <h2 class="legal-section__title">{% trans 'Changes and cancellations' %}</h2>
+            <p>
+                {% trans 'Once a journey is confirmed, change and cancellation terms depend on the proposal and the partners involved. Weather, park closures, aircraft schedules, and medical events can force adjustments. We work to protect the quality of the route, but refunds and credits follow the confirmed commercial terms and supplier policies.' %}
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2 class="legal-section__title">{% trans 'Limitation of liability' %}</h2>
+            <p>
+                {% trans 'AfroLink Adventures plans and coordinates specialist travel. We are not liable for losses caused by events outside reasonable control, including weather, wildlife behaviour, transport disruption, political events, or supplier failure, except where liability cannot be limited by applicable law. Nothing on this site creates a warranty beyond what is expressly confirmed in writing.' %}
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2 class="legal-section__title">{% trans 'Intellectual property' %}</h2>
+            <p>
+                {% trans 'Website text, branding, photography, and itinerary frameworks belong to AfroLink Adventures or our licensors. You may not copy or reuse them for commercial purposes without prior written consent.' %}
+            </p>
+        </section>
+    </div>
+
+    <p class="legal-footer-note">
+        {% trans 'Related pages:' %}
+        <a href="{% url 'privacy' %}">{% trans 'Privacy' %}</a>
+        ·
+        <a href="{% url 'legal' %}">{% trans 'Legal Notice' %}</a>
+    </p>
+</article>
+{% endblock %}

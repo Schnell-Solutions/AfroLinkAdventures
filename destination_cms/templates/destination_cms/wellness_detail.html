@@ -1,0 +1,317 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block meta_title %}{% if wellness.meta_title %}{{ wellness.meta_title }}{% else %}{{ wellness.name_en }} | Wellness | AfroLink Adventures{% endif %}{% endblock %}
+{% block meta_description %}{% if wellness.meta_description %}{{ wellness.meta_description }}{% else %}{{ wellness.overview|default:wellness.wellness_purpose|truncatewords:36 }}{% endif %}{% endblock %}
+{% block body_class %}wellness-detail-body{% endblock %}
+
+{% block extra_head %}
+{% include "destination_cms/includes/experience_detail_styles.html" %}
+<style>
+    body.wellness-detail-body:not(.home-body),
+    body.wellness-detail-body:not(.home-body) .site-main,
+    body.wellness-detail-body:not(.home-body) .content-frame {
+        background: #FFFFFF;
+    }
+
+    .wellness-detail-body .xp-media {
+        position: relative;
+    }
+
+    .wellness-detail-body .xp-media::after {
+        content: "";
+        position: absolute;
+        inset: auto 0 0 0;
+        height: 28%;
+        background: linear-gradient(to top, rgba(10, 10, 10, 0.18), transparent);
+        pointer-events: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="xp-page">
+    <div class="xp-main">
+        <a class="back-link" href="{% url 'destination_cms:region_hub' wellness.region.slug %}">← {% trans 'Back to region' %}</a>
+
+        <header class="xp-hero">
+            <div class="xp-hero__copy">
+                <p class="xp-kicker">{% trans 'Wellness experience' %}</p>
+                <h1 class="xp-title">{% if request.LANGUAGE_CODE == 'de' %}{{ wellness.name_de }}{% else %}{{ wellness.name_en }}{% endif %}</h1>
+                <p class="xp-location">{{ wellness.region.name_en }}{% if wellness.category %} · {{ wellness.get_category_display }}{% endif %}</p>
+                {% if wellness.overview %}
+                    <p class="xp-lede">{{ wellness.overview }}</p>
+                {% elif wellness.wellness_purpose %}
+                    <p class="xp-lede">{{ wellness.wellness_purpose }}</p>
+                {% endif %}
+            </div>
+            <div class="xp-media">
+                {% if hero_image_url %}
+                    <img src="{{ hero_image_url }}" alt="{{ wellness.name_en }}">
+                {% else %}
+                    <div class="xp-media__placeholder">{% trans 'Wellness imagery' %}</div>
+                {% endif %}
+            </div>
+        </header>
+
+        {% if wellness.overview or wellness.wellness_purpose %}
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Overview' %}</h2>
+            <div class="xp-prose">{% firstof wellness.overview wellness.wellness_purpose %}</div>
+            {% if wellness.treatment_style %}<p class="xp-section__intro" style="margin-top:12px;">{{ wellness.treatment_style }}</p>{% endif %}
+        </section>
+        {% endif %}
+
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Experience details' %}</h2>
+            <div class="xp-grid">
+                {% if wellness.typical_duration or wellness.duration_choice %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Duration' %}</span>
+                    <div class="xp-fact__value">{% firstof wellness.typical_duration wellness.get_duration_choice_display %}</div>
+                </div>
+                {% endif %}
+                {% if wellness.ideal_for %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Ideal for' %}</span>
+                    <div class="xp-fact__value">{{ wellness.ideal_for }}</div>
+                </div>
+                {% endif %}
+                {% if wellness.arrival_time %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Arrival' %}</span>
+                    <div class="xp-fact__value">{{ wellness.arrival_time }}</div>
+                </div>
+                {% endif %}
+                {% if wellness.age_restrictions %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Age notes' %}</span>
+                    <div class="xp-fact__value">{{ wellness.age_restrictions }}</div>
+                </div>
+                {% endif %}
+            </div>
+
+            {% if wellness.has_massage or wellness.has_hydrotherapy or wellness.has_sauna or wellness.has_steam_room or wellness.has_yoga or wellness.has_meditation or wellness.has_fitness or wellness.has_pool or wellness.has_spa or wellness.has_gym or wellness.has_relaxation_lounge or wellness.has_private_treatment_rooms %}
+            <div class="xp-amenity-block">
+                {% if wellness.has_massage or wellness.has_hydrotherapy or wellness.has_sauna or wellness.has_steam_room or wellness.has_yoga or wellness.has_meditation or wellness.has_fitness %}
+                <div class="xp-amenity-group">
+                    <div class="xp-amenity-group__label">{% trans 'Treatments' %}</div>
+                    <p class="xp-amenity-group__hint">{% trans 'What you can book as part of this experience.' %}</p>
+                    <ul class="xp-amenity-list">
+                        {% if wellness.has_massage %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Massage' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Hands-on recovery treatments.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if wellness.has_hydrotherapy %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Hydrotherapy' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Water-based recovery circuits.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if wellness.has_sauna %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Sauna' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Dry heat recovery between treatments.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if wellness.has_steam_room %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Steam room' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Humid heat as part of the spa circuit.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if wellness.has_yoga %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Yoga' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Guided movement and stretch sessions.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if wellness.has_meditation %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Meditation' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Breathwork or quiet practice time.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if wellness.has_fitness %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Fitness' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Light active recovery options.' %}</span>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if wellness.has_pool or wellness.has_spa or wellness.has_gym or wellness.has_relaxation_lounge or wellness.has_private_treatment_rooms %}
+                <div class="xp-amenity-group">
+                    <div class="xp-amenity-group__label">{% trans 'Facilities' %}</div>
+                    <p class="xp-amenity-group__hint">{% trans 'Spaces available around the treatment itself.' %}</p>
+                    <ul class="xp-amenity-list">
+                        {% if wellness.has_pool %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Pool' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Swim or cool-down space on site.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if wellness.has_spa %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Spa' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Dedicated spa environment.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if wellness.has_gym %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Gym' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Fitness space if you want light training.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if wellness.has_relaxation_lounge %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Relaxation lounge' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Quiet seating before or after treatment.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if wellness.has_private_treatment_rooms %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Private treatment rooms' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Enclosed rooms rather than open spa floors.' %}</span>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+        </section>
+
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Logistics' %}</h2>
+            <div class="xp-grid">
+                {% if wellness.arrival_time %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Arrival timing' %}</span>
+                    <div class="xp-fact__value">{{ wellness.arrival_time }}</div>
+                </div>
+                {% endif %}
+                {% if wellness.suitability_notes %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Suitability' %}</span>
+                    <div class="xp-fact__value">{{ wellness.suitability_notes }}</div>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Preparation' %}</h2>
+            <div class="xp-grid">
+                {% if wellness.clothing_notes %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Clothing' %}</span>
+                    <div class="xp-fact__value">{{ wellness.clothing_notes }}</div>
+                </div>
+                {% endif %}
+                {% if wellness.preparation_notes %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Preparation' %}</span>
+                    <div class="xp-fact__value">{{ wellness.preparation_notes }}</div>
+                </div>
+                {% endif %}
+                {% if wellness.medical_considerations or wellness.health_notice %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Medical considerations' %}</span>
+                    <div class="xp-fact__value">{% firstof wellness.medical_considerations wellness.health_notice %}</div>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+
+        {% if included_items or optional_items or wellness.get_inclusions %}
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Included & optional' %}</h2>
+            <div class="xp-split">
+                <div>
+                    <p class="xp-fact__label">{% trans 'Included' %}</p>
+                    <ul class="xp-list">
+                        {% if included_items %}
+                            {% for item in included_items %}<li>{{ item.label }}</li>{% endfor %}
+                        {% else %}
+                            {% for item in wellness.get_inclusions %}<li>{{ item }}</li>{% endfor %}
+                        {% endif %}
+                    </ul>
+                </div>
+                {% if optional_items %}
+                <div>
+                    <p class="xp-fact__label">{% trans 'Optional extras' %}</p>
+                    <ul class="xp-list">{% for item in optional_items %}<li>{{ item.label }}</li>{% endfor %}</ul>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+        {% endif %}
+
+        {% if wellness.gallery_images.all %}
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Gallery' %}</h2>
+            <div class="xp-gallery">
+                {% for image in wellness.gallery_images.all %}
+                <figure>
+                    <img src="{{ image.image_url }}" alt="{{ image.caption_en|default:wellness.name_en }}">
+                    {% if image.caption_en %}<figcaption>{{ image.caption_en }}</figcaption>{% endif %}
+                </figure>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        {% if faqs %}
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'FAQ' %}</h2>
+            <div class="xp-faq" data-faq-accordion>
+                {% for faq in faqs %}
+                <details name="wellness-faq" {% if forloop.first %}open{% endif %}>
+                    <summary>{{ faq.question }}</summary>
+                    <p>{{ faq.answer }}</p>
+                </details>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        {% if related_cards %}
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Related experiences' %}</h2>
+            <div class="xp-related">
+                {% for card in related_cards %}
+                <a href="{{ card.url }}">
+                    <div class="xp-related__media">{% if card.image_url %}<img src="{{ card.image_url }}" alt="{{ card.title }}">{% endif %}</div>
+                    {% if card.label %}<div class="xp-related__label">{{ card.label }}</div>{% endif %}
+                    <div class="xp-related__title">{{ card.title }}</div>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+    </div>
+
+    <aside class="xp-aside" data-detail-cta-panel>
+        <div class="xp-cta">
+            <div class="xp-cta__eyebrow">{% trans 'Shortlist' %}</div>
+            <h2 class="xp-cta__title">{% trans 'Add to shortlist' %}</h2>
+            <p class="xp-cta__copy">{% trans 'Add this wellness experience so we can place recovery days between golf and safari.' %}</p>
+            <form method="post" action="{% url 'inquiry_crm:add_interest_to_inquiry_list' %}">
+                {% csrf_token %}
+                <input type="hidden" name="interest_type" value="wellness_experience">
+                <input type="hidden" name="object_id" value="{{ wellness.pk }}">
+                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                <button class="xp-cta__btn" type="submit">{% trans 'Add to shortlist' %} →</button>
+            </form>
+            {% include "includes/inquiry_commitment_note.html" with compact=True %}
+        </div>
+    </aside>
+</div>
+{% include "includes/detail_cta_bar.html" %}
+{% include "destination_cms/includes/experience_faq_accordion.html" %}
+{% endblock %}

@@ -1,0 +1,1917 @@
+{% extends "base.html" %}
+{% load i18n static cms_extras %}
+
+{% block meta_title %}{{ meta_title|default:"AfroLink Adventures | Private Golf, Safari & Wellness Journeys" }}{% endblock %}
+{% block meta_description %}{{ meta_description|default:"Design a private African journey shaped around championship golf, Big Five safari access, coastal retreats, alpine wellness, and expert bilingual concierge planning." }}{% endblock %}
+{% block body_class %}home-body{% endblock %}
+
+{% block extra_head %}
+<style>
+    body.home-body .content-frame {
+        width: 100%;
+        max-width: none;
+        padding: 0;
+    }
+
+    body.home-body .legal-bar {
+        border-top: 0;
+    }
+
+
+    .home-page,
+    .home-page * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    .home-page {
+        width: 100%;
+        margin: 0;
+        background: var(--color-black);
+    }
+
+    .home-section {
+        border-top: 0;
+        border-bottom: 0;
+    }
+
+    .home-container {
+        width: min(100% - 32px, var(--container-width));
+        margin: 0 auto;
+    }
+
+    .hero {
+        position: relative;
+        min-height: calc(100svh - 62px);
+        display: grid;
+        align-items: end;
+        overflow: hidden;
+        background: #0A0A0A;
+    }
+
+    .hero__video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 1;
+    }
+
+    .hero__veil {
+        position: absolute;
+        inset: 0;
+        background:
+            linear-gradient(90deg, rgba(0, 0, 0, 0.58), rgba(0, 0, 0, 0.12) 58%, rgba(0, 0, 0, 0.18)),
+            linear-gradient(0deg, rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.04) 52%);
+    }
+
+    .hero__content {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: clamp(22px, 4vw, 44px);
+        align-items: end;
+        padding: clamp(84px, 12vw, 140px) 0 clamp(34px, 6vw, 76px);
+    }
+
+    .eyebrow {
+        margin-bottom: 18px;
+        color: var(--color-accent);
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+    }
+
+    .hero__title {
+        max-width: 700px;
+        font-size: clamp(2.15rem, 4vw, 4.35rem);
+        font-family: var(--font-heading);
+        font-weight: 400;
+        letter-spacing: 0.03em;
+        line-height: 1.08;
+        text-transform: uppercase;
+    }
+
+    .hero__title span {
+        display: block;
+    }
+
+    .hero__copy {
+        max-width: 500px;
+        margin-top: 16px;
+        color: var(--color-text);
+        font-size: clamp(0.92rem, 1.05vw, 1.08rem);
+        line-height: 1.45;
+    }
+
+    .hero__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 0;
+        justify-content: flex-end;
+    }
+
+    .home-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 52px;
+        padding: 0 30px;
+        border: 1px solid var(--color-gold);
+        background: var(--color-gold);
+        color: var(--color-black);
+        font-size: clamp(0.7rem, 0.85vw, 0.78rem);
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+    }
+
+    .home-button:hover {
+        background: var(--color-text);
+        border-color: var(--color-text);
+        color: var(--color-black);
+    }
+
+    .home-button--quiet {
+        border-color: var(--color-line-muted);
+        color: var(--color-muted);
+    }
+
+    .home-button--quiet:hover {
+        border-color: var(--color-line);
+        color: var(--color-black);
+    }
+
+    .founder-section {
+        background: #FFFFFF;
+        color: #0A0A0A;
+    }
+
+    .pledge {
+        max-width: 760px;
+        display: grid;
+        gap: 20px;
+        justify-items: center;
+        padding: clamp(70px, 9vw, 110px) 0;
+        text-align: center;
+    }
+
+    .pillar-card {
+        border: 0;
+        background: transparent;
+    }
+
+    .founder-frame {
+        width: min(100%, 520px);
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+        justify-self: center;
+    }
+
+    .founder-portrait img {
+        width: 100%;
+        aspect-ratio: 0.88;
+        display: block;
+        object-fit: cover;
+        background: #E7DFD1;
+    }
+
+    .founder-portrait {
+        width: 100%;
+        margin: 0;
+    }
+
+    .founder-portrait__placeholder {
+        width: 100%;
+        aspect-ratio: 0.88;
+        display: grid;
+        place-items: center;
+        background: #E7DFD1;
+        color: #8A7B63;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .founder-portrait__caption {
+        display: none;
+    }
+
+    .pledge__copy {
+        max-width: 760px;
+    }
+
+    .section-title {
+        max-width: 760px;
+        font-size: clamp(1.8rem, 4vw, 3rem);
+        text-transform: uppercase;
+    }
+
+    .founder-section .section-title {
+        color: #0A0A0A;
+        font-family: var(--font-heading);
+        font-size: clamp(1.55rem, 2.7vw, 2.35rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.05;
+    }
+
+    .pledge__text {
+        display: grid;
+        gap: 12px;
+        margin-top: 20px;
+    }
+
+    .pledge__text p {
+        color: #0A0A0A;
+        font-size: clamp(0.86rem, 1.05vw, 0.96rem);
+        font-weight: 400;
+        line-height: 1.6;
+    }
+
+    .whatsapp-float {
+        position: fixed;
+        right: clamp(18px, 3vw, 28px);
+        bottom: clamp(18px, 3vw, 28px);
+        z-index: 50;
+        width: 52px;
+        height: 52px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        border-radius: 6px;
+        background: #22C55E;
+        color: #041007;
+    }
+
+    .whatsapp-float svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    .pillars {
+        background: #F7F4ED;
+        color: #0A0A0A;
+        padding: clamp(70px, 9vw, 112px) 0;
+    }
+
+    /* Warm sand from logo tan/brown family — distinct from Featured Journeys cream */
+    .special-offers {
+        background: #EBE3D4;
+        color: #0A0A0A;
+        padding: clamp(70px, 9vw, 112px) 0;
+    }
+
+    .special-offers .section-header__copy {
+        color: #0A0A0A;
+    }
+
+    .section-header {
+        max-width: 720px;
+        display: grid;
+        gap: 12px;
+        justify-items: start;
+        margin: 0 0 var(--space-section);
+        text-align: left;
+    }
+
+    .section-header__copy {
+        max-width: 640px;
+        color: #0A0A0A;
+        font-size: 0.82rem;
+        line-height: 1.25;
+    }
+
+    .pillar-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-card);
+        border: 0;
+    }
+
+    .pillar-card {
+        min-height: auto;
+        display: grid;
+        gap: 16px;
+        padding: 0;
+        border: 0;
+        color: #0A0A0A;
+    }
+
+    .pillar-card__media {
+        width: 100%;
+        aspect-ratio: 1.82;
+        overflow: hidden;
+        border-radius: 2px;
+        background: #E7DFD1;
+    }
+
+    .pillar-card__media img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+    }
+
+    .pillar-card__image-placeholder {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        place-items: center;
+        color: #8A7B63;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .pillar-card__body {
+        display: grid;
+        gap: 10px;
+    }
+
+    .pillar-card__title {
+        margin-top: 0;
+        color: #0A0A0A;
+        font-family: var(--font-body);
+        font-size: clamp(0.95rem, 1.35vw, 1.18rem);
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        line-height: 1.2;
+        text-transform: uppercase;
+    }
+
+    .pillar-card__copy {
+        margin-top: 0;
+        color: #0A0A0A;
+        font-size: 0.82rem;
+        line-height: 1.22;
+    }
+
+    .pillar-card__meta {
+        color: #6E6254;
+        font-size: 0.68rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .pillar-card__footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 4px;
+    }
+
+    .text-cta {
+        display: inline-flex;
+        width: fit-content;
+        margin-top: 4px;
+        border-bottom: 0;
+        color: #0A0A0A;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0;
+        text-transform: uppercase;
+    }
+
+    .pillars .section-title,
+    .special-offers .section-title,
+    .regions-showcase .section-title,
+    .events-showcase .section-title {
+        max-width: 100%;
+        color: #0A0A0A;
+        font-family: var(--font-heading);
+        font-size: clamp(1.55rem, 3vw, 2.35rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.1;
+    }
+
+    .events-showcase .section-header__copy {
+        color: #0A0A0A;
+    }
+
+    .regions-showcase {
+        background: #FFFFFF;
+        color: #0A0A0A;
+        padding: clamp(70px, 9vw, 112px) 0;
+    }
+
+    .regions-showcase .section-title,
+    .regions-showcase .section-header__copy {
+        color: #0A0A0A;
+    }
+
+    .region-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: var(--space-card);
+    }
+
+    .region-card {
+        display: grid;
+        gap: 16px;
+        background: transparent;
+        color: #0A0A0A;
+    }
+
+    .region-card__media {
+        aspect-ratio: 1.82;
+        border-radius: 2px;
+        overflow: hidden;
+        background: #E7DFD1;
+    }
+
+    .region-card__media img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+    }
+
+    .region-card__placeholder {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        place-items: center;
+        color: #8A7B63;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .region-card__body {
+        display: grid;
+        gap: 10px;
+        padding: 0;
+    }
+
+    .region-card__label {
+        color: #6E6254;
+        font-size: 0.68rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .region-card__title {
+        color: #0A0A0A;
+        font-family: var(--font-body);
+        font-size: clamp(0.95rem, 1.35vw, 1.18rem);
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        line-height: 1.05;
+        text-transform: uppercase;
+    }
+
+    .region-card__copy {
+        color: #0A0A0A;
+        font-size: 0.82rem;
+        line-height: 1.22;
+    }
+
+    .events-showcase {
+        background: #F7F4ED;
+        color: #0A0A0A;
+        padding: clamp(70px, 9vw, 112px) 0;
+    }
+
+    .home-promoted-event {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(300px, 1fr);
+        overflow: hidden;
+        margin-bottom: var(--space-section);
+        border-radius: 4px;
+        background: #0A0A0A;
+        color: #FAF7F0;
+    }
+
+    .home-promoted-event__media {
+        position: relative;
+        min-height: clamp(180px, 16vw, 240px);
+        background: #1A1A1A;
+    }
+
+    .home-promoted-event__media img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+    }
+
+    .home-promoted-event__placeholder {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        color: rgba(250, 247, 240, 0.62);
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .home-promoted-event__body {
+        display: grid;
+        align-content: center;
+        gap: 12px;
+        padding: clamp(22px, 3vw, 34px);
+    }
+
+    .home-promoted-event__badge,
+    .home-promoted-event__meta {
+        font-size: 0.68rem;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .home-promoted-event__badge {
+        width: fit-content;
+        border-radius: 999px;
+        background: #F4A62C;
+        color: #0A0A0A;
+        padding: 8px 12px;
+    }
+
+    .home-promoted-event__meta {
+        color: rgba(250, 247, 240, 0.68);
+    }
+
+    .home-promoted-event__title {
+        color: #FAF7F0;
+        font-family: var(--font-heading);
+        font-size: clamp(1.45rem, 2.4vw, 2.1rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.15;
+        text-transform: uppercase;
+    }
+
+    .home-promoted-event__copy {
+        color: rgba(250, 247, 240, 0.74);
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+
+    .home-promoted-event__cta {
+        width: fit-content;
+        margin-top: 6px;
+        padding-bottom: 3px;
+        border-bottom: 1px solid rgba(250, 247, 240, 0.5);
+        color: #FAF7F0;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        transition: border-color var(--ease-standard), color var(--ease-standard);
+    }
+
+    .home-promoted-event__cta:hover {
+        border-color: #C79A55;
+        color: #C79A55;
+    }
+
+    .event-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-card);
+    }
+
+    .event-card {
+        display: grid;
+        gap: 16px;
+        color: #0A0A0A;
+    }
+
+    .event-card__media {
+        aspect-ratio: 1.82;
+        border-radius: 2px;
+        overflow: hidden;
+        background: #E7DFD1;
+    }
+
+    .event-card__media img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+    }
+
+    .event-card__placeholder {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        place-items: center;
+        color: #8A7B63;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .event-card__body {
+        display: grid;
+        gap: 10px;
+    }
+
+    .event-card__meta {
+        color: #6E6254;
+        font-size: 0.68rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .event-card__title {
+        color: #0A0A0A;
+        font-family: var(--font-body);
+        font-size: clamp(0.95rem, 1.35vw, 1.18rem);
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        line-height: 1.05;
+        text-transform: uppercase;
+    }
+
+    .event-card__copy {
+        color: #0A0A0A;
+        font-size: 0.82rem;
+        line-height: 1.22;
+    }
+
+    .journey-process {
+        background: #F4A62C;
+        color: #0A0A0A;
+        padding: clamp(70px, 10vw, 128px) 0 76px;
+    }
+
+    .journey-process__inner {
+        display: grid;
+        gap: var(--space-section);
+    }
+
+    .journey-title {
+        color: #0A0A0A;
+        font-family: var(--font-heading);
+        font-size: clamp(1.55rem, 3vw, 2.15rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    .journey-steps {
+        display: grid;
+        gap: var(--space-card);
+        max-width: 720px;
+        margin: 0 auto;
+    }
+
+    .journey-step {
+        display: grid;
+        grid-template-columns: 72px minmax(0, 1fr);
+        gap: 16px;
+        align-items: start;
+    }
+
+    .journey-step:nth-child(2) {
+        margin-left: 160px;
+    }
+
+    .journey-step:nth-child(3) {
+        margin-left: 64px;
+    }
+
+    .journey-step__number {
+        color: #0A0A0A;
+        font-family: var(--font-heading);
+        font-size: clamp(2.2rem, 5vw, 3.2rem);
+        line-height: 0.9;
+        text-align: right;
+    }
+
+    .journey-step__title {
+        color: #0A0A0A;
+        font-family: var(--font-body);
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+    }
+
+    .journey-step__copy {
+        max-width: 420px;
+        margin-top: 4px;
+        color: #0A0A0A;
+        font-size: 0.78rem;
+        font-weight: 400;
+        line-height: 1.5;
+    }
+
+    .journey-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-card);
+        width: min(100%, 560px);
+        margin: 16px auto 0;
+    }
+
+    .journey-action-card {
+        display: grid;
+        gap: 10px;
+        justify-items: center;
+        min-height: 130px;
+        padding: 24px 22px;
+        background: #3B2414;
+        color: #FFFFFF;
+        text-align: center;
+    }
+
+    .journey-action-card__title {
+        color: #FFFFFF;
+        font-family: var(--font-body);
+        font-size: 0.86rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+    }
+
+    .journey-action-card__copy {
+        color: #FFFFFF;
+        font-size: 0.68rem;
+        line-height: 1.25;
+    }
+
+    .journey-action-card__button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 38px;
+        margin-top: 4px;
+        padding: 0 20px;
+        background: #F4A62C;
+        color: #0A0A0A;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        transition: background-color var(--ease-standard);
+    }
+
+    .journey-action-card__button:hover {
+        background: #FFFFFF;
+    }
+
+    .partner-strip {
+        --partner-logo-max-width: clamp(120px, 14vw, 200px);
+        --partner-logo-max-height: clamp(40px, 5vw, 64px);
+        --partner-row-min-height: clamp(44px, 5.5vw, 72px);
+        background: var(--color-nav-bg);
+        color: #0A0A0A;
+        padding: clamp(28px, 4.5vw, 52px) 0;
+    }
+
+    .partner-strip__inner {
+        display: grid;
+        gap: clamp(18px, 3vw, 28px);
+        justify-items: start;
+    }
+
+    .partner-strip__label {
+        color: #6E6254;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-align: left;
+        text-transform: uppercase;
+    }
+
+    .partner-strip__logos {
+        width: 100%;
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: flex-start;
+        gap: clamp(24px, 4vw, 56px);
+        overflow: hidden;
+        min-height: var(--partner-row-min-height);
+        transition: opacity 280ms ease;
+    }
+
+    .partner-strip__logos:not(.is-ready) {
+        visibility: hidden;
+    }
+
+    .partner-strip__logos.is-fading {
+        opacity: 0;
+    }
+
+    .partner-logo-link {
+        display: inline-flex;
+        flex: 0 0 auto;
+        align-items: center;
+        justify-content: center;
+        min-height: var(--partner-row-min-height);
+    }
+
+    .partner-logo {
+        display: block;
+        width: auto;
+        max-width: var(--partner-logo-max-width);
+        max-height: var(--partner-logo-max-height);
+        filter: grayscale(1);
+        opacity: 0.58;
+        object-fit: contain;
+        transition: filter var(--ease-standard), opacity var(--ease-standard);
+    }
+
+    .partner-logo-link:hover .partner-logo,
+    .partner-logo-link:focus-visible .partner-logo {
+        filter: grayscale(0);
+        opacity: 1;
+    }
+
+    .partner-strip__rule {
+        display: none;
+    }
+
+    .guest-experiences {
+        background: #0A0A0A;
+        color: #FFFFFF;
+        padding: clamp(64px, 8vw, 96px) 0;
+    }
+
+    .guest-experiences__inner {
+        width: min(100% - 32px, 1120px);
+        margin: 0 auto;
+    }
+
+    .guest-header {
+        max-width: 720px;
+        padding-bottom: clamp(28px, 4vw, 42px);
+    }
+
+    .guest-title {
+        color: #FFFFFF;
+        font-family: var(--font-heading);
+        font-size: clamp(1.8rem, 3.4vw, 3rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.1;
+        text-transform: uppercase;
+    }
+
+    .guest-summary {
+        max-width: 560px;
+        margin-top: 16px;
+        color: rgba(255, 255, 255, 0.72);
+        font-size: 0.94rem;
+        line-height: 1.65;
+    }
+
+    .testimonial-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+        margin-top: var(--space-section);
+    }
+
+    .testimonial {
+        display: grid;
+        align-content: space-between;
+        min-height: 250px;
+        padding: clamp(24px, 3vw, 34px);
+    }
+
+    .testimonial__quote {
+        color: rgba(255, 255, 255, 0.86);
+        font-family: var(--font-heading);
+        font-size: clamp(1rem, 1.45vw, 1.24rem);
+        font-style: italic;
+        line-height: 1.45;
+    }
+
+    .testimonial__author {
+        margin-top: 28px;
+        color: #FFFFFF;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        line-height: 1.55;
+        text-transform: uppercase;
+    }
+
+    .approach {
+        background: #FFFFFF;
+        color: #0A0A0A;
+        padding: clamp(64px, 8vw, 96px) 0;
+    }
+
+    .approach__inner {
+        width: min(100% - 32px, 1120px);
+        margin: 0 auto;
+    }
+
+    .approach__header {
+        max-width: 720px;
+        margin: 0 0 clamp(48px, 6vw, 80px);
+        text-align: left;
+    }
+
+    .approach__title {
+        color: #0A0A0A;
+        font-family: var(--font-heading);
+        font-size: clamp(1.8rem, 3.4vw, 3rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.1;
+        text-transform: uppercase;
+    }
+
+    .approach__summary {
+        margin: 20px 0 0;
+        max-width: 620px;
+        color: #5F574C;
+        font-size: 1rem;
+        line-height: 1.65;
+    }
+
+    .approach__steps {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-card);
+        margin-bottom: var(--space-section);
+        padding-top: var(--space-section);
+        border-top: 1px solid #DED8CC;
+    }
+
+    .approach-step__numeral {
+        display: block;
+        margin-bottom: 14px;
+        color: #9A7A43;
+        font-family: var(--font-heading);
+        font-size: 1.4rem;
+    }
+
+    .approach-step__title {
+        margin-bottom: 12px;
+        color: #0A0A0A;
+        font-family: var(--font-heading);
+        font-size: 1.35rem;
+        font-weight: 400;
+        letter-spacing: 0.02em;
+    }
+
+    .approach-step__copy {
+        color: #5F574C;
+        font-size: 0.95rem;
+        line-height: 1.65;
+    }
+
+    .approach__paths {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-card);
+        border-top: 1px solid #DED8CC;
+    }
+
+    .approach-path {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: clamp(40px, 5vw, 64px) 0;
+    }
+
+    .approach-path__title {
+        margin-bottom: 16px;
+        color: #0A0A0A;
+        font-family: var(--font-heading);
+        font-size: clamp(1.35rem, 2vw, 1.7rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+    }
+
+    .approach-path__copy {
+        margin-bottom: 44px;
+        color: #5F574C;
+        font-size: 0.98rem;
+        line-height: 1.65;
+    }
+
+    .approach-path__cta {
+        align-self: flex-start;
+        padding-bottom: 4px;
+        border-bottom: 1px solid #0A0A0A;
+        color: #0A0A0A;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        transition: border-color var(--ease-standard), color var(--ease-standard);
+    }
+
+    .approach-path__cta:hover {
+        border-color: #9A7A43;
+        color: #9A7A43;
+    }
+
+    .text-cta {
+        transition: color var(--ease-standard);
+    }
+
+    .text-cta:hover {
+        color: #8B5B19;
+    }
+
+    .pillar-card__media,
+    .region-card__media,
+    .event-card__media {
+        border-radius: var(--radius-media);
+        overflow: hidden;
+    }
+
+    .pillar-card__media img,
+    .region-card__media img,
+    .event-card__media img {
+        transition: transform 400ms ease;
+    }
+
+    .pillar-card:hover .pillar-card__media img,
+    .region-card:hover .region-card__media img,
+    .event-card:hover .event-card__media img {
+        transform: scale(1.03);
+    }
+
+    .testimonial__quote {
+        transition: color var(--ease-standard);
+    }
+
+    @media (max-width: 980px) {
+        .hero {
+            min-height: min(100svh - 62px, 720px);
+        }
+
+        .hero__content {
+            grid-template-columns: 1fr;
+            align-items: end;
+            gap: 28px;
+            padding: clamp(72px, 10vw, 110px) 0 clamp(28px, 5vw, 48px);
+        }
+
+        .hero__title {
+            max-width: 620px;
+            font-size: clamp(2rem, 5.5vw, 3.4rem);
+            line-height: 1.1;
+        }
+
+        .hero__copy {
+            max-width: 540px;
+            line-height: 1.55;
+        }
+
+        .hero__actions {
+            justify-content: flex-start;
+        }
+
+        .home-button {
+            min-height: 48px;
+        }
+
+        .pledge {
+            grid-template-columns: 1fr;
+            padding: clamp(56px, 8vw, 88px) 0;
+            gap: 24px;
+        }
+
+        .section-header {
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .home-promoted-event {
+            grid-template-columns: 1fr;
+        }
+
+        .home-promoted-event__media {
+            min-height: clamp(200px, 36vw, 280px);
+        }
+
+        .pillar-card {
+            min-height: auto;
+        }
+
+        .pillar-card__title {
+            margin-top: 0;
+        }
+
+        .journey-step,
+        .journey-step:nth-child(2),
+        .journey-step:nth-child(3) {
+            margin-left: 0;
+        }
+
+        .journey-process {
+            padding: clamp(56px, 8vw, 96px) 0 clamp(56px, 8vw, 72px);
+        }
+
+        .approach__steps {
+            grid-template-columns: 1fr;
+            gap: var(--space-card);
+        }
+
+        .approach__paths {
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
+
+        .approach-path {
+            padding: clamp(28px, 4vw, 40px) 0;
+        }
+
+        .guest-experiences {
+            padding: clamp(52px, 7vw, 80px) 0;
+        }
+
+        .partner-strip__logos {
+            gap: 28px;
+        }
+    }
+
+    /* Tablet: keep multi-column grids above the mobile rail breakpoint */
+    @media (max-width: 980px) and (min-width: 769px) {
+        .pillar-grid,
+        .region-grid,
+        .event-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: var(--space-card);
+        }
+
+        .testimonial-grid {
+            grid-template-columns: 1fr;
+            gap: 0;
+            margin-top: var(--space-section);
+        }
+
+        .testimonial {
+            min-height: 0;
+            padding: 28px 0;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .pillar-grid,
+        .region-grid,
+        .event-grid,
+        .testimonial-grid,
+        .journey-actions {
+            scroll-behavior: auto;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .home-container,
+        .approach__inner,
+        .guest-experiences__inner {
+            width: min(100% - 24px, var(--container-width));
+        }
+
+        .hero {
+            min-height: min(100svh - 62px, 640px);
+        }
+
+        .hero__veil {
+            background:
+                linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.18) 40%, rgba(0, 0, 0, 0.62)),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.2));
+        }
+
+        .hero__content {
+            grid-template-columns: 1fr;
+            gap: 22px;
+            padding: 72px 0 28px;
+        }
+
+        .hero__title {
+            max-width: 100%;
+            font-size: clamp(1.7rem, 8.2vw, 2.45rem);
+            letter-spacing: 0.02em;
+            line-height: 1.12;
+        }
+
+        .hero__copy {
+            max-width: 100%;
+            font-size: 0.92rem;
+            line-height: 1.55;
+        }
+
+        .hero__actions {
+            flex-direction: column;
+            justify-content: flex-start;
+            width: 100%;
+        }
+
+        .home-button {
+            width: 100%;
+            min-height: 48px;
+            padding: 0 20px;
+        }
+
+        .founder-frame {
+            width: 100%;
+            gap: 10px;
+        }
+
+        .founder-section .section-title {
+            font-size: clamp(1.35rem, 6.5vw, 1.9rem);
+            line-height: 1.15;
+        }
+
+        .pledge__text p {
+            font-size: 0.88rem;
+            line-height: 1.65;
+        }
+
+        .section-title,
+        .guest-title,
+        .approach__title,
+        .journey-title {
+            font-size: clamp(1.45rem, 6.5vw, 2rem);
+            line-height: 1.15;
+        }
+
+        .section-header__copy,
+        .guest-summary,
+        .approach__summary {
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .pillars,
+        .special-offers,
+        .regions-showcase,
+        .events-showcase {
+            padding: clamp(52px, 8vw, 72px) 0;
+        }
+
+        .section-header {
+            margin-bottom: var(--space-section);
+        }
+
+        .pillar-card__title,
+        .region-card__title,
+        .event-card__title {
+            font-size: clamp(1.05rem, 4.5vw, 1.25rem);
+        }
+
+        .journey-process {
+            padding: 52px 0 56px;
+        }
+
+        .journey-steps {
+            gap: 22px;
+            max-width: 100%;
+        }
+
+        .journey-step {
+            grid-template-columns: 44px minmax(0, 1fr);
+            gap: 12px;
+        }
+
+        .journey-step__number {
+            font-size: 2rem;
+            text-align: left;
+        }
+
+        .journey-action-card {
+            min-height: 0;
+            padding: 22px 18px;
+        }
+
+        .journey-action-card__button {
+            min-height: 44px;
+            width: 100%;
+        }
+
+        .approach {
+            padding: clamp(48px, 8vw, 72px) 0;
+        }
+
+        .approach__header {
+            margin-bottom: 36px;
+            text-align: left;
+        }
+
+        .approach__summary {
+            margin-left: 0;
+            text-align: left;
+        }
+
+        .approach-step__title {
+            font-size: 1.2rem;
+        }
+
+        .approach-path__cta {
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .partner-strip {
+            --partner-logo-max-width: clamp(112px, 22vw, 148px);
+            --partner-logo-max-height: clamp(38px, 7vw, 48px);
+            --partner-row-min-height: 52px;
+            padding: 28px 0;
+        }
+
+        .partner-strip__inner {
+            gap: 18px;
+        }
+
+        .partner-strip__logos {
+            gap: clamp(20px, 4vw, 28px);
+        }
+
+        .guest-experiences__inner {
+            width: min(100% - 24px, 780px);
+        }
+
+        .guest-header {
+            padding-bottom: 22px;
+        }
+
+        .testimonial__quote {
+            font-size: 1.05rem;
+        }
+
+        .text-cta {
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+        }
+    }
+
+    @media (max-width: 420px) {
+        .hero__title {
+            font-size: clamp(1.55rem, 9vw, 1.95rem);
+        }
+
+        .founder-frame {
+            gap: 8px;
+        }
+
+        .journey-step {
+            grid-template-columns: 36px minmax(0, 1fr);
+        }
+    }
+
+    /* Mobile: horizontal card rails (desktop/tablet grids unchanged above) */
+    @media (max-width: 768px) {
+        .pillar-grid,
+        .region-grid,
+        .event-grid,
+        .testimonial-grid,
+        .journey-actions {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: stretch;
+            gap: 14px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            overscroll-behavior-x: contain;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            scroll-padding-inline: max(12px, calc((100vw - min(100vw - 24px, var(--container-width))) / 2));
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            width: 100vw;
+            max-width: 100vw;
+            margin-left: calc(50% - 50vw);
+            margin-right: calc(50% - 50vw);
+            padding-left: max(12px, calc((100vw - min(100vw - 24px, var(--container-width))) / 2));
+            padding-right: 16px;
+            box-sizing: border-box;
+        }
+
+        .pillar-grid::-webkit-scrollbar,
+        .region-grid::-webkit-scrollbar,
+        .event-grid::-webkit-scrollbar,
+        .testimonial-grid::-webkit-scrollbar,
+        .journey-actions::-webkit-scrollbar {
+            display: none;
+            width: 0;
+            height: 0;
+        }
+
+        .pillar-grid > *,
+        .region-grid > *,
+        .event-grid > *,
+        .testimonial-grid > *,
+        .journey-actions > * {
+            flex: 0 0 min(78vw, 300px);
+            width: min(78vw, 300px);
+            max-width: min(78vw, 300px);
+            scroll-snap-align: start;
+        }
+
+        .testimonial-grid {
+            gap: 14px;
+            margin-top: var(--space-section);
+        }
+
+        .testimonial {
+            min-height: 220px;
+            padding: clamp(20px, 4vw, 28px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: var(--radius-media);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .journey-action-card {
+            min-height: 0;
+        }
+
+        .journey-action-card__button {
+            width: 100%;
+        }
+
+        .pillar-grid:focus-visible,
+        .region-grid:focus-visible,
+        .event-grid:focus-visible,
+        .testimonial-grid:focus-visible,
+        .journey-actions:focus-visible {
+            outline: 2px solid #9A7A43;
+            outline-offset: 4px;
+        }
+
+        .partner-strip__logos {
+            gap: 22px;
+        }
+    }
+
+    @media (max-width: 420px) {
+        .partner-strip {
+            --partner-logo-max-width: clamp(96px, 28vw, 120px);
+            --partner-logo-max-height: 40px;
+            --partner-row-min-height: 44px;
+        }
+
+        .partner-strip__logos {
+            gap: 16px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+{% static 'video/hero-video.mp4' as hero_video_fallback %}
+
+<div class="home-page">
+    <section class="hero" aria-labelledby="home-hero-title">
+        <video class="hero__video" autoplay muted loop playsinline aria-hidden="true">
+            <source src="{% if hero_video_url %}{{ hero_video_url }}{% else %}{{ hero_video_fallback }}{% endif %}" type="video/mp4">
+        </video>
+        <div class="hero__veil" aria-hidden="true"></div>
+        <div class="home-container hero__content">
+            <div>
+                <h1 id="home-hero-title" class="hero__title">
+                    {% if hero_headline %}
+                        {{ hero_headline }}
+                    {% else %}
+                        <span>Master The Greens.</span>
+                        <span>Unleash The Wild.</span>
+                    {% endif %}
+                </h1>
+                <p class="hero__copy">
+                    {{ hero_subtext|default:"Experience East Africa's most exclusive championship courses and legendary safaris, curated by elite industry specialists." }}
+                </p>
+            </div>
+            <div class="hero__actions">
+                <a class="home-button" href="{{ hero_primary_url|default:'/journeys/' }}">{% trans 'Explore Signature Journeys' %}</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="approach" aria-labelledby="approach-title">
+        <div class="approach__inner">
+            <header class="approach__header">
+                <h2 id="approach-title" class="approach__title">{% trans 'The Afrolink Approach' %}</h2>
+                <p class="approach__summary">
+                    {% trans 'Expert-Led. Personally Curated. We reject generic, automated booking platforms and begin every journey with direct founder-led planning. From tee-sheet strategy and safari access windows to lodge pacing, transfers, and golf-bag handling, every movement is designed as one accountable system for a stress-free East African experience.' %}
+                </p>
+            </header>
+
+            <div class="approach__steps">
+                <div class="approach-step">
+                    <span class="approach-step__numeral">I.</span>
+                    <h3 class="approach-step__title">{% trans 'The Vision' %}</h3>
+                    <p class="approach-step__copy">
+                        {% trans 'Define your travel windows, golf handicap, and the specific wildlife encounters on your bucket list.' %}
+                    </p>
+                </div>
+
+                <div class="approach-step">
+                    <span class="approach-step__numeral">II.</span>
+                    <h3 class="approach-step__title">{% trans 'The Architecture' %}</h3>
+                    <p class="approach-step__copy">
+                        {% trans 'Collaborate directly with our founders to draft a realistic, day-by-day itinerary tailored entirely to your pace.' %}
+                    </p>
+                </div>
+
+                <div class="approach-step">
+                    <span class="approach-step__numeral">III.</span>
+                    <h3 class="approach-step__title">{% trans 'The Arrival' %}</h3>
+                    <p class="approach-step__copy">
+                        {% trans 'Approve the routing, and we finalize every regional logistic. You simply arrive in East Africa.' %}
+                    </p>
+                </div>
+            </div>
+
+            <div class="approach__paths">
+                <div class="approach-path">
+                    <div>
+                        <h3 class="approach-path__title">{% trans 'Design Your Itinerary' %}</h3>
+                        <p class="approach-path__copy">
+                            {% trans 'Start from a signature journey or build a shortlist of golf, safari, and stays — then refine everything on a consultation.' %}
+                        </p>
+                    </div>
+                    <a class="approach-path__cta" href="{% url 'inquiry_crm:inquiry_start' %}">{% trans 'Start an enquiry' %} →</a>
+                </div>
+
+                <div class="approach-path">
+                    <div>
+                        <h3 class="approach-path__title">{% trans 'Speak With Our Team' %}</h3>
+                        <p class="approach-path__copy">
+                            {% trans 'Request a private video consultation in German or English. We email consultation details within two hours — nothing is booked until you confirm together.' %}
+                        </p>
+                    </div>
+                    <a class="approach-path__cta" href="{% url 'inquiry_crm:consultation' %}">{% trans 'Request a consultation' %} →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="home-section pillars" aria-labelledby="featured-journeys-title">
+        <div class="home-container">
+            <div class="section-header">
+                <h2 id="featured-journeys-title" class="section-title">
+                    {{ featured_journeys_title|default:"Featured Journeys" }}
+                </h2>
+                <p class="section-header__copy">
+                    {{ featured_journeys_intro|default:"Start with a proven AfroLink route, then refine the dates, pace, accommodation tier, and private experiences with the concierge team." }}
+                </p>
+            </div>
+
+            <div class="pillar-grid" role="list" aria-label="{% trans 'Featured journeys' %}" tabindex="0">
+                {% for card in featured_package_cards %}
+                    <article class="pillar-card" role="listitem">
+                        <div class="pillar-card__media">
+                            {% if card.image_url %}
+                                <img src="{{ card.image_url }}" alt="{% localized_text card.package 'title' %}">
+                            {% else %}
+                                <div class="pillar-card__image-placeholder">{% trans 'Journey Image' %}</div>
+                            {% endif %}
+                        </div>
+                        <div class="pillar-card__body">
+                            {% if card.package_type_label %}
+                                <p class="package-type-chips">
+                                    <span class="package-type-chip package-type-chip--{{ card.package.package_type }}">{{ card.package_type_label }}</span>
+                                </p>
+                            {% endif %}
+                            <p class="pillar-card__meta">
+                                {{ card.package.duration_days }} {% trans 'Days' %}
+                            </p>
+                            <h3 class="pillar-card__title">
+                                {% localized_text card.package 'title' %}
+                            </h3>
+                            <p class="pillar-card__copy">
+                                {% if request.LANGUAGE_CODE == 'de' and card.package.summary_de %}
+                                    {{ card.package.summary_de|truncatewords:24 }}
+                                {% else %}
+                                    {{ card.package.summary_en|truncatewords:24 }}
+                                {% endif %}
+                            </p>
+                            {% include "includes/package_price.html" with has_promo_price=card.has_promo_price promo_price_label=card.promo_price_label original_price_label=card.original_price_label starting_price_label=card.starting_price_label savings_label=card.savings_label promo_label='' is_featured_promo=False compact=True only %}
+                            <div class="pillar-card__footer">
+                                <a class="text-cta" href="{% url 'destination_cms:package_detail' card.package.slug %}">{% trans 'Explore Journey →' %}</a>
+                            </div>
+                        </div>
+                    </article>
+                {% empty %}
+                    <article class="pillar-card" role="listitem">
+                        <div class="pillar-card__media">
+                            <div class="pillar-card__image-placeholder">{% trans 'Journey Image' %}</div>
+                        </div>
+                        <div class="pillar-card__body">
+                            <p class="pillar-card__meta">{% trans 'Journeys' %}</p>
+                            <h3 class="pillar-card__title">
+                                {% trans 'Featured journeys are being prepared.' %}
+                            </h3>
+                            <p class="pillar-card__copy">{% trans 'Add active BasePackage records in the backend to feature live journeys here.' %}</p>
+                            <a class="text-cta" href="/journeys/">{% trans 'View All Journeys →' %}</a>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    {% if special_offer_cards %}
+    <section class="home-section pillars special-offers" aria-labelledby="special-offers-title">
+        <div class="home-container">
+            <div class="section-header">
+                <h2 id="special-offers-title" class="section-title">
+                    {% trans 'Special Offers' %}
+                </h2>
+                <p class="section-header__copy">
+                    {% trans 'Limited-time promotional journeys with clear savings. Customize or extend any itinerary with the concierge team.' %}
+                </p>
+            </div>
+
+            <div class="pillar-grid" role="list" aria-label="{% trans 'Special offers' %}" tabindex="0">
+                {% for card in special_offer_cards %}
+                    <article class="pillar-card" role="listitem">
+                        <div class="pillar-card__media">
+                            {% if card.image_url %}
+                                <img src="{{ card.image_url }}" alt="{% localized_text card.package 'title' %}">
+                            {% else %}
+                                <div class="pillar-card__image-placeholder">{% trans 'Journey Image' %}</div>
+                            {% endif %}
+                        </div>
+                        <div class="pillar-card__body">
+                            {% if card.package_type_label %}
+                                <p class="package-type-chips">
+                                    <span class="package-type-chip package-type-chip--{{ card.package.package_type }}">{{ card.package_type_label }}</span>
+                                </p>
+                            {% endif %}
+                            <p class="pillar-card__meta">
+                                {{ card.package.duration_days }} {% trans 'Days' %}
+                            </p>
+                            <h3 class="pillar-card__title">
+                                {% localized_text card.package 'title' %}
+                            </h3>
+                            <p class="pillar-card__copy">
+                                {% if request.LANGUAGE_CODE == 'de' and card.package.summary_de %}
+                                    {{ card.package.summary_de|truncatewords:24 }}
+                                {% else %}
+                                    {{ card.package.summary_en|truncatewords:24 }}
+                                {% endif %}
+                            </p>
+                            {% include "includes/package_price.html" with has_promo_price=card.has_promo_price promo_price_label=card.promo_price_label original_price_label=card.original_price_label starting_price_label=card.starting_price_label savings_label=card.savings_label promo_label='' is_featured_promo=False compact=True only %}
+                            <div class="pillar-card__footer">
+                                <a class="text-cta" href="{% url 'destination_cms:package_detail' card.package.slug %}">{% trans 'View Offer →' %}</a>
+                            </div>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <section class="home-section regions-showcase" aria-labelledby="home-regions-title">
+        <div class="home-container">
+            <div class="section-header">
+                <h2 id="home-regions-title" class="section-title">
+                    {{ regions_title|default:"Explore The Regions" }}
+                </h2>
+                <p class="section-header__copy">
+                    {{ regions_intro|default:"Begin with geography. Each regional hub reveals the golf, safari, wellness, and accommodation logic that shapes a private AfroLink route." }}
+                </p>
+            </div>
+
+            <div class="region-grid" role="list" aria-label="{% trans 'Destination hubs' %}" tabindex="0">
+                {% for region in featured_regions %}
+                    <article class="region-card" role="listitem">
+                        <div class="region-card__media">
+                            {% with image=region.gallery_images.all.0 %}
+                                {% if image %}
+                                    <img src="{{ image.image_url }}" alt="{% if request.LANGUAGE_CODE == 'de' and image.caption_de %}{{ image.caption_de }}{% elif image.caption_en %}{{ image.caption_en }}{% else %}{{ region.name_en }}{% endif %}">
+                                {% else %}
+                                    <div class="region-card__placeholder">{% trans 'Region Image' %}</div>
+                                {% endif %}
+                            {% endwith %}
+                        </div>
+                        <div class="region-card__body">
+                            <p class="region-card__label">{% trans 'Destination Hub' %}</p>
+                            <h3 class="region-card__title">
+                                {% if request.LANGUAGE_CODE == 'de' %}{{ region.name_de }}{% else %}{{ region.name_en }}{% endif %}
+                            </h3>
+                            <p class="region-card__copy">
+                                {% if request.LANGUAGE_CODE == 'de' and region.description_de %}
+                                    {{ region.description_de|truncatewords:20 }}
+                                {% else %}
+                                    {{ region.description_en|truncatewords:20 }}
+                                {% endif %}
+                            </p>
+                            <a class="text-cta" href="{% url 'destination_cms:region_hub' region.slug %}">{% trans 'Open Region →' %}</a>
+                        </div>
+                    </article>
+                {% empty %}
+                    <article class="region-card" role="listitem">
+                        <div class="region-card__media">
+                            <div class="region-card__placeholder">{% trans 'Region Image' %}</div>
+                        </div>
+                        <div class="region-card__body">
+                            <p class="region-card__label">{% trans 'Destination Hub' %}</p>
+                            <h3 class="region-card__title">{% trans 'Regions are being prepared.' %}</h3>
+                            <p class="region-card__copy">{% trans 'Add active Region records in the backend to feature destination hubs here.' %}</p>
+                            <a class="text-cta" href="/regions/">{% trans 'View All Regions →' %}</a>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="home-section events-showcase" aria-labelledby="home-events-title">
+        <div class="home-container">
+            <div class="section-header">
+                <h2 id="home-events-title" class="section-title">
+                    {{ events_title|default:"Upcoming Golf Events" }}
+                </h2>
+                <p class="section-header__copy">
+                    {{ events_intro|default:"Add a one-off tournament or recurring club day to your Kenya itinerary, then let the concierge team shape the route around it." }}
+                </p>
+            </div>
+
+            {% if promoted_event %}
+                <article class="home-promoted-event">
+                    <div class="home-promoted-event__media">
+                        {% if promoted_event.image_url %}
+                            <img src="{{ promoted_event.image_url }}" alt="{% if request.LANGUAGE_CODE == 'de' and promoted_event.title_de %}{{ promoted_event.title_de }}{% else %}{{ promoted_event.title_en }}{% endif %}">
+                        {% else %}
+                            <div class="home-promoted-event__placeholder">{% trans 'Featured Event Image' %}</div>
+                        {% endif %}
+                    </div>
+                    <div class="home-promoted-event__body">
+                        <p class="home-promoted-event__badge">{% trans 'Featured Event' %}</p>
+                        <p class="home-promoted-event__meta">
+                            {% if promoted_event.is_recurring %}
+                                {% trans 'Every' %} {{ promoted_event.get_recurrence_weekday_display }}
+                            {% else %}
+                                {{ promoted_event.event_date|date:"M j, Y" }}
+                            {% endif %}
+                            {% if promoted_event.start_time %} / {{ promoted_event.start_time|time:"g:i A" }}{% endif %}
+                        </p>
+                        <h3 class="home-promoted-event__title">
+                            {% if request.LANGUAGE_CODE == 'de' and promoted_event.title_de %}{{ promoted_event.title_de }}{% else %}{{ promoted_event.title_en }}{% endif %}
+                        </h3>
+                        <p class="home-promoted-event__copy">
+                            {% if request.LANGUAGE_CODE == 'de' and promoted_event.summary_de %}
+                                {{ promoted_event.summary_de|truncatewords:22 }}
+                            {% else %}
+                                {{ promoted_event.summary_en|truncatewords:22 }}
+                            {% endif %}
+                        </p>
+                        <a class="home-promoted-event__cta" href="{% url 'destination_cms:event_detail' promoted_event.slug %}">{% trans 'View Featured Event →' %}</a>
+                    </div>
+                </article>
+            {% endif %}
+
+            {% if featured_events or not promoted_event %}
+                <div class="event-grid" role="list" aria-label="{% trans 'Upcoming golf events' %}" tabindex="0">
+                    {% for event in featured_events %}
+                        <article class="event-card" role="listitem">
+                            <div class="event-card__media">
+                                {% if event.image_url %}
+                                    <img src="{{ event.image_url }}" alt="{% if request.LANGUAGE_CODE == 'de' and event.title_de %}{{ event.title_de }}{% else %}{{ event.title_en }}{% endif %}">
+                                {% else %}
+                                    <div class="event-card__placeholder">{% trans 'Event Image' %}</div>
+                                {% endif %}
+                            </div>
+                            <div class="event-card__body">
+                                <p class="event-card__meta">
+                                    {% if event.is_recurring %}
+                                        {% trans 'Every' %} {{ event.get_recurrence_weekday_display }}
+                                    {% else %}
+                                        {{ event.event_date|date:"M j, Y" }}
+                                    {% endif %}
+                                    {% if event.start_time %} / {{ event.start_time|time:"g:i A" }}{% endif %}
+                                </p>
+                                <h3 class="event-card__title">
+                                    {% if request.LANGUAGE_CODE == 'de' and event.title_de %}{{ event.title_de }}{% else %}{{ event.title_en }}{% endif %}
+                                </h3>
+                                <p class="event-card__copy">
+                                    {% if request.LANGUAGE_CODE == 'de' and event.summary_de %}
+                                        {{ event.summary_de|truncatewords:20 }}
+                                    {% else %}
+                                        {{ event.summary_en|truncatewords:20 }}
+                                    {% endif %}
+                                </p>
+                                <a class="text-cta" href="{% url 'destination_cms:event_detail' event.slug %}">{% trans 'View Event →' %}</a>
+                            </div>
+                        </article>
+                    {% empty %}
+                        {% if not promoted_event %}
+                            <article class="event-card" role="listitem">
+                                <div class="event-card__media">
+                                    <div class="event-card__placeholder">{% trans 'Event Image' %}</div>
+                                </div>
+                                <div class="event-card__body">
+                                    <p class="event-card__meta">{% trans 'Golf Events' %}</p>
+                                    <h3 class="event-card__title">{% trans 'Events are being prepared.' %}</h3>
+                                    <p class="event-card__copy">{% trans 'Add active GolfEvent records in the backend to publish upcoming and recurring golf events.' %}</p>
+                                    <a class="text-cta" href="/events/">{% trans 'View Events →' %}</a>
+                                </div>
+                            </article>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <section class="guest-experiences" aria-labelledby="guest-experiences-title">
+        <div class="guest-experiences__inner">
+            <div class="guest-header">
+                <h2 id="guest-experiences-title" class="guest-title">{% trans 'Guest Experiences' %}</h2>
+                <p class="guest-summary">
+                    {% trans 'Rated 4.7/5 by 214 guests for discreet golf, safari, and transfer planning.' %}
+                </p>
+            </div>
+
+            <div class="testimonial-grid" role="list" aria-label="{% trans 'Guest experiences' %}" tabindex="0">
+                <article class="testimonial" role="listitem">
+                    <p class="testimonial__quote">
+                        "{% trans 'Every tee time was confirmed before we landed. No scrambling, no surprises, the coordination was genuinely impressive.' %}"
+                    </p>
+                    <p class="testimonial__author">
+                        David Hartley<br>
+                        {% trans 'United Kingdom - Coastal Golf Circuit, Mar 2024' %}
+                    </p>
+                </article>
+
+                <article class="testimonial" role="listitem">
+                    <p class="testimonial__quote">
+                        "{% trans 'Our guide repositioned us three times before the crossing happened. That kind of knowledge is not something you find by accident.' %}"
+                    </p>
+                    <p class="testimonial__author">
+                        Priya Nambiar<br>
+                        {% trans 'Canada - Maasai Mara Safari, Jul 2025' %}
+                    </p>
+                </article>
+
+                <article class="testimonial" role="listitem">
+                    <p class="testimonial__quote">
+                        "{% trans 'The transfers were on time, the lodges were excellent, and we never once had to think about logistics. Exactly what I needed.' %}"
+                    </p>
+                    <p class="testimonial__author">
+                        Marcus Engel<br>
+                        {% trans 'Germany - Golf & Safari Combination, Oct 2024' %}
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="partner-strip" aria-label="{% trans 'Partner and accreditation logos' %}">
+        <div class="home-container partner-strip__inner">
+            <p class="partner-strip__label">{% trans 'Trusted Local & Travel Partners' %}</p>
+            <div
+                class="partner-strip__logos"
+                data-partner-logos
+                data-interval-ms="10000"
+            >
+                {% for partner in partners %}
+                    {% if partner.website_url %}
+                        <a class="partner-logo-link" href="{{ partner.website_url }}" aria-label="{{ partner.name }}">
+                            <img class="partner-logo" src="{% static partner.logo_path %}" alt="{{ partner.name }}">
+                        </a>
+                    {% else %}
+                        <span class="partner-logo-link" aria-label="{{ partner.name }}">
+                            <img class="partner-logo" src="{% static partner.logo_path %}" alt="{{ partner.name }}">
+                        </span>
+                    {% endif %}
+                {% empty %}
+                    <span class="partner-logo-link" aria-label="{% trans 'Partner logos pending' %}"></span>
+                {% endfor %}
+            </div>
+        </div>
+        <hr class="partner-strip__rule" aria-hidden="true">
+    </section>
+
+    <a class="whatsapp-float" href="https://wa.me/254743113141" target="_blank" rel="noopener" aria-label="{% trans 'Chat on WhatsApp' %}">
+        <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+            <path fill="currentColor" d="M16.04 4C9.4 4 4 9.24 4 15.69c0 2.06.56 4.06 1.61 5.82L4 28l6.68-1.55A12.33 12.33 0 0 0 16.04 27C22.68 27 28 21.76 28 15.31 28 8.96 22.68 4 16.04 4Zm0 20.92c-1.76 0-3.48-.46-4.98-1.33l-.36-.21-3.96.92.95-3.74-.24-.39a9.4 9.4 0 0 1-1.43-4.98c0-5.28 4.48-9.56 10.02-9.56 5.52 0 9.98 4.08 9.98 9.68 0 5.3-4.48 9.61-9.98 9.61Zm5.48-7.18c-.3-.15-1.78-.85-2.06-.95-.28-.1-.48-.15-.68.15-.2.29-.78.94-.96 1.14-.18.19-.35.22-.65.07-.3-.15-1.27-.45-2.42-1.41-.9-.78-1.5-1.75-1.68-2.04-.18-.3-.02-.46.13-.61.14-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.19.05-.37-.03-.52-.07-.15-.68-1.59-.93-2.18-.25-.57-.5-.49-.68-.5h-.58c-.2 0-.52.07-.8.37-.28.3-1.05 1-1.05 2.44 0 1.44 1.08 2.83 1.23 3.03.15.2 2.13 3.16 5.17 4.43.72.3 1.29.49 1.73.63.73.22 1.39.19 1.91.12.58-.08 1.78-.71 2.03-1.4.25-.69.25-1.28.18-1.4-.08-.13-.28-.2-.58-.35Z"/>
+        </svg>
+    </a>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/partner-logos.js' %}" defer></script>
+{% endblock %}

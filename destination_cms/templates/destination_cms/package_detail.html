@@ -1,0 +1,690 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block meta_title %}{% if request.LANGUAGE_CODE == 'de' %}{{ package.title_de }}{% else %}{{ package.title_en }}{% endif %} | AfroLink Journey{% endblock %}
+{% block meta_description %}{{ starting_price_label }} for a private AfroLink journey with concierge customization.{% endblock %}
+{% block body_class %}journey-detail-body{% endblock %}
+
+{% block extra_head %}
+<style>
+    .journey-detail,
+    .journey-detail * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    body.journey-detail-body:not(.home-body),
+    body.journey-detail-body:not(.home-body) .site-main,
+    body.journey-detail-body:not(.home-body) .content-frame {
+        background: #FFFFFF;
+    }
+
+    .journey-detail {
+        --jd-ink: #0A0A0A;
+        --jd-muted: #5F574C;
+        --jd-soft: #7A6A55;
+        --jd-line: #E7DFD1;
+        display: grid;
+        gap: var(--space-section);
+        padding: var(--space-page);
+    }
+
+    .journey-hero {
+        display: grid;
+        gap: var(--space-card);
+    }
+
+    .journey-hero__content {
+        max-width: 860px;
+    }
+
+    .back-link + .journey-eyebrow {
+        margin-top: 24px;
+    }
+
+    .journey-eyebrow,
+    .day-card__label {
+        color: var(--jd-soft);
+        font-size: 0.66rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .journey-title {
+        max-width: 980px;
+        margin-top: 10px;
+        color: var(--jd-ink);
+        font-family: var(--font-heading);
+        font-size: clamp(1.85rem, 3.6vw, 3.2rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.02;
+        text-transform: uppercase;
+    }
+
+    .journey-description {
+        max-width: 720px;
+        margin-top: 14px;
+        color: var(--jd-muted);
+        font-size: 1rem;
+        line-height: 1.65;
+    }
+
+    .journey-hero__price-quiet {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 8px 12px;
+        margin-top: 18px;
+        color: var(--jd-ink);
+        font-size: 0.92rem;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+    }
+
+    .journey-hero__offer-label {
+        display: inline-flex;
+        align-items: center;
+        min-height: 22px;
+        padding: 0 8px;
+        background: #0A0A0A;
+        color: #FFFFFF;
+        font-size: 0.62rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+
+    .journey-hero__price-hint {
+        color: var(--jd-soft);
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+    }
+
+    .journey-hero__media {
+        position: relative;
+        aspect-ratio: 2.39 / 1;
+        max-height: 460px;
+        width: 100%;
+        overflow: hidden;
+        border-radius: var(--radius-media);
+        background: var(--jd-line);
+    }
+
+    .journey-hero__media::after {
+        content: "";
+        position: absolute;
+        inset: auto 0 0 0;
+        height: 28%;
+        background: linear-gradient(to top, rgba(10, 10, 10, 0.18), transparent);
+        pointer-events: none;
+    }
+
+    .journey-hero__media img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+    }
+
+    .journey-hero__placeholder {
+        aspect-ratio: 2.39 / 1;
+        max-height: 460px;
+        display: grid;
+        place-items: center;
+        color: var(--jd-soft);
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+    }
+
+    .package-inclusions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-card);
+        align-items: stretch;
+        margin-top: var(--space-card);
+    }
+
+    .package-inclusions__heading {
+        grid-column: 1 / -1;
+        display: grid;
+        gap: 10px;
+        max-width: 680px;
+    }
+
+    .package-inclusions__heading h2 {
+        color: var(--jd-ink);
+        font-family: var(--font-heading);
+        font-size: clamp(1.5rem, 3vw, 2.45rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.05;
+        text-transform: uppercase;
+    }
+
+    .package-inclusions__heading p {
+        color: var(--jd-muted);
+        font-size: 0.95rem;
+        line-height: 1.65;
+    }
+
+    .package-list-panel {
+        display: grid;
+        align-content: start;
+        gap: 8px;
+    }
+
+    .package-list-panel__label {
+        color: var(--jd-soft);
+        font-size: 0.64rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .package-list-panel__title {
+        color: var(--jd-ink);
+        font-family: var(--font-heading);
+        font-size: clamp(1.25rem, 2.2vw, 1.65rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.15;
+    }
+
+    .coverage-list {
+        display: grid;
+        gap: 3px;
+        margin: 4px 0 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .coverage-list li {
+        display: grid;
+        grid-template-columns: 8px minmax(0, 1fr);
+        gap: 9px;
+        align-items: start;
+        padding: 0;
+        border: 0;
+        color: var(--jd-muted);
+        font-size: 0.92rem;
+        line-height: 1.5;
+    }
+
+    .coverage-list__bullet {
+        width: 5px;
+        height: 5px;
+        margin-top: 0.62em;
+        background: var(--jd-soft);
+    }
+
+    .journey-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+        gap: var(--space-section);
+        align-items: start;
+        width: 100%;
+    }
+
+    .itinerary-section {
+        display: grid;
+        gap: var(--space-card);
+        min-width: 0;
+    }
+
+    .itinerary-heading {
+        display: grid;
+        gap: 10px;
+        max-width: 680px;
+    }
+
+    .itinerary-heading h2 {
+        color: var(--jd-ink);
+        font-family: var(--font-heading);
+        font-size: clamp(1.5rem, 3vw, 2.45rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.05;
+        text-transform: uppercase;
+    }
+
+    .itinerary-heading p {
+        color: var(--jd-muted);
+        font-size: 0.95rem;
+        line-height: 1.65;
+    }
+
+    .itinerary-list {
+        display: grid;
+        gap: 0;
+    }
+
+    .day-card {
+        display: grid;
+        grid-template-columns: 76px minmax(0, 0.9fr) minmax(260px, 1fr);
+        gap: var(--space-card);
+        align-items: start;
+        padding: var(--space-card) 0;
+        border-top: 1px solid var(--jd-line);
+    }
+
+    .day-card:last-child {
+        border-bottom: 1px solid var(--jd-line);
+    }
+
+    .day-card__number {
+        color: var(--jd-ink);
+        font-family: var(--font-heading);
+        font-size: clamp(1.25rem, 2.2vw, 1.85rem);
+        line-height: 1;
+    }
+
+    .day-card__main {
+        display: grid;
+        align-content: start;
+        gap: 10px;
+    }
+
+    .day-card__title {
+        color: var(--jd-ink);
+        font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.18;
+        text-transform: uppercase;
+    }
+
+    .day-detail-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: start;
+        gap: var(--space-card);
+    }
+
+    .day-detail {
+        display: grid;
+        align-content: start;
+        gap: 6px;
+    }
+
+    .day-detail__value {
+        color: var(--jd-muted);
+        font-size: 0.92rem;
+        line-height: 1.65;
+    }
+
+    .activity-link {
+        border-bottom: 1px solid transparent;
+        color: var(--jd-ink);
+        font-weight: 500;
+        transition: color 0.25s ease, border-color 0.25s ease;
+    }
+
+    .activity-link:hover {
+        border-color: currentColor;
+        color: #9A7A43;
+    }
+
+    .journey-aside {
+        position: sticky;
+        top: 96px;
+    }
+
+    .journey-cta {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        background: #111111;
+        padding: clamp(22px, 3vw, 28px);
+    }
+
+    /* Beat base.html body:not(.home-body) heading/p color rules that load later. */
+    .journey-cta,
+    .journey-cta h2,
+    .journey-cta p,
+    .journey-cta div,
+    .journey-cta span {
+        color: #F5F0E8 !important;
+    }
+
+    .journey-cta__eyebrow {
+        color: #D4CBC0 !important;
+        font-size: 0.64rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .journey-cta__title {
+        color: #FFFFFF !important;
+        font-family: var(--font-heading);
+        font-size: 1.35rem;
+        font-weight: 400;
+        line-height: 1.2;
+    }
+
+    .journey-cta__summary {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        padding: 12px 0;
+        border-top: 1px solid #3A3732;
+        border-bottom: 1px solid #3A3732;
+    }
+
+    .summary-item {
+        display: grid;
+        gap: 4px;
+    }
+
+    .summary-label {
+        color: #D4CBC0 !important;
+        font-size: 0.64rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .summary-value {
+        color: #FFFFFF !important;
+        font-size: 0.88rem;
+        line-height: 1.35;
+    }
+
+    .journey-cta .package-price__badges {
+        margin-bottom: 6px;
+    }
+
+    .journey-cta .package-price__badge {
+        border-color: rgba(245, 240, 232, 0.35);
+        background: transparent;
+        color: #D8C39A !important;
+        font-family: var(--font-body);
+        font-size: 0.62rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        line-height: 1.2;
+        text-transform: uppercase;
+        padding: 6px 10px;
+    }
+
+    .journey-cta .package-price__current {
+        color: #FFFFFF !important;
+        font-family: var(--font-body);
+    }
+
+    .journey-cta .package-price__original,
+    .journey-cta .package-price__original s {
+        color: #A89F93 !important;
+        font-family: var(--font-body);
+    }
+
+    .journey-cta .package-price__savings {
+        color: #C79A55 !important;
+        font-family: var(--font-body);
+    }
+
+    .journey-cta__copy {
+        color: #D4CBC0 !important;
+        font-size: 0.88rem;
+        line-height: 1.55;
+    }
+
+    .journey-cta__btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin-top: 4px;
+        padding: 14px 18px;
+        border: 1px solid #FFFFFF;
+        background: transparent;
+        color: #FFFFFF !important;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    .journey-cta__btn:hover {
+        background: #FFFFFF;
+        color: #0A0A0A !important;
+    }
+
+    .empty-state {
+        color: var(--jd-muted);
+        padding-top: 24px;
+        border-top: 1px solid var(--jd-line);
+    }
+
+    @media (max-width: 960px) {
+        .journey-detail {
+            padding-bottom: 88px;
+        }
+
+        .journey-layout,
+        .day-card,
+        .day-detail-grid,
+        .package-inclusions {
+            grid-template-columns: 1fr;
+        }
+
+        .journey-aside {
+            position: relative;
+            top: auto;
+            width: 100%;
+        }
+
+        .journey-cta {
+            padding: clamp(22px, 4vw, 28px);
+            gap: 14px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<article class="journey-detail">
+    <section class="journey-hero" aria-labelledby="journey-title">
+        <div class="journey-hero__content">
+            <a class="back-link" href="{% url 'destination_cms:package_list' %}">← {% trans 'Back to journeys' %}</a>
+            <p class="journey-eyebrow">
+                {{ package.duration_days }} {% trans 'Day Journey' %}
+                {% if package_type_label %} / {{ package_type_label }}{% endif %}
+            </p>
+            <h1 id="journey-title" class="journey-title">
+                {% if request.LANGUAGE_CODE == 'de' %}{{ package.title_de }}{% else %}{{ package.title_en }}{% endif %}
+            </h1>
+            <p class="journey-description">{{ package_description }}</p>
+            {% if has_promo_price or starting_price_label %}
+                <p class="journey-hero__price-quiet">
+                    {% if has_promo_price %}
+                        {{ promo_price_label }}
+                        <span class="journey-hero__price-hint">{% trans 'Full pricing in enquiry panel' %}</span>
+                    {% else %}
+                        {{ starting_price_label }}
+                    {% endif %}
+                </p>
+            {% endif %}
+        </div>
+
+        <div class="journey-hero__media">
+            {% if hero_image_url %}
+                <img src="{{ hero_image_url }}" alt="{% if request.LANGUAGE_CODE == 'de' %}{{ package.title_de }}{% else %}{{ package.title_en }}{% endif %}">
+            {% else %}
+                <div class="journey-hero__placeholder">{% trans 'Journey hero image' %}</div>
+            {% endif %}
+        </div>
+
+    </section>
+
+    <div class="journey-layout">
+        <section class="itinerary-section" aria-labelledby="itinerary-title">
+            <div class="itinerary-heading">
+                <h2 id="itinerary-title">{% trans 'Package Breakdown' %}</h2>
+                <p>{% trans 'A day-by-day view of the stays and experiences that shape the route. Each item can be opened for deeper context before you add the journey to your inquiry.' %}</p>
+            </div>
+
+            <div class="itinerary-list">
+                {% for day in itinerary_days %}
+                    <article class="day-card">
+                        <div class="day-card__number">{{ day.day_number|stringformat:"02d" }}</div>
+
+                        <div class="day-card__main">
+                            <span class="day-card__label">{% trans 'Day' %}</span>
+                            <h3 class="day-card__title">
+                                {% if request.LANGUAGE_CODE == 'de' %}{{ day.title_de }}{% else %}{{ day.title_en }}{% endif %}
+                            </h3>
+                        </div>
+
+                        <div class="day-detail-grid">
+                            <div class="day-detail">
+                                <span class="day-card__label">{% trans 'Stay' %}</span>
+                                <div class="day-detail__value">
+                                    {% if day.accommodation and day.accommodation.slug %}
+                                        <a class="activity-link" href="{% url 'destination_cms:accommodation_detail' day.accommodation.slug %}">
+                                            {{ day.accommodation.name }}
+                                        </a>
+                                    {% elif day.accommodation %}
+                                        {{ day.accommodation.name }}
+                                    {% else %}
+                                        {% trans 'Concierge-selected accommodation pending' %}
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="day-detail">
+                                <span class="day-card__label">{% trans 'Experiences' %}</span>
+                                <div class="day-detail__value">
+                                    {% for activity in day.activities.all %}
+                                        <div>
+                                            {% if activity.content_type.model == 'golfcourse' %}
+                                                <a class="activity-link" href="{% url 'destination_cms:course_detail' activity.content_object.slug %}">
+                                                    {{ activity.content_object.name }}
+                                                </a>
+                                            {% elif activity.content_type.model == 'safaridestination' or activity.content_type.model == 'safariextension' %}
+                                                {% if activity.content_object.slug %}
+                                                <a class="activity-link" href="{% url 'destination_cms:safari_detail' activity.content_object.slug %}">
+                                                    {{ activity.content_object.name }}
+                                                </a>
+                                                {% else %}
+                                                    {{ activity.content_object.name }}
+                                                {% endif %}
+                                            {% elif activity.content_type.model == 'wellnessexperience' and activity.content_object.slug %}
+                                                <a class="activity-link" href="{% url 'destination_cms:wellness_detail' activity.content_object.slug %}">
+                                                    {% if request.LANGUAGE_CODE == 'de' %}{{ activity.content_object.name_de }}{% else %}{{ activity.content_object.name_en }}{% endif %}
+                                                </a>
+                                            {% else %}
+                                                {% firstof activity.content_object.name activity.content_object.name_en "Curated private experience" %}
+                                            {% endif %}
+                                        </div>
+                                    {% empty %}
+                                        <div>{% trans 'Experience sequencing will be confirmed by the concierge team.' %}</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                {% empty %}
+                    <div class="empty-state">
+                        {% trans 'The full day-by-day sequence is being prepared. Enquire and the concierge team will confirm the routing.' %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% if included_items or excluded_items %}
+                <section class="package-inclusions" aria-label="{% trans 'Package inclusions and exclusions' %}">
+                    <div class="package-inclusions__heading">
+                        <h2>{% trans 'What Is Covered' %}</h2>
+                        <p>{% trans 'A clear view of what this package price already carries, and what remains flexible or billed separately.' %}</p>
+                    </div>
+
+                    {% if included_items %}
+                        <div class="package-list-panel">
+                            <span class="package-list-panel__label">{% trans 'In the package' %}</span>
+                            <h3 class="package-list-panel__title">{% trans 'Included' %}</h3>
+                            <ul class="coverage-list">
+                                {% for item in included_items %}
+                                    <li>
+                                        <span class="coverage-list__bullet" aria-hidden="true"></span>
+                                        <span>{{ item }}</span>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+
+                    {% if excluded_items %}
+                        <div class="package-list-panel package-list-panel--excluded">
+                            <span class="package-list-panel__label">{% trans 'Billed separately' %}</span>
+                            <h3 class="package-list-panel__title">{% trans 'Not Included' %}</h3>
+                            <ul class="coverage-list">
+                                {% for item in excluded_items %}
+                                    <li>
+                                        <span class="coverage-list__bullet" aria-hidden="true"></span>
+                                        <span>{{ item }}</span>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </section>
+            {% endif %}
+        </section>
+
+        <aside class="journey-aside" data-detail-cta-panel aria-label="{% trans 'Enquire about this journey' %}">
+            <div class="journey-cta">
+                <p class="journey-cta__eyebrow">{% trans 'Private journey' %}</p>
+                <h2 class="journey-cta__title">{% trans 'Enquire about this route and refine it with our team.' %}</h2>
+
+                <div class="journey-cta__summary">
+                    <div class="summary-item">
+                        <span class="summary-label">{% trans 'Length' %}</span>
+                        <span class="summary-value">{{ package.duration_days }} {% trans 'Days' %}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">{% trans 'Pricing' %}</span>
+                        <span class="summary-value">
+                            {% include "includes/package_price.html" with has_promo_price=has_promo_price promo_price_label=promo_price_label original_price_label=original_price_label starting_price_label=starting_price_label savings_label=savings_label promo_label=promo_label is_featured_promo=is_featured_promo only %}
+                        </span>
+                    </div>
+                </div>
+
+                <p class="journey-cta__copy">
+                    {% trans 'Continue to a focused enquiry form for this package. You will confirm dates, guests, and a preferred consultation window. Nothing is booked until you refine the plan on a video consultation with our team.' %}
+                </p>
+                <a class="journey-cta__btn" href="{% url 'inquiry_crm:package_enquiry' package.slug %}">
+                    {% trans 'Enquire' %}
+                </a>
+                {% include "includes/inquiry_commitment_note.html" with compact=True %}
+            </div>
+        </aside>
+    </div>
+
+    <div class="detail-cta-bar" data-detail-cta-bar hidden>
+        <div class="detail-cta-bar__meta">
+            {% if has_promo_price %}
+                <p class="detail-cta-bar__label">{% trans 'Special offer' %}</p>
+                <p class="detail-cta-bar__price">
+                    {{ promo_price_label }}
+                    {% if original_price_label %}<s>{{ original_price_label }}</s>{% endif %}
+                </p>
+            {% elif starting_price_label %}
+                <p class="detail-cta-bar__label">{% trans 'From' %}</p>
+                <p class="detail-cta-bar__price">{{ starting_price_label }}</p>
+            {% else %}
+                <p class="detail-cta-bar__label">{% trans 'Private journey' %}</p>
+                <p class="detail-cta-bar__value">{% trans 'Plan with concierge' %}</p>
+            {% endif %}
+        </div>
+        <a class="detail-cta-bar__btn" href="{% url 'inquiry_crm:package_enquiry' package.slug %}">
+            {% trans 'Enquire' %}
+        </a>
+    </div>
+</article>
+{% endblock %}

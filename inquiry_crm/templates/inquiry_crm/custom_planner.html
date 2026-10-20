@@ -1,0 +1,687 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block meta_title %}{% trans 'Optional planning notes' %} | AfroLink Adventures{% endblock %}
+{% block meta_description %}{% trans 'Share optional planning signals for a private AfroLink golf, safari, and wellness journey.' %}{% endblock %}
+{% block body_class %}planner-body{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/inquiry-ux.css' %}">
+<style>
+    .planner-page,
+    .planner-page * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    .planner-page {
+        display: grid;
+        gap: var(--space-section);
+        padding: var(--space-page);
+    }
+
+    body.planner-body:not(.home-body),
+    body.planner-body:not(.home-body) .site-main,
+    body.planner-body:not(.home-body) .content-frame {
+        background: #FFFFFF;
+    }
+
+    .planner-header {
+        display: grid;
+        gap: 8px;
+        max-width: 680px;
+    }
+
+    .planner-title {
+        color: #0A0A0A;
+        font-size: clamp(1.35rem, 2.4vw, 1.85rem) !important;
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.2;
+        text-transform: uppercase;
+    }
+
+    .planner-copy {
+        color: #5F574C;
+        font-size: 0.92rem;
+        line-height: 1.65;
+        max-width: 560px;
+    }
+
+    .planner-rule {
+        width: 100%;
+        margin: 0;
+        border: 0;
+        border-top: 1px solid #DED8CC;
+    }
+
+    .planner-shell {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(240px, 0.8fr);
+        gap: var(--space-section);
+        align-items: start;
+    }
+
+    .planner-form {
+        display: grid;
+        gap: var(--space-section);
+    }
+
+    .planner-side {
+        position: sticky;
+        top: 92px;
+        display: grid;
+        gap: 16px;
+        padding-top: 4px;
+    }
+
+    .planner-side__title {
+        color: #0A0A0A;
+        font-size: clamp(1.15rem, 2vw, 1.45rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.25;
+        text-transform: uppercase;
+    }
+
+    .planner-side__title em {
+        display: block;
+        margin-top: 6px;
+        color: #7A6A55;
+        font-size: 0.72em;
+        font-style: normal;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+    }
+
+    .planner-side__list {
+        display: grid;
+        gap: 0;
+        margin: 8px 0 0;
+        padding: 0;
+        list-style: none;
+        border-top: 1px solid #DED8CC;
+    }
+
+    .planner-side__list li {
+        padding: 14px 0;
+        border-bottom: 1px solid #DED8CC;
+        color: #5F574C;
+        font-size: 0.86rem;
+        line-height: 1.6;
+    }
+
+    .planner-section {
+        display: grid;
+        gap: 20px;
+    }
+
+    .planner-section__label {
+        color: #7A6A55;
+        font-size: 0.64rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .planner-section__title {
+        margin-top: 8px;
+        color: #0A0A0A;
+        font-size: clamp(1.2rem, 2vw, 1.55rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.15;
+        text-transform: uppercase;
+    }
+
+    .choice-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px var(--space-card);
+    }
+
+    .choice-card {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 12px;
+        align-items: start;
+        padding: 16px 0;
+        border-top: 1px solid #DED8CC;
+        background: #fff !important;
+        cursor: pointer;
+        transition: color var(--ease-standard);
+    }
+
+    .choice-card input {
+        width: 16px;
+        height: 16px;
+        margin-top: 4px;
+        accent-color: #0A0A0A;
+    }
+
+    .choice-card__title {
+        display: block;
+        color: #0A0A0A;
+        font-size: 0.95rem;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        line-height: 1.3;
+        text-transform: uppercase;
+    }
+
+    .choice-card__copy {
+        display: block;
+        margin-top: 6px;
+        color: #5F574C;
+        font-size: 0.84rem;
+        line-height: 1.55;
+    }
+
+    .choice-card:has(input:checked) .choice-card__title {
+        color: #9A7A43;
+    }
+
+    .field-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-card);
+    }
+
+    .planner-field {
+        display: grid;
+        gap: 7px;
+    }
+
+    .planner-field label {
+        color: #7A6A55;
+        font-size: 0.64rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .planner-field input[type="number"] {
+        min-height: 44px;
+        width: 100%;
+        border: 0;
+        border-bottom: 1px solid #D5CAB8;
+        background: transparent;
+        color: #0A0A0A;
+        padding: 0 8px 10px;
+        font: inherit;
+        font-size: 0.88rem;
+    }
+
+    .planner-field input[type="number"]:focus {
+        border-color: #0A0A0A;
+        outline: 0;
+    }
+
+    .planner-field--manual[hidden] {
+        display: none;
+    }
+
+    .custom-select {
+        position: relative;
+    }
+
+    .custom-select__trigger {
+        width: 100%;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        border: 0;
+        border-bottom: 1px solid #D5CAB8;
+        background: transparent;
+        color: #0A0A0A;
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.88rem;
+        padding: 0 8px 10px;
+        text-align: left;
+    }
+
+    .custom-select__trigger:focus-visible,
+    .custom-select.is-open .custom-select__trigger {
+        border-color: #0A0A0A;
+        outline: 0;
+    }
+
+    .custom-select__chevron {
+        width: 14px;
+        height: 9px;
+        flex: none;
+        color: #7A6A55;
+        transition: transform var(--ease-standard), color var(--ease-standard);
+    }
+
+    .custom-select.is-open .custom-select__chevron {
+        color: #0A0A0A;
+        transform: rotate(180deg);
+    }
+
+    .custom-select__menu {
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        z-index: 20;
+        width: 100%;
+        max-height: 260px;
+        overflow: auto;
+        display: grid;
+        gap: 2px;
+        padding: 5px;
+        border: 1px solid #DED8CC;
+        border-radius: var(--radius-media);
+        background: #FFFFFF;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(6px);
+        transition: opacity var(--ease-standard), transform var(--ease-standard);
+    }
+
+    .custom-select.is-open .custom-select__menu {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    .custom-select__option {
+        width: 100%;
+        min-height: 38px;
+        border: 0;
+        border-radius: calc(var(--radius-media) - 2px);
+        background: transparent;
+        color: #0A0A0A;
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.84rem;
+        padding: 0 8px;
+        text-align: left;
+    }
+
+    .custom-select__option:hover,
+    .custom-select__option:focus-visible {
+        background: #F7F4ED;
+        color: #0A0A0A;
+        outline: 0;
+    }
+
+    .custom-select__option.is-selected {
+        background: #0A0A0A;
+        color: #FFFFFF;
+    }
+
+    .planner-submit {
+        justify-self: start;
+        min-height: 48px;
+        border: 0;
+        border-radius: var(--radius-media);
+        background: #0A0A0A;
+        color: #FFFFFF;
+        cursor: pointer;
+        padding: 0 24px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        transition: background-color var(--ease-standard), color var(--ease-standard);
+    }
+
+    .planner-submit:hover {
+        background: var(--color-gold);
+        color: #0A0A0A;
+    }
+
+    @media (max-width: 980px) {
+        .planner-shell {
+            grid-template-columns: 1fr;
+        }
+
+        .planner-side {
+            position: static;
+            order: -1;
+        }
+    }
+
+    @media (max-width: 700px) {
+        .choice-grid,
+        .field-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .planner-submit {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<article class="planner-page">
+    {% include "includes/inquiry_progress.html" with flow="custom" step="shortlist" %}
+
+    <header class="planner-header">
+        <h1 class="planner-title">{% trans 'Optional planning notes' %}</h1>
+        <p class="planner-copy">
+            {% trans 'These signals help our team prepare — they are not a locked itinerary. You can skip this step and request a consultation directly.' %}
+        </p>
+        <p class="planner-copy">
+            <a href="{% url 'inquiry_crm:inquiry_intake' %}?intent=consultation">{% trans 'Skip to enquiry form →' %}</a>
+        </p>
+    </header>
+
+    <hr class="planner-rule" aria-hidden="true">
+
+    <div class="planner-shell">
+        <form class="planner-form" method="get" action="{% url 'inquiry_crm:inquiry_intake' %}" data-planner-form>
+            <section class="planner-section" aria-labelledby="intent-title">
+                <div>
+                    <p class="planner-section__label">{% trans '01 · Planning intent' %}</p>
+                    <h2 id="intent-title" class="planner-section__title">{% trans 'What should lead the route?' %}</h2>
+                </div>
+
+                <div class="choice-grid">
+                    <label class="choice-card">
+                        <input type="radio" name="planning_focus" value="Balanced golf and safari" checked>
+                        <span>
+                            <span class="choice-card__title">{% trans 'Balanced Golf & Safari' %}</span>
+                            <span class="choice-card__copy">{% trans 'Strong rounds, private game viewing, and calm transfer logic.' %}</span>
+                        </span>
+                    </label>
+                    <label class="choice-card">
+                        <input type="radio" name="planning_focus" value="Golf-first routing">
+                        <span>
+                            <span class="choice-card__title">{% trans 'Golf-First Routing' %}</span>
+                            <span class="choice-card__copy">{% trans 'Championship courses, tee-time quality, and recovery after demanding rounds.' %}</span>
+                        </span>
+                    </label>
+                    <label class="choice-card">
+                        <input type="radio" name="planning_focus" value="Safari-led routing">
+                        <span>
+                            <span class="choice-card__title">{% trans 'Safari-Led Routing' %}</span>
+                            <span class="choice-card__copy">{% trans 'Wildlife timing, guide quality, and private access over rushed transitions.' %}</span>
+                        </span>
+                    </label>
+                    <label class="choice-card">
+                        <input type="radio" name="planning_focus" value="Wellness recovery led">
+                        <span>
+                            <span class="choice-card__title">{% trans 'Wellness & Recovery' %}</span>
+                            <span class="choice-card__copy">{% trans 'Privacy, lodge rhythm, spa recovery, and slower mornings.' %}</span>
+                        </span>
+                    </label>
+                </div>
+            </section>
+
+            <section class="planner-section" aria-labelledby="route-title">
+                <div>
+                    <p class="planner-section__label">{% trans '02 · Route frame' %}</p>
+                    <h2 id="route-title" class="planner-section__title">{% trans 'Set the practical outline' %}</h2>
+                </div>
+
+                <div class="field-grid">
+                    <div class="planner-field">
+                        <label id="day-count-label">{% trans 'Journey Length' %}</label>
+                        <div class="custom-select" data-custom-select data-day-count-select>
+                            <input type="hidden" name="day_count_choice" value="10" data-custom-select-input>
+                            <input type="hidden" id="day_count" name="day_count" value="10">
+                            <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="day-count-label">
+                                <span data-custom-select-label>{% trans '10 days / balanced signature route' %}</span>
+                                <svg class="custom-select__chevron" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                                    <path d="M1.25 1.5L7 7.25L12.75 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="custom-select__menu" role="listbox" aria-labelledby="day-count-label">
+                                <button class="custom-select__option" type="button" role="option" data-value="7" aria-selected="false">{% trans '7 days / focused escape' %}</button>
+                                <button class="custom-select__option is-selected" type="button" role="option" data-value="10" aria-selected="true">{% trans '10 days / balanced signature route' %}</button>
+                                <button class="custom-select__option" type="button" role="option" data-value="12" aria-selected="false">{% trans '12 days / slower private rhythm' %}</button>
+                                <button class="custom-select__option" type="button" role="option" data-value="15" aria-selected="false">{% trans '15 days / complete odyssey' %}</button>
+                                <button class="custom-select__option" type="button" role="option" data-value="21" aria-selected="false">{% trans '21 days / extended expedition' %}</button>
+                                <button class="custom-select__option" type="button" role="option" data-value="manual" aria-selected="false">{% trans 'Manual length / choose my days' %}</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="planner-field planner-field--manual" id="manual_day_count_field" hidden>
+                        <label for="manual_day_count">{% trans 'Manual Days' %}</label>
+                        <input id="manual_day_count" type="number" min="1" max="60" step="1" value="10" inputmode="numeric">
+                    </div>
+
+                    <div class="planner-field">
+                        <label id="region-label">{% trans 'Regional Anchor' %}</label>
+                        <div class="custom-select" data-custom-select>
+                            <input type="hidden" name="region_id" value="" data-custom-select-input required>
+                            <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="region-label">
+                                <span data-custom-select-label>{% trans 'Select a region' %}</span>
+                                <svg class="custom-select__chevron" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                                    <path d="M1.25 1.5L7 7.25L12.75 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="custom-select__menu" role="listbox" aria-labelledby="region-label">
+                                <button class="custom-select__option is-selected" type="button" role="option" data-value="" aria-selected="true">{% trans 'Select a region' %}</button>
+                                {% for region in regions %}
+                                    <button class="custom-select__option" type="button" role="option" data-value="{{ region.id }}" aria-selected="false">
+                                        {% if request.LANGUAGE_CODE == 'de' %}{{ region.name_de }}{% else %}{{ region.name_en }}{% endif %}
+                                    </button>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="planner-field">
+                        <label id="pace-label">{% trans 'Preferred Pace' %}</label>
+                        <div class="custom-select" data-custom-select>
+                            <input type="hidden" name="travel_pace" value="Measured and private" data-custom-select-input>
+                            <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="pace-label">
+                                <span data-custom-select-label>{% trans 'Measured and private' %}</span>
+                                <svg class="custom-select__chevron" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                                    <path d="M1.25 1.5L7 7.25L12.75 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="custom-select__menu" role="listbox" aria-labelledby="pace-label">
+                                <button class="custom-select__option is-selected" type="button" role="option" data-value="Measured and private" aria-selected="true">{% trans 'Measured and private' %}</button>
+                                <button class="custom-select__option" type="button" role="option" data-value="Active with full days" aria-selected="false">{% trans 'Active with full days' %}</button>
+                                <button class="custom-select__option" type="button" role="option" data-value="Slow luxury with recovery time" aria-selected="false">{% trans 'Slow luxury with recovery time' %}</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="planner-field">
+                        <label id="stay-label">{% trans 'Stay Preference' %}</label>
+                        <div class="custom-select" data-custom-select>
+                            <input type="hidden" name="accommodation_style" value="Best available by region" data-custom-select-input>
+                            <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="stay-label">
+                                <span data-custom-select-label>{% trans 'Best available by region' %}</span>
+                                <svg class="custom-select__chevron" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                                    <path d="M1.25 1.5L7 7.25L12.75 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="custom-select__menu" role="listbox" aria-labelledby="stay-label">
+                                <button class="custom-select__option is-selected" type="button" role="option" data-value="Best available by region" aria-selected="true">{% trans 'Best available by region' %}</button>
+                                <button class="custom-select__option" type="button" role="option" data-value="Classic luxury lodges" aria-selected="false">{% trans 'Classic luxury lodges' %}</button>
+                                <button class="custom-select__option" type="button" role="option" data-value="Private villas where possible" aria-selected="false">{% trans 'Private villas where possible' %}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="planner-section" aria-labelledby="priority-title">
+                <div>
+                    <p class="planner-section__label">{% trans '03 · Priority signals' %}</p>
+                    <h2 id="priority-title" class="planner-section__title">{% trans 'Optional course and safari focus' %}</h2>
+                </div>
+
+                <div class="field-grid">
+                    <div class="planner-field">
+                        <label id="golf-label">{% trans 'Golf Priority' %}</label>
+                        <div class="custom-select" data-custom-select>
+                            <input type="hidden" name="golf_course_ids" value="" data-custom-select-input>
+                            <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="golf-label">
+                                <span data-custom-select-label>{% trans 'Let AfroLink recommend' %}</span>
+                                <svg class="custom-select__chevron" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                                    <path d="M1.25 1.5L7 7.25L12.75 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="custom-select__menu" role="listbox" aria-labelledby="golf-label">
+                                <button class="custom-select__option is-selected" type="button" role="option" data-value="" aria-selected="true">{% trans 'Let AfroLink recommend' %}</button>
+                                {% for course in golf_courses %}
+                                    <button class="custom-select__option" type="button" role="option" data-value="{{ course.id }}" aria-selected="false">
+                                        {{ course.name }} / {% if request.LANGUAGE_CODE == 'de' %}{{ course.region.name_de }}{% else %}{{ course.region.name_en }}{% endif %}
+                                    </button>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="planner-field">
+                        <label id="safari-label">{% trans 'Safari Priority' %}</label>
+                        <div class="custom-select" data-custom-select>
+                            <input type="hidden" name="safari_extension_ids" value="" data-custom-select-input>
+                            <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="safari-label">
+                                <span data-custom-select-label>{% trans 'Let AfroLink recommend' %}</span>
+                                <svg class="custom-select__chevron" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                                    <path d="M1.25 1.5L7 7.25L12.75 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="custom-select__menu" role="listbox" aria-labelledby="safari-label">
+                                <button class="custom-select__option is-selected" type="button" role="option" data-value="" aria-selected="true">{% trans 'Let AfroLink recommend' %}</button>
+                                {% for safari in safari_extensions %}
+                                    <button class="custom-select__option" type="button" role="option" data-value="{{ safari.id }}" aria-selected="false">
+                                        {{ safari.name }} / {% if request.LANGUAGE_CODE == 'de' %}{{ safari.region.name_de }}{% else %}{{ safari.region.name_en }}{% endif %}
+                                    </button>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <button class="planner-submit" type="submit">{% trans 'Continue with these notes' %}</button>
+        </form>
+
+        <aside class="planner-side" aria-label="{% trans 'Planner guidance' %}">
+            <h2 class="planner-side__title">{% trans 'A brief we work from' %} <em>{% trans 'not a locked itinerary' %}</em></h2>
+            <ul class="planner-side__list">
+                <li>{% trans 'Nothing is booked until your video consultation confirms the plan.' %}</li>
+                <li>{% trans 'Skip anytime and request a consultation with only the essentials.' %}</li>
+                <li>{% trans 'We email consultation details within two hours of your enquiry.' %}</li>
+            </ul>
+            <p>
+                <a href="{% url 'inquiry_crm:inquiry_intake' %}?intent=consultation">
+                    {% trans 'Request consultation without notes →' %}
+                </a>
+            </p>
+        </aside>
+    </div>
+</article>
+
+<script>
+    (() => {
+        const form = document.querySelector('[data-planner-form]');
+        if (!form) {
+            return;
+        }
+
+        const hiddenDayCount = document.getElementById('day_count');
+        const manualField = document.getElementById('manual_day_count_field');
+        const manualInput = document.getElementById('manual_day_count');
+        const daySelect = form.querySelector('[data-day-count-select]');
+        const dayChoiceInput = daySelect ? daySelect.querySelector('[data-custom-select-input]') : null;
+
+        const syncDayCount = () => {
+            if (!dayChoiceInput || !hiddenDayCount || !manualField || !manualInput) {
+                return;
+            }
+
+            const isManual = dayChoiceInput.value === 'manual';
+            manualField.hidden = !isManual;
+            manualInput.required = isManual;
+            hiddenDayCount.value = isManual ? manualInput.value : dayChoiceInput.value;
+        };
+
+        const closeCustomSelect = (select) => {
+            const trigger = select.querySelector('.custom-select__trigger');
+            select.classList.remove('is-open');
+            if (trigger) {
+                trigger.setAttribute('aria-expanded', 'false');
+            }
+        };
+
+        const closeAllCustomSelects = (exceptSelect = null) => {
+            form.querySelectorAll('[data-custom-select]').forEach((select) => {
+                if (select !== exceptSelect) {
+                    closeCustomSelect(select);
+                }
+            });
+        };
+
+        form.querySelectorAll('[data-custom-select]').forEach((select) => {
+            const trigger = select.querySelector('.custom-select__trigger');
+            const label = select.querySelector('[data-custom-select-label]');
+            const input = select.querySelector('[data-custom-select-input]');
+            const options = select.querySelectorAll('.custom-select__option');
+
+            if (!trigger || !label || !input) {
+                return;
+            }
+
+            trigger.addEventListener('click', () => {
+                const isOpen = select.classList.contains('is-open');
+                closeAllCustomSelects(select);
+                select.classList.toggle('is-open', !isOpen);
+                trigger.setAttribute('aria-expanded', String(!isOpen));
+            });
+
+            options.forEach((option) => {
+                option.addEventListener('click', () => {
+                    input.value = option.dataset.value || '';
+                    label.textContent = option.textContent.trim();
+
+                    options.forEach((item) => {
+                        const isSelected = item === option;
+                        item.classList.toggle('is-selected', isSelected);
+                        item.setAttribute('aria-selected', String(isSelected));
+                    });
+
+                    closeCustomSelect(select);
+
+                    if (select.hasAttribute('data-day-count-select')) {
+                        syncDayCount();
+                    }
+                });
+            });
+
+            select.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    closeCustomSelect(select);
+                    trigger.focus();
+                }
+            });
+        });
+
+        if (manualInput) {
+            manualInput.addEventListener('input', syncDayCount);
+        }
+
+        form.addEventListener('submit', (event) => {
+            const regionInput = form.querySelector('input[name="region_id"]');
+            if (regionInput && !regionInput.value) {
+                event.preventDefault();
+                regionInput.closest('[data-custom-select]')?.querySelector('.custom-select__trigger')?.focus();
+            }
+            syncDayCount();
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!event.target.closest('[data-custom-select]')) {
+                closeAllCustomSelects();
+            }
+        });
+
+        syncDayCount();
+    })();
+</script>
+{% endblock %}

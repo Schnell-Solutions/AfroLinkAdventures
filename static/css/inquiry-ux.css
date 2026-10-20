@@ -1,0 +1,242 @@
+.inquiry-progress {
+    margin: 0 0 clamp(20px, 3vw, 32px);
+}
+
+.inquiry-progress__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.inquiry-progress__step {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #8A8074;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.inquiry-progress__index {
+    display: inline-grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border: 1px solid #D5CAB8;
+    border-radius: 999px;
+    color: inherit;
+    font-size: 0.62rem;
+}
+
+.inquiry-progress__step.is-current {
+    color: #0A0A0A;
+}
+
+.inquiry-progress__step.is-current .inquiry-progress__index {
+    border-color: #0A0A0A;
+    background: #0A0A0A;
+    color: #FFFFFF;
+}
+
+.inquiry-progress__step.is-complete {
+    color: #9A7A43;
+}
+
+.inquiry-progress__step.is-complete .inquiry-progress__index {
+    border-color: #9A7A43;
+    color: #9A7A43;
+}
+
+.inquiry-commitment {
+    margin: 12px 0 0;
+    color: #6E6254;
+    font-size: 0.82rem;
+    line-height: 1.55;
+}
+
+.inquiry-commitment--compact {
+    margin-top: 10px;
+    font-size: 0.75rem;
+    line-height: 1.45;
+}
+
+.inquiry-dock {
+    position: sticky;
+    bottom: 0;
+    z-index: 40;
+    border-top: 1px solid #DED8CC;
+    background: rgba(247, 244, 237, 0.96);
+    backdrop-filter: blur(8px);
+}
+
+.inquiry-dock__inner {
+    width: min(100% - 24px, var(--container-width, 1120px));
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 18px;
+    padding: 12px 0;
+}
+
+.inquiry-dock__copy {
+    margin: 0;
+    color: #5F574C;
+    font-size: 0.82rem;
+    line-height: 1.45;
+}
+
+.inquiry-dock__cta {
+    display: inline-flex;
+    align-items: center;
+    min-height: 42px;
+    padding: 0 18px;
+    border: 0;
+    background: #0A0A0A;
+    color: #FFFFFF;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+    .inquiry-dock__cta:hover {
+    background: var(--color-gold);
+    color: #0A0A0A;
+}
+
+.quick-shortlist {
+    margin-top: 10px;
+}
+
+.quick-shortlist__btn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    padding: 0 12px;
+    border: 0;
+    background: #0A0A0A;
+    color: #FFFFFF;
+    font-size: 0.64rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.quick-shortlist__btn:hover {
+    background: var(--color-gold, #F2A900);
+    color: #0A0A0A;
+}
+
+.region-inquire {
+    margin-top: clamp(28px, 4vw, 40px);
+    padding-top: 24px;
+    border-top: 1px solid #DED8CC;
+    display: grid;
+    gap: 10px;
+    max-width: 520px;
+}
+
+.region-inquire__title {
+    margin: 0;
+    color: #0A0A0A;
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.region-inquire__copy {
+    margin: 0;
+    color: #5F574C;
+    font-size: 0.88rem;
+    line-height: 1.55;
+}
+
+.region-inquire__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 18px;
+    align-items: center;
+}
+
+.region-inquire__cta {
+    display: inline-flex;
+    align-items: center;
+    min-height: 42px;
+    padding: 0 16px;
+    border: 0;
+    background: #0A0A0A;
+    color: #FFFFFF;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.region-inquire__cta:hover {
+    background: var(--color-gold, #F2A900);
+    color: #0A0A0A;
+}
+
+.toast--rich {
+    grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.toast__body {
+    display: grid;
+    gap: 10px;
+}
+
+.toast__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.toast__action {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 0 12px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: #FFFFFF;
+    color: #0A0A0A;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.toast__action:hover {
+    color: #0A0A0A;
+    background: #F7F4ED;
+}
+
+.toast__action--ghost {
+    background: transparent;
+    color: #FFFFFF;
+}
+
+.toast__action--ghost:hover {
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 640px) {
+    .inquiry-dock__inner {
+        align-items: stretch;
+    }
+
+    .inquiry-dock__cta {
+        justify-content: center;
+        width: 100%;
+    }
+}

@@ -1,0 +1,8 @@
+{% load i18n %}
+<form class="quick-shortlist" method="post" action="{% url 'inquiry_crm:add_interest_to_inquiry_list' %}">
+    {% csrf_token %}
+    <input type="hidden" name="interest_type" value="{{ interest_type }}">
+    <input type="hidden" name="object_id" value="{{ object_id }}">
+    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+    <button class="quick-shortlist__btn" type="submit">{% trans 'Add to shortlist' %}</button>
+</form>

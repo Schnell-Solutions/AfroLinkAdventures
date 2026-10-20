@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block meta_title %}Destinations | AfroLink Adventures{% endblock %}
+{% block meta_description %}Explore AfroLink destination hubs for golf, safari, wellness, and accommodation planning across Kenya.{% endblock %}
+{% block body_class %}regions-body{% endblock %}
+
+{% block extra_head %}
+<style>
+    .destination-list,
+    .destination-list * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    .destination-list {
+        --destination-card-gap: clamp(32px, 4vw, 44px);
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        padding: var(--space-page);
+    }
+
+    body.regions-body:not(.home-body),
+    body.regions-body:not(.home-body) .site-main,
+    body.regions-body:not(.home-body) .content-frame {
+        background: #FFFFFF;
+    }
+
+    .destination-header {
+        display: grid;
+        gap: 8px;
+        max-width: 700px;
+        margin-bottom: 28px;
+    }
+
+    .destination-title {
+        color: #0A0A0A;
+        font-size: clamp(1.75rem, 3.4vw, 3.1rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.1;
+        text-transform: uppercase;
+    }
+
+    .destination-copy {
+        max-width: 560px;
+        color: #5F574C;
+        font-size: 0.92rem;
+        line-height: 1.65;
+    }
+
+    .destination-list__rule {
+        width: 100%;
+        margin: 0 0 28px;
+        border: 0;
+        border-top: 1px solid #DED8CC;
+    }
+
+    .destination-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--destination-card-gap);
+    }
+
+    .destination-card {
+        display: grid;
+        gap: 18px;
+        background: transparent;
+    }
+
+    .destination-card__media {
+        aspect-ratio: 16 / 10;
+        border-radius: var(--radius-media);
+        overflow: hidden;
+        background: #E7DFD1;
+    }
+
+    .destination-card__media img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        transition: transform 400ms ease;
+    }
+
+    .destination-card:hover .destination-card__media img {
+        transform: scale(1.03);
+    }
+
+    .destination-card__placeholder {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        place-items: center;
+        color: #7A6A55;
+        font-size: 0.68rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+    }
+
+    .destination-card__body {
+        display: grid;
+        align-content: space-between;
+        gap: 16px;
+    }
+
+    .destination-card__title {
+        max-width: 520px;
+        color: #0A0A0A;
+        font-size: clamp(1.25rem, 2.2vw, 1.8rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.15;
+        text-transform: uppercase;
+    }
+
+    .destination-card__meta {
+        color: #7A6A55;
+        font-size: 0.66rem;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+    }
+
+    .destination-card__summary {
+        max-width: 540px;
+        color: #5F574C;
+        font-size: 0.86rem;
+        line-height: 1.55;
+    }
+
+    .destination-card__link {
+        width: fit-content;
+        padding-bottom: 3px;
+        border-bottom: 1px solid currentColor;
+        color: #0A0A0A;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .destination-card__link:hover {
+        color: #9A7A43;
+    }
+
+    .empty-state {
+        border-top: 1px solid #D5CAB8;
+        padding: 32px 0;
+        color: #5F574C;
+        font-size: 0.92rem;
+        line-height: 1.65;
+    }
+
+    @media (max-width: 860px) {
+        .destination-list {
+            --destination-card-gap: 40px;
+        }
+
+        .destination-header {
+            margin-bottom: 24px;
+        }
+
+        .destination-grid {
+            grid-template-columns: 1fr;
+            gap: 44px;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .destination-list {
+            --destination-card-gap: 44px;
+            padding: 24px 0 56px;
+        }
+
+        .destination-header {
+            margin-bottom: 18px;
+        }
+
+        .destination-grid {
+            gap: 48px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<article class="destination-list">
+    <header class="destination-header">
+        <h1 class="destination-title">{% trans 'Destinations' %}</h1>
+        <p class="destination-copy">
+            {% trans 'Explore Kenyan golf, safari, wellness, and stay hubs arranged by geography for easier route planning.' %}
+        </p>
+    </header>
+
+    <hr class="destination-list__rule" aria-hidden="true">
+
+    <section class="destination-grid" aria-label="{% trans 'Available destination hubs' %}">
+        {% for region in regions %}
+            <article class="destination-card">
+                <div class="destination-card__media">
+                    {% with image=region.gallery_images.all.0 %}
+                        {% if image %}
+                            <img src="{{ image.image_url }}" alt="{% if request.LANGUAGE_CODE == 'de' and image.caption_de %}{{ image.caption_de }}{% elif image.caption_en %}{{ image.caption_en }}{% else %}{{ region.name_en }}{% endif %}">
+                        {% else %}
+                            <div class="destination-card__placeholder">{% trans 'Destination image' %}</div>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                <div class="destination-card__body">
+                    <p class="destination-card__meta">
+                        {{ region.golf_courses.all|length }} {% trans 'courses' %} / {{ region.safari_destinations.all|length }} {% trans 'safari destinations' %}
+                    </p>
+                    <h2 class="destination-card__title">
+                        {% if request.LANGUAGE_CODE == 'de' %}{{ region.name_de }}{% else %}{{ region.name_en }}{% endif %}
+                    </h2>
+                    <p class="destination-card__summary">
+                        {% if request.LANGUAGE_CODE == 'de' and region.description_de %}{{ region.description_de|truncatewords:30 }}{% else %}{{ region.description_en|truncatewords:30 }}{% endif %}
+                    </p>
+                    <a class="destination-card__link" href="{% url 'destination_cms:region_hub' region.slug %}">
+                        {% trans 'Open Destination →' %}
+                    </a>
+                </div>
+            </article>
+        {% empty %}
+            {% include "includes/listing_empty.html" %}
+        {% endfor %}
+    </section>
+</article>
+{% endblock %}

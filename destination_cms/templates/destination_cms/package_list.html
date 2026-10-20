@@ -1,0 +1,686 @@
+{% extends "base.html" %}
+{% load i18n static cms_extras %}
+
+{% block meta_title %}Journeys | AfroLink Adventures{% endblock %}
+{% block meta_description %}Explore private AfroLink golf, safari, and wellness journeys ready for concierge customization.{% endblock %}
+{% block body_class %}journeys-body{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/listing-filters.css' %}">
+<style>
+    .journey-list,
+    .journey-list * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    .journey-list {
+        --journey-card-gap: clamp(32px, 4vw, 44px);
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        padding: var(--space-page);
+    }
+
+    body.journeys-body:not(.home-body),
+    body.journeys-body:not(.home-body) .site-main,
+    body.journeys-body:not(.home-body) .content-frame {
+        background: #FFFFFF;
+    }
+
+    .journey-list__header {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 28px;
+    }
+
+    .journey-list__intro {
+        display: grid;
+        gap: 8px;
+        max-width: 700px;
+    }
+
+    .journey-list__title {
+        color: #0A0A0A;
+        font-size: clamp(1.75rem, 3.4vw, 3.1rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.1;
+        text-transform: uppercase;
+    }
+
+    .journey-list__copy {
+        color: #5F574C;
+        font-size: 0.92rem;
+        line-height: 1.65;
+    }
+
+    .journey-list__rule {
+        display: none;
+    }
+
+    .planner-launch {
+        display: inline-flex;
+        align-items: center;
+        min-height: 48px;
+        border: 0;
+        border-radius: var(--radius-media);
+        background: #0A0A0A;
+        color: #FFFFFF;
+        padding: 0 24px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        transition: background-color var(--ease-standard), color var(--ease-standard);
+    }
+
+    .planner-launch:hover {
+        background: var(--color-gold);
+        color: #0A0A0A;
+    }
+
+    .journey-filters {
+        display: grid;
+        grid-template-columns: minmax(0, 1.5fr) repeat(4, minmax(0, 1fr)) auto;
+        gap: clamp(18px, 3vw, 28px);
+        align-items: end;
+        margin-bottom: 24px;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: #FFFFFF;
+    }
+
+    .filter-field {
+        display: grid;
+        gap: 7px;
+    }
+
+    .filter-field label {
+        color: #7A6A55;
+        font-size: 0.64rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .filter-field input,
+    .filter-field select {
+        min-height: 44px;
+        width: 100%;
+        border: 0;
+        border-bottom: 1px solid #D5CAB8;
+        background: transparent;
+        color: #0A0A0A;
+        padding: 0 8px 10px;
+        font: inherit;
+        font-size: 0.88rem;
+    }
+
+    .custom-select {
+        position: relative;
+    }
+
+    .custom-select__trigger {
+        width: 100%;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        border: 0;
+        border-bottom: 1px solid #D5CAB8;
+        background: transparent;
+        color: #0A0A0A;
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.88rem;
+        padding: 0 8px 10px;
+        text-align: left;
+    }
+
+    .custom-select__trigger:focus-visible,
+    .custom-select.is-open .custom-select__trigger {
+        border-color: #0A0A0A;
+        outline: 0;
+    }
+
+    .custom-select__chevron {
+        width: 14px;
+        height: 9px;
+        flex: none;
+        color: #7A6A55;
+        transition: transform var(--ease-standard), color var(--ease-standard);
+    }
+
+    .custom-select.is-open .custom-select__chevron {
+        color: #0A0A0A;
+        transform: rotate(180deg);
+    }
+
+    .custom-select__menu {
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        z-index: 15;
+        width: 100%;
+        display: grid;
+        gap: 2px;
+        padding: 5px;
+        border: 1px solid #DED8CC;
+        border-radius: var(--radius-media);
+        background: #FFFFFF;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(6px);
+        transition: opacity var(--ease-standard), transform var(--ease-standard);
+    }
+
+    .custom-select.is-open .custom-select__menu {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    .custom-select__option {
+        width: 100%;
+        min-height: 38px;
+        border: 0;
+        border-radius: calc(var(--radius-media) - 2px);
+        background: transparent;
+        color: #0A0A0A;
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.84rem;
+        padding: 0 8px;
+        text-align: left;
+    }
+
+    .custom-select__option:hover,
+    .custom-select__option:focus-visible {
+        background: #F7F4ED;
+        color: #0A0A0A;
+        outline: 0;
+    }
+
+    .custom-select__option.is-selected {
+        background: #0A0A0A;
+        color: #FFFFFF;
+    }
+
+    .filter-field input:focus,
+    .filter-field select:focus {
+        border-color: #0A0A0A;
+        outline: 0;
+    }
+
+    .filter-field input::placeholder {
+        color: #9C9081;
+    }
+
+    .filter-field select {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg width='14' height='9' viewBox='0 0 14 9' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.25 1.5L7 7.25L12.75 1.5' stroke='%237A6A55' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        background-position: right 2px center;
+        background-size: 14px 9px;
+        background-repeat: no-repeat;
+        padding-right: 30px;
+    }
+
+    .filter-actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        align-self: end;
+        justify-self: end;
+        min-height: 44px;
+    }
+
+    .filter-actions:empty {
+        display: none;
+    }
+
+    .filter-actions--noscript {
+        display: none;
+    }
+
+    .filter-submit {
+        min-height: 44px;
+        border: 1px solid #0A0A0A;
+        border-radius: var(--radius-media);
+        background: #0A0A0A;
+        color: #FFFFFF;
+        cursor: pointer;
+        padding: 0 20px;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        transition: background-color var(--ease-standard), color var(--ease-standard);
+    }
+
+    .filter-submit:hover {
+        background: transparent;
+        color: #0A0A0A;
+    }
+
+    .filter-clear {
+        min-height: 36px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-media);
+        background: #F7F4ED;
+        color: #7A6A55;
+        padding: 0 12px;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    .filter-clear:hover {
+        background: #0A0A0A;
+        color: #FFFFFF;
+    }
+
+    .result-summary {
+        margin: -8px 0 16px;
+        color: #7A6A55;
+        font-size: 0.78rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+    }
+
+    .result-summary[hidden] {
+        display: none !important;
+        margin: 0;
+    }
+
+    .journey-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--journey-card-gap);
+    }
+
+    .journey-card {
+        display: grid;
+        gap: 18px;
+        background: transparent;
+    }
+
+    .journey-card__media {
+        aspect-ratio: 16 / 10;
+        border-radius: var(--radius-media);
+        overflow: hidden;
+        background: #E7DFD1;
+    }
+
+    .journey-card__media img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        transition: transform 400ms ease;
+    }
+
+    .journey-card:hover .journey-card__media img {
+        transform: scale(1.03);
+    }
+
+    .journey-card__placeholder {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        place-items: center;
+        color: #8A7B63;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+    }
+
+    .journey-card__body {
+        display: grid;
+        align-content: space-between;
+        gap: 16px;
+    }
+
+    .journey-card__meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px 10px;
+        color: #7A6A55;
+        font-size: 0.66rem;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+    }
+
+    .journey-card__title {
+        max-width: 520px;
+        margin-top: 8px;
+        color: #0A0A0A;
+        font-size: clamp(1.25rem, 2.2vw, 1.8rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.15;
+        text-transform: uppercase;
+    }
+
+    .journey-card__summary {
+        max-width: 540px;
+        margin-top: 12px;
+        color: #5F574C;
+        font-size: 0.86rem;
+        line-height: 1.55;
+    }
+
+    .journey-card__footer {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 24px;
+    }
+
+    .journey-card__price {
+        color: #5F574C;
+        font-size: 0.82rem;
+        line-height: 1.4;
+    }
+
+    .journey-card__link {
+        width: fit-content;
+        padding-bottom: 3px;
+        border-bottom: 1px solid currentColor;
+        color: #0A0A0A;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        transition: color var(--ease-standard);
+    }
+
+    .journey-card__link:hover {
+        color: #9A7A43;
+    }
+
+    .empty-state {
+        display: none;
+    }
+
+    @media (max-width: 1100px) {
+        .journey-filters {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .journey-filters .filter-field--search {
+            grid-column: 1 / -1;
+        }
+    }
+
+    @media (max-width: 860px) {
+        .journey-list {
+            --journey-card-gap: 40px;
+        }
+
+        .journey-list__header {
+            align-items: flex-start;
+            flex-direction: column;
+            margin-bottom: 24px;
+        }
+
+        .journey-filters {
+            margin-bottom: 20px;
+        }
+
+        .journey-grid {
+            grid-template-columns: 1fr;
+            gap: 44px;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .journey-list {
+            --journey-card-gap: 44px;
+            padding: 24px 0 56px;
+        }
+
+        .journey-list__header {
+            margin-bottom: 24px;
+        }
+
+        .journey-filters {
+            grid-template-columns: 1fr;
+            margin-bottom: 18px;
+        }
+
+        .journey-grid {
+            gap: 48px;
+        }
+
+        .filter-actions {
+            justify-self: start;
+        }
+
+        .planner-launch {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 560px) {
+        .journey-card__footer {
+            align-items: start;
+            flex-direction: column;
+            gap: 12px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<article class="journey-list" data-listing-root>
+    <header class="journey-list__header">
+        <div class="journey-list__intro">
+            <h1 class="journey-list__title">{% trans 'Signature Journeys' %}</h1>
+            <p class="journey-list__copy">
+                {% trans 'Curated golf, safari, and wellness routes that can be refined privately with our concierge team.' %}
+            </p>
+        </div>
+        <a class="planner-launch" href="{% url 'inquiry_crm:inquiry_start' %}">{% trans 'Start an enquiry' %}</a>
+    </header>
+
+    <hr class="journey-list__rule" aria-hidden="true">
+
+    <form class="journey-filters" method="get" action="{% url 'destination_cms:package_list' %}" data-listing-filter>
+        <div class="filter-field filter-field--search">
+            <label for="filter-q">{% trans 'Search' %}</label>
+            <input
+                type="search"
+                id="filter-q"
+                name="q"
+                value="{{ filters.q }}"
+                placeholder="{% trans 'Journey name or theme' %}"
+            >
+        </div>
+
+        <div class="filter-field">
+            <label id="filter-type-label">{% trans 'Type' %}</label>
+            <div class="custom-select" data-custom-select>
+                <input type="hidden" name="type" value="{{ filters.type }}" data-custom-select-input>
+                <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="filter-type-label">
+                    <span data-custom-select-label>
+                        {% if filters.type == 'golf' %}
+                            {% trans 'Golf Focused' %}
+                        {% elif filters.type == 'safari' %}
+                            {% trans 'Safari Focused' %}
+                        {% elif filters.type == 'golf_safari' %}
+                            {% trans 'Safari + Golf' %}
+                        {% else %}
+                            {% trans 'All types' %}
+                        {% endif %}
+                    </span>
+                    <svg class="custom-select__chevron" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                        <path d="M1.25 1.5L7 7.25L12.75 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div class="custom-select__menu" role="listbox" aria-labelledby="filter-type-label">
+                    <button class="custom-select__option {% if not filters.type %}is-selected{% endif %}" type="button" role="option" data-value="" aria-selected="{% if not filters.type %}true{% else %}false{% endif %}">{% trans 'All types' %}</button>
+                    <button class="custom-select__option {% if filters.type == 'golf' %}is-selected{% endif %}" type="button" role="option" data-value="golf" aria-selected="{% if filters.type == 'golf' %}true{% else %}false{% endif %}">{% trans 'Golf Focused' %}</button>
+                    <button class="custom-select__option {% if filters.type == 'safari' %}is-selected{% endif %}" type="button" role="option" data-value="safari" aria-selected="{% if filters.type == 'safari' %}true{% else %}false{% endif %}">{% trans 'Safari Focused' %}</button>
+                    <button class="custom-select__option {% if filters.type == 'golf_safari' %}is-selected{% endif %}" type="button" role="option" data-value="golf_safari" aria-selected="{% if filters.type == 'golf_safari' %}true{% else %}false{% endif %}">{% trans 'Safari + Golf' %}</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-field">
+            <label id="filter-duration-label">{% trans 'Duration' %}</label>
+            <div class="custom-select" data-custom-select>
+                <input type="hidden" name="duration" value="{{ filters.duration }}" data-custom-select-input>
+                <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="filter-duration-label">
+                    <span data-custom-select-label>
+                        {% if filters.duration == 'short' %}
+                            {% trans 'Up to 7 days' %}
+                        {% elif filters.duration == 'medium' %}
+                            {% trans '8 - 12 days' %}
+                        {% elif filters.duration == 'long' %}
+                            {% trans '13+ days' %}
+                        {% else %}
+                            {% trans 'Any length' %}
+                        {% endif %}
+                    </span>
+                    <svg class="custom-select__chevron" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                        <path d="M1.25 1.5L7 7.25L12.75 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div class="custom-select__menu" role="listbox" aria-labelledby="filter-duration-label">
+                    <button class="custom-select__option {% if not filters.duration %}is-selected{% endif %}" type="button" role="option" data-value="" aria-selected="{% if not filters.duration %}true{% else %}false{% endif %}">{% trans 'Any length' %}</button>
+                    <button class="custom-select__option {% if filters.duration == 'short' %}is-selected{% endif %}" type="button" role="option" data-value="short" aria-selected="{% if filters.duration == 'short' %}true{% else %}false{% endif %}">{% trans 'Up to 7 days' %}</button>
+                    <button class="custom-select__option {% if filters.duration == 'medium' %}is-selected{% endif %}" type="button" role="option" data-value="medium" aria-selected="{% if filters.duration == 'medium' %}true{% else %}false{% endif %}">{% trans '8 - 12 days' %}</button>
+                    <button class="custom-select__option {% if filters.duration == 'long' %}is-selected{% endif %}" type="button" role="option" data-value="long" aria-selected="{% if filters.duration == 'long' %}true{% else %}false{% endif %}">{% trans '13+ days' %}</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-field">
+            <label id="filter-offer-label">{% trans 'Offers' %}</label>
+            <div class="custom-select" data-custom-select>
+                <input type="hidden" name="offer" value="{{ filters.offer }}" data-custom-select-input>
+                <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="filter-offer-label">
+                    <span data-custom-select-label>
+                        {% if filters.offer == 'special' %}
+                            {% trans 'Special offers only' %}
+                        {% else %}
+                            {% trans 'All journeys' %}
+                        {% endif %}
+                    </span>
+                    <svg class="custom-select__chevron" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                        <path d="M1.25 1.5L7 7.25L12.75 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div class="custom-select__menu" role="listbox" aria-labelledby="filter-offer-label">
+                    <button class="custom-select__option {% if not filters.offer %}is-selected{% endif %}" type="button" role="option" data-value="" aria-selected="{% if not filters.offer %}true{% else %}false{% endif %}">{% trans 'All journeys' %}</button>
+                    <button class="custom-select__option {% if filters.offer == 'special' %}is-selected{% endif %}" type="button" role="option" data-value="special" aria-selected="{% if filters.offer == 'special' %}true{% else %}false{% endif %}">{% trans 'Special offers only' %}</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-field">
+            <label id="filter-sort-label">{% trans 'Sort By' %}</label>
+            <div class="custom-select" data-custom-select>
+                <input type="hidden" name="sort" value="{{ filters.sort }}" data-custom-select-input>
+                <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="filter-sort-label">
+                    <span data-custom-select-label>
+                        {% if filters.sort == 'duration' %}
+                            {% trans 'Duration' %}
+                        {% elif filters.sort == 'price_asc' %}
+                            {% trans 'Price: Low to High' %}
+                        {% elif filters.sort == 'price_desc' %}
+                            {% trans 'Price: High to Low' %}
+                        {% else %}
+                            {% trans 'Recommended' %}
+                        {% endif %}
+                    </span>
+                    <svg class="custom-select__chevron" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                        <path d="M1.25 1.5L7 7.25L12.75 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div class="custom-select__menu" role="listbox" aria-labelledby="filter-sort-label">
+                    <button class="custom-select__option {% if not filters.sort %}is-selected{% endif %}" type="button" role="option" data-value="" aria-selected="{% if not filters.sort %}true{% else %}false{% endif %}">{% trans 'Recommended' %}</button>
+                    <button class="custom-select__option {% if filters.sort == 'duration' %}is-selected{% endif %}" type="button" role="option" data-value="duration" aria-selected="{% if filters.sort == 'duration' %}true{% else %}false{% endif %}">{% trans 'Duration' %}</button>
+                    <button class="custom-select__option {% if filters.sort == 'price_asc' %}is-selected{% endif %}" type="button" role="option" data-value="price_asc" aria-selected="{% if filters.sort == 'price_asc' %}true{% else %}false{% endif %}">{% trans 'Price: Low to High' %}</button>
+                    <button class="custom-select__option {% if filters.sort == 'price_desc' %}is-selected{% endif %}" type="button" role="option" data-value="price_desc" aria-selected="{% if filters.sort == 'price_desc' %}true{% else %}false{% endif %}">{% trans 'Price: High to Low' %}</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-actions">
+            <a class="filter-clear" href="{% url 'destination_cms:package_list' %}" data-filter-clear hidden>{% trans 'Clear Filters' %}</a>
+            <noscript>
+                <button type="submit" class="filter-submit">{% trans 'Apply' %}</button>
+            </noscript>
+        </div>
+    </form>
+
+    <p class="result-summary" data-filter-summary data-singular="{% trans '{count} journey found' %}" data-plural="{% trans '{count} journeys found' %}" hidden></p>
+
+    <section class="journey-grid" aria-label="{% trans 'Available journeys' %}" data-filter-grid>
+        {% for card in package_cards %}
+            <article
+                class="journey-card"
+                data-filter-item
+                data-search="{% localized_text card.package 'title' %} {% if request.LANGUAGE_CODE == 'de' and card.package.summary_de %}{{ card.package.summary_de }}{% else %}{{ card.package.summary_en }}{% endif %}"
+                data-type="{{ card.package.package_type }}"
+                data-duration-days="{{ card.package.duration_days }}"
+                data-sort-duration="{{ card.package.duration_days }}"
+                data-sort-price="{{ card.starting_price|default:'' }}"
+                data-sort-title="{% localized_text card.package 'title' %}"
+                data-offer="{% if card.has_promo_price %}special{% endif %}"
+            >
+                <div class="journey-card__media">
+                    {% if card.image_url %}
+                        <img src="{{ card.image_url }}" alt="{% localized_text card.package 'title' %}">
+                    {% else %}
+                        <div class="journey-card__placeholder">{% trans 'Journey image' %}</div>
+                    {% endif %}
+                </div>
+                <div class="journey-card__body">
+                    <div>
+                            <p class="journey-card__meta">
+                                {% if card.package_type_label %}
+                                    <span class="package-type-chip package-type-chip--{{ card.package.package_type }}">{{ card.package_type_label }}</span>
+                                {% endif %}
+                                {{ card.package.duration_days }} {% trans 'Days' %}
+                            </p>
+                        <h2 class="journey-card__title">
+                            {% localized_text card.package 'title' %}
+                        </h2>
+                        <p class="journey-card__summary">
+                            {% if request.LANGUAGE_CODE == 'de' and card.package.summary_de %}{{ card.package.summary_de }}{% else %}{{ card.package.summary_en|default:"Private golf, safari, and wellness routing refined by the AfroLink concierge team." }}{% endif %}
+                        </p>
+                    </div>
+                    <div class="journey-card__footer">
+                        {% include "includes/package_price.html" with has_promo_price=card.has_promo_price promo_price_label=card.promo_price_label original_price_label=card.original_price_label starting_price_label=card.starting_price_label savings_label=card.savings_label promo_label='' is_featured_promo=False compact=True only %}
+                        <a class="journey-card__link" href="{% url 'destination_cms:package_detail' card.package.slug %}">
+                            {% trans 'Explore Journey →' %}
+                        </a>
+                    </div>
+                </div>
+            </article>
+        {% endfor %}
+    </section>
+
+    {% include "includes/filter_empty.html" %}
+</article>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/listing-filters.js' %}" defer></script>
+{% endblock %}

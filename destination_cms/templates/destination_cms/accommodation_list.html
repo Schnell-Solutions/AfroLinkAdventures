@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block meta_title %}Lodges & Resorts | AfroLink Adventures{% endblock %}
+{% block meta_description %}Explore AfroLink accommodation anchors for private golf, safari, and wellness journeys.{% endblock %}
+
+{% block extra_head %}
+<style>
+    .stay-list,
+    .stay-list * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    .stay-list {
+        display: grid;
+        gap: var(--space-section);
+        padding: var(--space-page);
+    }
+
+    .stay-header {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.9fr);
+        gap: var(--space-section);
+        align-items: end;
+        padding-bottom: var(--space-section);
+        border-bottom: 1px solid #D5CAB8;
+    }
+
+    .stay-kicker {
+        margin-bottom: 16px;
+        color: #9A7A43;
+        font-size: 0.68rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+    }
+
+    .stay-title {
+        color: #0A0A0A;
+        font-size: clamp(2rem, 5vw, 4.2rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1;
+        text-transform: uppercase;
+    }
+
+    .stay-copy {
+        color: #5F574C;
+        font-size: 0.92rem;
+        line-height: 1.65;
+    }
+
+    .stay-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-card);
+    }
+
+    .stay-card {
+        display: grid;
+        border: 1px solid #D5CAB8;
+        background: transparent;
+    }
+
+    .stay-card__media {
+        aspect-ratio: 16 / 10;
+        border-bottom: 1px solid #D5CAB8;
+        overflow: hidden;
+    }
+
+    .stay-card__media img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+    }
+
+    .stay-card__placeholder {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        place-items: center;
+        color: #7A6A55;
+        font-size: 0.68rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+    }
+
+    .stay-card__body {
+        display: grid;
+        gap: 18px;
+        padding: clamp(22px, 3vw, 32px);
+    }
+
+    .stay-card__title {
+        color: #0A0A0A;
+        font-size: clamp(1.35rem, 2.6vw, 2.25rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.05;
+        text-transform: uppercase;
+    }
+
+    .stay-card__meta {
+        color: #7A6A55;
+        font-size: 0.66rem;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+    }
+
+    .stay-card__link {
+        width: fit-content;
+        border-bottom: 1px solid currentColor;
+        color: #0A0A0A;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .empty-state {
+        border: 1px solid #D5CAB8;
+        padding: 32px;
+        color: #5F574C;
+    }
+
+    @media (max-width: 860px) {
+        .stay-header,
+        .stay-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<article class="stay-list">
+    <header class="stay-header">
+        <div>
+            <p class="stay-kicker">{% trans 'Lodges & Resorts' %}</p>
+            <h1 class="stay-title">{% trans 'Stay with purpose.' %}</h1>
+        </div>
+        <p class="stay-copy">
+            {% trans 'Accommodation anchors are selected for routing logic, rest quality, regional character, and access to golf, safari, and wellness experiences.' %}
+        </p>
+    </header>
+
+    <section class="stay-grid" aria-label="{% trans 'Available accommodations' %}">
+        {% for accommodation in accommodations %}
+            <article class="stay-card">
+                <div class="stay-card__media">
+                    {% with image=accommodation.gallery_images.all.0 %}
+                        {% if image %}
+                            <img src="{{ image.image_url }}" alt="{% if request.LANGUAGE_CODE == 'de' and image.caption_de %}{{ image.caption_de }}{% elif image.caption_en %}{{ image.caption_en }}{% else %}{{ accommodation.name }}{% endif %}">
+                        {% else %}
+                            <div class="stay-card__placeholder">{% trans 'Accommodation image' %}</div>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                <div class="stay-card__body">
+                    <p class="stay-card__meta">
+                        {{ accommodation.star_rating }} {% trans 'Star' %} / {% if request.LANGUAGE_CODE == 'de' %}{{ accommodation.region.name_de }}{% else %}{{ accommodation.region.name_en }}{% endif %}
+                    </p>
+                    <h2 class="stay-card__title">{{ accommodation.name }}</h2>
+                    <p class="stay-copy">
+                        {% if request.LANGUAGE_CODE == 'de' and accommodation.description_de %}{{ accommodation.description_de }}{% else %}{{ accommodation.description_en }}{% endif %}
+                    </p>
+                    {% if accommodation.slug %}
+                        <a class="stay-card__link" href="{% url 'destination_cms:accommodation_detail' accommodation.slug %}">
+                            {% trans 'Open Stay →' %}
+                        </a>
+                    {% endif %}
+                    {% include "includes/quick_shortlist.html" with interest_type="accommodation" object_id=accommodation.pk %}
+                </div>
+            </article>
+        {% empty %}
+            {% include "includes/listing_empty.html" %}
+        {% endfor %}
+    </section>
+</article>
+{% endblock %}

@@ -1,0 +1,562 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block meta_title %}{% trans 'Safari Destinations' %} | AfroLink Adventures{% endblock %}
+{% block meta_description %}{% trans 'Browse AfroLink safari destinations paired with private East African golf and wellness journeys.' %}{% endblock %}
+{% block body_class %}safaris-body{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/listing-filters.css' %}">
+<style>
+    .safari-list,
+    .safari-list * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    body.safaris-body .safari-list {
+        --safari-card-gap: clamp(32px, 4vw, 44px);
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        padding: var(--space-page);
+    }
+
+    body.safaris-body:not(.home-body),
+    body.safaris-body:not(.home-body) .site-main,
+    body.safaris-body:not(.home-body) .content-frame {
+        background: #FFFFFF;
+    }
+
+    .safari-list__header {
+        display: grid;
+        gap: 8px;
+        max-width: 700px;
+        margin-bottom: 28px;
+    }
+
+    .safari-list__title {
+        color: #0A0A0A;
+        font-size: clamp(1.75rem, 3.4vw, 3.1rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.1;
+        text-transform: uppercase;
+    }
+
+    .safari-list__copy {
+        color: #5F574C;
+        font-size: 0.92rem;
+        line-height: 1.65;
+    }
+
+    .safari-list__rule {
+        display: none;
+    }
+
+    .safari-filters {
+        display: grid;
+        grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr)) auto;
+        gap: clamp(18px, 3vw, 28px);
+        align-items: end;
+        margin-bottom: 24px;
+        padding: 0;
+        border: 0;
+        background: #FFFFFF;
+    }
+
+    .filter-field {
+        display: grid;
+        gap: 7px;
+    }
+
+    .filter-field label {
+        color: #7A6A55;
+        font-size: 0.64rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .filter-field input {
+        min-height: 44px;
+        width: 100%;
+        border: 0;
+        border-bottom: 1px solid #D5CAB8;
+        background: transparent;
+        color: #0A0A0A;
+        padding: 0 8px 10px;
+        font: inherit;
+        font-size: 0.88rem;
+    }
+
+    .filter-field input:focus {
+        border-color: #0A0A0A;
+        outline: 0;
+    }
+
+    .filter-field input::placeholder {
+        color: #9C9081;
+    }
+
+    .custom-select {
+        position: relative;
+    }
+
+    .custom-select__trigger {
+        width: 100%;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        border: 0;
+        border-bottom: 1px solid #D5CAB8;
+        background: transparent;
+        color: #0A0A0A;
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.88rem;
+        padding: 0 8px 10px;
+        text-align: left;
+    }
+
+    .custom-select__trigger:focus-visible,
+    .custom-select.is-open .custom-select__trigger {
+        border-color: #0A0A0A;
+        outline: 0;
+    }
+
+    .custom-select__chevron {
+        width: 14px;
+        height: 9px;
+        flex: none;
+        color: #7A6A55;
+        transition: transform var(--ease-standard), color var(--ease-standard);
+    }
+
+    .custom-select.is-open .custom-select__chevron {
+        color: #0A0A0A;
+        transform: rotate(180deg);
+    }
+
+    .custom-select__menu {
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        z-index: 15;
+        width: 100%;
+        display: grid;
+        gap: 2px;
+        padding: 5px;
+        border: 1px solid #DED8CC;
+        border-radius: var(--radius-media);
+        background: #FFFFFF;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(6px);
+        transition: opacity var(--ease-standard), transform var(--ease-standard);
+    }
+
+    .custom-select.is-open .custom-select__menu {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    .custom-select__option {
+        width: 100%;
+        min-height: 38px;
+        border: 0;
+        border-radius: calc(var(--radius-media) - 2px);
+        background: transparent;
+        color: #0A0A0A;
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.84rem;
+        padding: 0 8px;
+        text-align: left;
+    }
+
+    .custom-select__option:hover,
+    .custom-select__option:focus-visible {
+        background: #F7F4ED;
+        color: #0A0A0A;
+        outline: 0;
+    }
+
+    .custom-select__option.is-selected {
+        background: #0A0A0A;
+        color: #FFFFFF;
+    }
+
+    .filter-actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        align-self: end;
+        justify-self: end;
+        min-height: 44px;
+    }
+
+    .filter-submit {
+        min-height: 44px;
+        border: 1px solid #0A0A0A;
+        border-radius: var(--radius-media);
+        background: #0A0A0A;
+        color: #FFFFFF;
+        cursor: pointer;
+        padding: 0 20px;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        transition: background-color var(--ease-standard), color var(--ease-standard);
+    }
+
+    .filter-submit:hover {
+        background: transparent;
+        color: #0A0A0A;
+    }
+
+    .filter-clear {
+        min-height: 36px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-media);
+        background: #F7F4ED;
+        color: #7A6A55;
+        padding: 0 12px;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        transition: background-color var(--ease-standard), color var(--ease-standard);
+    }
+
+    .filter-clear:hover {
+        background: #0A0A0A;
+        color: #FFFFFF;
+    }
+
+    .result-summary {
+        margin: -8px 0 16px;
+        color: #7A6A55;
+        font-size: 0.78rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+    }
+
+    .result-summary[hidden] {
+        display: none !important;
+        margin: 0;
+    }
+
+    body.safaris-body .safari-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--safari-card-gap);
+    }
+
+    .content-card {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        gap: 14px;
+        background: transparent;
+    }
+
+    .content-card__media {
+        aspect-ratio: 16 / 10;
+        overflow: hidden;
+        border-radius: var(--radius-media);
+        background: #E7DFD1;
+    }
+
+    .content-card__media img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        transition: transform 400ms ease;
+    }
+
+    .content-card:hover .content-card__media img {
+        transform: scale(1.03);
+    }
+
+    .content-card__placeholder {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        place-items: center;
+        color: #7A6A55;
+        font-size: 0.66rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .content-card__body {
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .content-label {
+        color: #7A6A55;
+        font-size: 0.66rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .content-title {
+        color: #0A0A0A;
+        font-size: clamp(1.05rem, 1.7vw, 1.35rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.18;
+        text-transform: uppercase;
+    }
+
+    .content-copy {
+        color: #5F574C;
+        font-size: 0.84rem;
+        line-height: 1.55;
+    }
+
+    .content-link {
+        width: fit-content;
+        margin-top: auto;
+        padding-bottom: 3px;
+        border-bottom: 1px solid currentColor;
+        color: #0A0A0A;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .content-link:hover {
+        color: #9A7A43;
+    }
+
+    @media (max-width: 1100px) {
+        .safari-filters {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .safari-filters .filter-field--search {
+            grid-column: 1 / -1;
+        }
+    }
+
+    @media (max-width: 980px) {
+        body.safaris-body .safari-list {
+            --safari-card-gap: 40px;
+        }
+
+        .safari-filters {
+            margin-bottom: 20px;
+        }
+
+        body.safaris-body .safari-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 44px;
+        }
+    }
+
+    @media (max-width: 720px) {
+        body.safaris-body .safari-list {
+            --safari-card-gap: 44px;
+            padding: 24px 0 56px;
+        }
+
+        .safari-list__header {
+            margin-bottom: 24px;
+        }
+
+        .safari-filters {
+            grid-template-columns: 1fr;
+            margin-bottom: 18px;
+        }
+
+        body.safaris-body .safari-grid {
+            grid-template-columns: 1fr;
+            gap: 48px;
+        }
+
+        .filter-actions {
+            justify-self: start;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<article class="safari-list" data-listing-root>
+    <header class="safari-list__header">
+        <h1 class="safari-list__title">{% trans 'Safari Destinations' %}</h1>
+        <p class="safari-list__copy">
+            {% trans 'Parks, reserves, and conservancies chosen for wildlife density, access, and how cleanly they sit beside golf and recovery days.' %}
+        </p>
+    </header>
+
+    <hr class="safari-list__rule" aria-hidden="true">
+
+    <form class="safari-filters" method="get" action="{% url 'destination_cms:safari_list' %}" data-listing-filter>
+        <div class="filter-field filter-field--search">
+            <label for="filter-q">{% trans 'Search' %}</label>
+            <input
+                type="search"
+                id="filter-q"
+                name="q"
+                value="{{ filters.q }}"
+                placeholder="{% trans 'Destination, wildlife, or region' %}"
+            >
+        </div>
+
+        <div class="filter-field">
+            <label id="filter-region-label">{% trans 'Region' %}</label>
+            <div class="custom-select" data-custom-select>
+                <input type="hidden" name="region" value="{{ filters.region }}" data-custom-select-input>
+                <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="filter-region-label">
+                    <span data-custom-select-label>
+                        {% if filters.region %}
+                            {% for region in filter_regions %}
+                                {% if filters.region == region.slug %}
+                                    {% if request.LANGUAGE_CODE == 'de' and region.name_de %}{{ region.name_de }}{% else %}{{ region.name_en }}{% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            {% trans 'All regions' %}
+                        {% endif %}
+                    </span>
+                    <svg class="custom-select__chevron" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                        <path d="M1.25 1.5L7 7.25L12.75 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div class="custom-select__menu" role="listbox" aria-labelledby="filter-region-label">
+                    <button class="custom-select__option {% if not filters.region %}is-selected{% endif %}" type="button" role="option" data-value="" aria-selected="{% if not filters.region %}true{% else %}false{% endif %}">{% trans 'All regions' %}</button>
+                    {% for region in filter_regions %}
+                        <button class="custom-select__option {% if filters.region == region.slug %}is-selected{% endif %}" type="button" role="option" data-value="{{ region.slug }}" aria-selected="{% if filters.region == region.slug %}true{% else %}false{% endif %}">
+                            {% if request.LANGUAGE_CODE == 'de' and region.name_de %}{{ region.name_de }}{% else %}{{ region.name_en }}{% endif %}
+                        </button>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-field">
+            <label id="filter-wildlife-label">{% trans 'Wildlife' %}</label>
+            <div class="custom-select" data-custom-select>
+                <input type="hidden" name="big_five" value="{{ filters.big_five }}" data-custom-select-input>
+                <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="filter-wildlife-label">
+                    <span data-custom-select-label>
+                        {% if filters.big_five == 'yes' %}
+                            {% trans 'Big Five' %}
+                        {% elif filters.big_five == 'no' %}
+                            {% trans 'Specialty focus' %}
+                        {% else %}
+                            {% trans 'All wildlife' %}
+                        {% endif %}
+                    </span>
+                    <svg class="custom-select__chevron" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                        <path d="M1.25 1.5L7 7.25L12.75 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div class="custom-select__menu" role="listbox" aria-labelledby="filter-wildlife-label">
+                    <button class="custom-select__option {% if not filters.big_five %}is-selected{% endif %}" type="button" role="option" data-value="" aria-selected="{% if not filters.big_five %}true{% else %}false{% endif %}">{% trans 'All wildlife' %}</button>
+                    <button class="custom-select__option {% if filters.big_five == 'yes' %}is-selected{% endif %}" type="button" role="option" data-value="yes" aria-selected="{% if filters.big_five == 'yes' %}true{% else %}false{% endif %}">{% trans 'Big Five' %}</button>
+                    <button class="custom-select__option {% if filters.big_five == 'no' %}is-selected{% endif %}" type="button" role="option" data-value="no" aria-selected="{% if filters.big_five == 'no' %}true{% else %}false{% endif %}">{% trans 'Specialty focus' %}</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-field">
+            <label id="filter-experience-label">{% trans 'Experience' %}</label>
+            <div class="custom-select" data-custom-select>
+                <input type="hidden" name="experience" value="{{ filters.experience }}" data-custom-select-input>
+                <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="filter-experience-label">
+                    <span data-custom-select-label>
+                        {% if filters.experience == 'walking' %}
+                            {% trans 'Walking safaris' %}
+                        {% elif filters.experience == 'boat' %}
+                            {% trans 'Boat safaris' %}
+                        {% elif filters.experience == 'balloon' %}
+                            {% trans 'Balloon safaris' %}
+                        {% elif filters.experience == 'night' %}
+                            {% trans 'Night drives' %}
+                        {% else %}
+                            {% trans 'All experiences' %}
+                        {% endif %}
+                    </span>
+                    <svg class="custom-select__chevron" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                        <path d="M1.25 1.5L7 7.25L12.75 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div class="custom-select__menu" role="listbox" aria-labelledby="filter-experience-label">
+                    <button class="custom-select__option {% if not filters.experience %}is-selected{% endif %}" type="button" role="option" data-value="" aria-selected="{% if not filters.experience %}true{% else %}false{% endif %}">{% trans 'All experiences' %}</button>
+                    <button class="custom-select__option {% if filters.experience == 'walking' %}is-selected{% endif %}" type="button" role="option" data-value="walking" aria-selected="{% if filters.experience == 'walking' %}true{% else %}false{% endif %}">{% trans 'Walking safaris' %}</button>
+                    <button class="custom-select__option {% if filters.experience == 'boat' %}is-selected{% endif %}" type="button" role="option" data-value="boat" aria-selected="{% if filters.experience == 'boat' %}true{% else %}false{% endif %}">{% trans 'Boat safaris' %}</button>
+                    <button class="custom-select__option {% if filters.experience == 'balloon' %}is-selected{% endif %}" type="button" role="option" data-value="balloon" aria-selected="{% if filters.experience == 'balloon' %}true{% else %}false{% endif %}">{% trans 'Balloon safaris' %}</button>
+                    <button class="custom-select__option {% if filters.experience == 'night' %}is-selected{% endif %}" type="button" role="option" data-value="night" aria-selected="{% if filters.experience == 'night' %}true{% else %}false{% endif %}">{% trans 'Night drives' %}</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-actions">
+            <a class="filter-clear" href="{% url 'destination_cms:safari_list' %}" data-filter-clear hidden>{% trans 'Clear Filters' %}</a>
+            <noscript>
+                <button type="submit" class="filter-submit">{% trans 'Apply' %}</button>
+            </noscript>
+        </div>
+    </form>
+
+    <p class="result-summary" data-filter-summary data-singular="{% trans '{count} destination found' %}" data-plural="{% trans '{count} destinations found' %}" hidden></p>
+
+    <section class="safari-grid" aria-label="{% trans 'Safari destinations' %}" data-filter-grid>
+        {% for safari in safari_extensions %}
+            <article
+                class="content-card"
+                data-filter-item
+                data-search="{{ safari.name }} {{ safari.key_wildlife }} {{ safari.overview }} {% if request.LANGUAGE_CODE == 'de' and safari.region.name_de %}{{ safari.region.name_de }}{% else %}{{ safari.region.name_en }}{% endif %}"
+                data-region="{{ safari.region.slug }}"
+                data-big-five="{% if safari.big_five_available %}yes{% else %}no{% endif %}"
+                data-experience="{% if safari.walking_safaris %} walking{% endif %}{% if safari.boat_safaris %} boat{% endif %}{% if safari.balloon_safaris %} balloon{% endif %}{% if safari.night_drives %} night{% endif %}"
+                data-sort-title="{{ safari.name }}"
+            >
+                <div class="content-card__media">
+                    {% with image=safari.gallery_images.all.0 %}
+                        {% if image %}
+                            <img src="{{ image.image_url }}" alt="{% if request.LANGUAGE_CODE == 'de' and image.caption_de %}{{ image.caption_de }}{% elif image.caption_en %}{{ image.caption_en }}{% else %}{{ safari.name }}{% endif %}">
+                        {% elif safari.get_hero_image_url %}
+                            <img src="{{ safari.get_hero_image_url }}" alt="{{ safari.name }}">
+                        {% else %}
+                            <div class="content-card__placeholder">{% trans 'Safari image' %}</div>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                <div class="content-card__body">
+                    <span class="content-label">{% trans 'Safari Destination' %}</span>
+                    <h2 class="content-title">{{ safari.name }}</h2>
+                    <p class="content-copy">{{ safari.key_wildlife|truncatewords:22 }}</p>
+                    {% if safari.slug %}
+                        <a class="content-link" href="{% url 'destination_cms:safari_detail' safari.slug %}">{% trans 'Open destination →' %}</a>
+                        {% include "includes/quick_shortlist.html" with interest_type="safari_extension" object_id=safari.pk %}
+                    {% endif %}
+                </div>
+            </article>
+        {% endfor %}
+    </section>
+
+    {% include "includes/filter_empty.html" %}
+</article>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/listing-filters.js' %}" defer></script>
+{% endblock %}

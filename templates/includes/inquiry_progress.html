@@ -1,0 +1,34 @@
+{% load i18n %}
+{# step: shortlist | details | received #}
+{# flow: package | custom #}
+<nav class="inquiry-progress" aria-label="{% trans 'Enquiry progress' %}">
+    <ol class="inquiry-progress__list">
+        {% if flow == 'package' %}
+            <li class="inquiry-progress__step{% if step == 'shortlist' %} is-current{% elif step == 'details' or step == 'received' %} is-complete{% endif %}">
+                <span class="inquiry-progress__index">1</span>
+                <span class="inquiry-progress__label">{% trans 'Journey selected' %}</span>
+            </li>
+            <li class="inquiry-progress__step{% if step == 'details' %} is-current{% elif step == 'received' %} is-complete{% endif %}">
+                <span class="inquiry-progress__index">2</span>
+                <span class="inquiry-progress__label">{% trans 'Enquiry details' %}</span>
+            </li>
+            <li class="inquiry-progress__step{% if step == 'received' %} is-current{% endif %}">
+                <span class="inquiry-progress__index">3</span>
+                <span class="inquiry-progress__label">{% trans 'Consultation requested' %}</span>
+            </li>
+        {% else %}
+            <li class="inquiry-progress__step{% if step == 'shortlist' %} is-current{% elif step == 'details' or step == 'received' %} is-complete{% endif %}">
+                <span class="inquiry-progress__index">1</span>
+                <span class="inquiry-progress__label">{% trans 'Shortlist' %}</span>
+            </li>
+            <li class="inquiry-progress__step{% if step == 'details' %} is-current{% elif step == 'received' %} is-complete{% endif %}">
+                <span class="inquiry-progress__index">2</span>
+                <span class="inquiry-progress__label">{% trans 'Enquiry details' %}</span>
+            </li>
+            <li class="inquiry-progress__step{% if step == 'received' %} is-current{% endif %}">
+                <span class="inquiry-progress__index">3</span>
+                <span class="inquiry-progress__label">{% trans 'Consultation requested' %}</span>
+            </li>
+        {% endif %}
+    </ol>
+</nav>

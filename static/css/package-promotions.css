@@ -1,0 +1,171 @@
+.package-price {
+    display: grid;
+    gap: 4px;
+}
+
+.package-price--compact {
+    gap: 2px;
+}
+
+.package-price__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+.package-price__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-height: 0;
+    padding: 6px 10px;
+    border: 1px solid #D5CAB8;
+    background: #F7F4ED;
+    color: #7A6A55;
+    font-family: var(--font-body);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.package-price__badge--featured {
+    border-color: #0A0A0A;
+    background: #0A0A0A;
+    color: #FFFFFF;
+}
+
+.package-price__current {
+    margin: 0;
+    color: #0A0A0A;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.package-price__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px 12px;
+    margin: 0;
+}
+
+.package-price__row .package-price__current,
+.package-price__row .package-price__original {
+    margin: 0;
+}
+
+.package-price__original {
+    margin: 0;
+    color: #8A8074;
+    font-size: 0.78rem;
+}
+
+.package-price__original s {
+    text-decoration: line-through;
+}
+
+.package-price__savings {
+    margin: 0;
+    color: #9A7A43;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.home-body .package-price__current,
+.home-body .pillar-card .package-price__current {
+    color: inherit;
+}
+
+.home-body .package-price__badge {
+    border-color: rgba(244, 239, 231, 0.35);
+    background: transparent;
+    color: #D8C39A;
+}
+
+.home-body .package-price__badge--featured {
+    border-color: #F2A900;
+    background: #F2A900;
+    color: #0A0A0A;
+}
+
+.home-body .package-price__original {
+    color: #B8B0A4;
+}
+
+.home-body .package-price__savings {
+    color: #F2A900;
+}
+
+.journey-card__media,
+.pillar-card__media {
+    position: relative;
+}
+
+.package-card-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    padding: 0 10px;
+    background: #0A0A0A;
+    color: #FFFFFF;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.package-card-badge--featured {
+    background: #F2A900;
+    color: #0A0A0A;
+}
+
+.package-type-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0 0 2px;
+}
+
+.package-type-chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 22px;
+    padding: 0 9px;
+    border: 1px solid #D5CAB8;
+    background: transparent;
+    color: #7A6A55;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.package-type-chip--safari {
+    border-color: #2F4A3A;
+    color: #2F4A3A;
+}
+
+.package-type-chip--golf {
+    border-color: #9A7A43;
+    color: #9A7A43;
+}
+
+.package-type-chip--golf_safari {
+    border-color: #5C6B4A;
+    color: #5C6B4A;
+}
+
+.special-offers .pillar-grid {
+    margin-top: 0;
+}

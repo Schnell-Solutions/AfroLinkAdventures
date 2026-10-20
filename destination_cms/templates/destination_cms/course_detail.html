@@ -1,0 +1,391 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block meta_title %}{% if course.meta_title %}{{ course.meta_title }}{% else %}{{ course.name }} | Golf Course | AfroLink Adventures{% endif %}{% endblock %}
+{% block meta_description %}{% if course.meta_description %}{{ course.meta_description }}{% else %}{{ course.overview|default:course.signature_features|truncatewords:36 }}{% endif %}{% endblock %}
+{% block body_class %}course-detail-body{% endblock %}
+
+{% block extra_head %}
+{% include "destination_cms/includes/experience_detail_styles.html" %}
+<style>
+    body.course-detail-body:not(.home-body),
+    body.course-detail-body:not(.home-body) .site-main,
+    body.course-detail-body:not(.home-body) .content-frame {
+        background: #FFFFFF;
+    }
+
+    .course-detail-body .xp-media {
+        position: relative;
+    }
+
+    .course-detail-body .xp-media::after {
+        content: "";
+        position: absolute;
+        inset: auto 0 0 0;
+        height: 28%;
+        background: linear-gradient(to top, rgba(10, 10, 10, 0.18), transparent);
+        pointer-events: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="xp-page">
+    <div class="xp-main">
+        <a class="back-link" href="{% url 'destination_cms:region_hub' course.region.slug %}">← {% trans 'Back to region' %}</a>
+
+        <header class="xp-hero">
+            <div class="xp-hero__copy">
+                <p class="xp-kicker">{% trans 'Golf course' %}</p>
+                <h1 class="xp-title">{{ course.name }}</h1>
+                <p class="xp-location">{{ course.region.name_en }}{% if course.course_style %} · {{ course.get_course_style_display }}{% endif %}</p>
+                {% if course.overview %}
+                    <p class="xp-lede">{{ course.overview }}</p>
+                {% elif course.signature_features %}
+                    <p class="xp-lede">{{ course.signature_features|truncatewords:40 }}</p>
+                {% endif %}
+            </div>
+            <div class="xp-media">
+                {% if hero_image_url %}
+                    <img src="{{ hero_image_url }}" alt="{{ course.name }}">
+                {% else %}
+                    <div class="xp-media__placeholder">{% trans 'Course imagery' %}</div>
+                {% endif %}
+            </div>
+        </header>
+
+        {% if course.overview or course.signature_features %}
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Overview' %}</h2>
+            <div class="xp-prose">{% firstof course.overview course.signature_features %}</div>
+        </section>
+        {% endif %}
+
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Course details' %}</h2>
+            <div class="xp-grid">
+                {% if course.holes_and_par or course.holes %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Layout' %}</span>
+                    <div class="xp-fact__value">
+                        {% if course.holes_and_par %}
+                            {{ course.holes_and_par }}
+                        {% elif course.holes %}
+                            {{ course.holes }} holes{% if course.par %} · Par {{ course.par }}{% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+                {% if course.course_length %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Length' %}</span>
+                    <div class="xp-fact__value">{{ course.course_length }}</div>
+                </div>
+                {% endif %}
+                {% if course.architect_designer %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Architect' %}</span>
+                    <div class="xp-fact__value">{{ course.architect_designer }}</div>
+                </div>
+                {% endif %}
+                {% if course.year_opened %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Opened' %}</span>
+                    <div class="xp-fact__value">{{ course.year_opened }}</div>
+                </div>
+                {% endif %}
+                {% if course.turf_grass_type %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Turf' %}</span>
+                    <div class="xp-fact__value">{{ course.turf_grass_type }}</div>
+                </div>
+                {% endif %}
+                {% if course.difficulty_level %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Difficulty' %}</span>
+                    <div class="xp-fact__value">{{ course.difficulty_level }}</div>
+                </div>
+                {% endif %}
+                {% if course.best_suited_for %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Best suited for' %}</span>
+                    <div class="xp-fact__value">{{ course.best_suited_for }}</div>
+                </div>
+                {% endif %}
+                {% if course.signature_holes %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Signature holes' %}</span>
+                    <div class="xp-fact__value">{{ course.signature_holes }}</div>
+                </div>
+                {% endif %}
+            </div>
+
+            {% if course.is_championship or course.practice_range or course.putting_green or course.short_game_area or course.golf_academy or course.clubhouse or course.restaurant or course.pro_shop or course.walking_allowed or course.golf_carts or course.caddies or course.rental_clubs or course.locker_rooms or course.changing_rooms %}
+            <div class="xp-amenity-block">
+                {% if course.is_championship or course.practice_range or course.putting_green or course.short_game_area or course.golf_academy %}
+                <div class="xp-amenity-group">
+                    <div class="xp-amenity-group__label">{% trans 'Practice & warm-up' %}</div>
+                    <p class="xp-amenity-group__hint">{% trans 'What is available before your round to loosen up and prepare.' %}</p>
+                    <ul class="xp-amenity-list">
+                        {% if course.is_championship %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Championship layout' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'A full tournament-standard course, not a casual resort loop.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if course.practice_range %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Driving range' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Full-swing warm-up before your tee time.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if course.putting_green %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Putting green' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Practice greens to read speed before you start.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if course.short_game_area %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Short-game area' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Chipping and pitching practice near the first tee.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if course.golf_academy %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Golf academy' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Coaching available if you want a lesson during the stay.' %}</span>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if course.clubhouse or course.restaurant or course.pro_shop or course.locker_rooms or course.changing_rooms %}
+                <div class="xp-amenity-group">
+                    <div class="xp-amenity-group__label">{% trans 'Club facilities' %}</div>
+                    <p class="xp-amenity-group__hint">{% trans 'What you will find at the club before and after the round.' %}</p>
+                    <ul class="xp-amenity-list">
+                        {% if course.clubhouse %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Clubhouse' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Check-in, lounge space, and the social centre of the club.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if course.restaurant %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Restaurant / dining' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Meals and drinks available after the round.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if course.pro_shop %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Pro shop' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Balls, tees, and basic equipment on site.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if course.locker_rooms %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Locker rooms' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Secure storage for bags and personal items.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if course.changing_rooms %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Changing rooms' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Space to change before or after play.' %}</span>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if course.walking_allowed or course.golf_carts or course.caddies or course.rental_clubs %}
+                <div class="xp-amenity-group">
+                    <div class="xp-amenity-group__label">{% trans 'How you play' %}</div>
+                    <p class="xp-amenity-group__hint">{% trans 'How guests typically move around the course and what support is available.' %}</p>
+                    <ul class="xp-amenity-list">
+                        {% if course.walking_allowed %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Walking permitted' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'You may walk the course rather than taking a cart.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if course.golf_carts %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Golf carts' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Cart hire can be arranged for the round.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if course.caddies %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Caddie support' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Local caddies available subject to club rules and timing.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if course.rental_clubs %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Club rental' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Hire a set if you prefer not to travel with your own.' %}</span>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+        </section>
+
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Logistics' %}</h2>
+            <div class="xp-grid">
+                {% if course.distance_from_airport %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Airport access' %}</span>
+                    <div class="xp-fact__value">{{ course.distance_from_airport }}</div>
+                </div>
+                {% endif %}
+                {% if course.booking_window %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Booking window' %}</span>
+                    <div class="xp-fact__value">{{ course.booking_window }}</div>
+                </div>
+                {% endif %}
+                {% if course.average_playing_time %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Playing time' %}</span>
+                    <div class="xp-fact__value">{{ course.average_playing_time }}</div>
+                </div>
+                {% endif %}
+                {% if course.peak_season %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Peak season' %}</span>
+                    <div class="xp-fact__value">{{ course.peak_season }}</div>
+                </div>
+                {% endif %}
+                {% if course.best_playing_months or course.best_time_to_play %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Best time to play' %}</span>
+                    <div class="xp-fact__value">{% firstof course.best_playing_months course.best_time_to_play %}</div>
+                </div>
+                {% endif %}
+                {% if course.booking_notes %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Booking notes' %}</span>
+                    <div class="xp-fact__value">{{ course.booking_notes }}</div>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Preparation' %}</h2>
+            <div class="xp-grid">
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Dress code' %}</span>
+                    <div class="xp-fact__value">
+                        {% if course.dress_code %}{{ course.dress_code }}{% else %}
+                            {% if course.collared_shirts_required %}{% trans 'Collared shirts required.' %} {% endif %}
+                            {% if course.soft_spikes_required %}{% trans 'Soft spikes required.' %} {% endif %}
+                            {% if not course.denim_allowed %}{% trans 'Denim not permitted.' %}{% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+                {% if course.arrival_notes %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Arrival' %}</span>
+                    <div class="xp-fact__value">{{ course.arrival_notes }}</div>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+
+        {% if included_items or optional_items %}
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Included & optional' %}</h2>
+            <div class="xp-split">
+                {% if included_items %}
+                <div>
+                    <p class="xp-fact__label">{% trans 'Included' %}</p>
+                    <ul class="xp-list">
+                        {% for item in included_items %}<li>{{ item.label }}</li>{% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                {% if optional_items %}
+                <div>
+                    <p class="xp-fact__label">{% trans 'Optional extras' %}</p>
+                    <ul class="xp-list">
+                        {% for item in optional_items %}<li>{{ item.label }}</li>{% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+        {% endif %}
+
+        {% if course.gallery_images.all %}
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Gallery' %}</h2>
+            <div class="xp-gallery">
+                {% for image in course.gallery_images.all %}
+                <figure>
+                    <img src="{{ image.image_url }}" alt="{{ image.caption_en|default:course.name }}">
+                    {% if image.caption_en %}<figcaption>{{ image.caption_en }}</figcaption>{% endif %}
+                </figure>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        {% if faqs %}
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'FAQ' %}</h2>
+            <div class="xp-faq" data-faq-accordion>
+                {% for faq in faqs %}
+                <details name="course-faq" {% if forloop.first %}open{% endif %}>
+                    <summary>{{ faq.question }}</summary>
+                    <p>{{ faq.answer }}</p>
+                </details>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        {% if related_cards %}
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Related experiences' %}</h2>
+            <div class="xp-related">
+                {% for card in related_cards %}
+                <a href="{{ card.url }}">
+                    <div class="xp-related__media">
+                        {% if card.image_url %}<img src="{{ card.image_url }}" alt="{{ card.title }}">{% endif %}
+                    </div>
+                    {% if card.label %}<div class="xp-related__label">{{ card.label }}</div>{% endif %}
+                    <div class="xp-related__title">{{ card.title }}</div>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+    </div>
+
+    <aside class="xp-aside" data-detail-cta-panel>
+        <div class="xp-cta">
+            <div class="xp-cta__eyebrow">{% trans 'Shortlist' %}</div>
+            <h2 class="xp-cta__title">{% trans 'Add to shortlist' %}</h2>
+            <p class="xp-cta__copy">{% trans 'Save this course to your shortlist. Our concierge will sequence tee times around your safari and stay preferences.' %}</p>
+            <form method="post" action="{% url 'inquiry_crm:add_interest_to_inquiry_list' %}">
+                {% csrf_token %}
+                <input type="hidden" name="interest_type" value="golf_course">
+                <input type="hidden" name="object_id" value="{{ course.pk }}">
+                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                <button class="xp-cta__btn" type="submit">{% trans 'Add to shortlist' %} →</button>
+            </form>
+            {% include "includes/inquiry_commitment_note.html" with compact=True %}
+        </div>
+    </aside>
+</div>
+{% include "includes/detail_cta_bar.html" %}
+{% include "destination_cms/includes/experience_faq_accordion.html" %}
+{% endblock %}

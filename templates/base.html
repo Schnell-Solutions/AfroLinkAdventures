@@ -1,0 +1,1835 @@
+{% load i18n static %}
+<!doctype html>
+<html lang="{{ request.LANGUAGE_CODE|default:'en' }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{% block meta_description %}{% trans 'Luxury golf, safari, and wellness journeys across Africa, crafted by AfroLink Adventures.' %}{% endblock %}">
+    <title>{% block meta_title %}AfroLink Adventures{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    {% block extra_meta %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'css/experience-inquiry.css' %}">
+    <link rel="stylesheet" href="{% static 'css/promotional-banner.css' %}">
+    <link rel="stylesheet" href="{% static 'css/package-promotions.css' %}">
+    <link rel="stylesheet" href="{% static 'css/inquiry-ux.css' %}">
+    <link rel="stylesheet" href="{% static 'css/detail-cta.css' %}">
+    <style>
+        :root {
+            --color-black: #0A0A0A;
+            --color-panel: #101010;
+            --color-line: #F4EFE7;
+            --color-line-muted: #3A3732;
+            --color-text: #F4EFE7;
+            --color-muted: #B8B0A4;
+            --color-accent: #D8C39A;
+            --color-gold: #F2A900;
+            --color-nav-bg: #F4F4F4;
+            --color-nav-text: #121212;
+            --color-nav-muted: #3A3A3A;
+            --font-heading: "Libre Caslon Text", Georgia, "Times New Roman", serif;
+            --radius-media: 2px;
+            --radius-panel: 4px;
+            --ease-standard: 200ms ease;
+            --font-body: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            --container-width: 1180px;
+            --space-card: clamp(24px, 3.2vw, 32px);
+            --space-section: clamp(32px, 5vw, 48px);
+            --space-page: clamp(32px, 5vw, 56px) 0 clamp(56px, 7vw, 80px);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            box-shadow: none !important;
+            text-shadow: none !important;
+        }
+
+        html {
+            background: var(--color-black);
+            color: var(--color-text);
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            /* Avoid overflow-x on html/body — it breaks position:sticky on mobile. */
+            max-width: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            background: var(--color-black);
+            color: var(--color-text);
+            letter-spacing: 0.01em;
+            /* Keep overflow-x off body so sticky headers work (esp. mobile). */
+            max-width: 100%;
+        }
+
+        html.nav-drawer-open,
+        body.nav-drawer-open {
+            overflow: hidden;
+            overscroll-behavior: none;
+        }
+
+        body,
+        button,
+        input,
+        select,
+        textarea {
+            font-family: var(--font-body);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: color var(--ease-standard), border-color var(--ease-standard), background-color var(--ease-standard);
+        }
+
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible,
+        select:focus-visible,
+        textarea:focus-visible {
+            outline: 2px solid #9A7A43;
+            outline-offset: 3px;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            margin: 0;
+            color: var(--color-text);
+            font-family: var(--font-heading);
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            line-height: 1.1;
+        }
+
+        p {
+            margin: 0;
+            color: var(--color-muted);
+        }
+
+        .site-shell {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .site-chrome {
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            width: 100%;
+            flex-shrink: 0;
+            background: var(--color-nav-bg);
+        }
+
+        .container {
+            width: min(100% - 32px, var(--container-width));
+            margin: 0 auto;
+        }
+
+        .site-header {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            background: var(--color-nav-bg);
+            border-bottom: 1px solid #D8D8D8;
+        }
+
+        .nav {
+            position: relative;
+            min-height: 62px;
+            display: grid;
+            grid-template-columns: auto minmax(0, 1fr) auto;
+            align-items: center;
+            gap: clamp(14px, 3vw, 28px);
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            justify-content: flex-start;
+            justify-self: start;
+            min-width: max-content;
+            z-index: 2;
+        }
+
+        .brand__logo {
+            display: block;
+            width: clamp(88px, 9vw, 112px);
+            height: auto;
+        }
+
+        .nav-toggle {
+            display: none;
+            z-index: 2;
+            width: 44px;
+            height: 44px;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            background: transparent;
+            color: var(--color-nav-text);
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .nav-toggle__bars,
+        .nav-toggle__bars::before,
+        .nav-toggle__bars::after {
+            display: block;
+            width: 20px;
+            height: 1.5px;
+            background: currentColor;
+            transition: transform 180ms ease, opacity 180ms ease;
+        }
+
+        .nav-toggle__bars {
+            position: relative;
+        }
+
+        .nav-toggle__bars::before,
+        .nav-toggle__bars::after {
+            position: absolute;
+            left: 0;
+            content: "";
+        }
+
+        .nav-toggle__bars::before {
+            top: -6px;
+        }
+
+        .nav-toggle__bars::after {
+            top: 6px;
+        }
+
+        .nav.is-open .nav-toggle__bars {
+            background: transparent;
+        }
+
+        .nav.is-open .nav-toggle__bars::before {
+            top: 0;
+            transform: rotate(45deg);
+        }
+
+        .nav.is-open .nav-toggle__bars::after {
+            top: 0;
+            transform: rotate(-45deg);
+        }
+
+        .nav__panel {
+            display: contents;
+        }
+
+        .nav-drawer__top {
+            display: none;
+        }
+
+        .nav__links {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px clamp(14px, 2.4vw, 26px);
+            width: 100%;
+            color: var(--color-nav-text);
+            font-size: clamp(0.72rem, 0.9vw, 0.82rem);
+            font-weight: 600;
+            letter-spacing: 0;
+            text-transform: none;
+        }
+
+        .nav__link {
+            border: 0;
+            background: transparent;
+            color: var(--color-nav-text);
+            cursor: pointer;
+            font: inherit;
+            padding: 0;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            transition: color 160ms ease, border-color 160ms ease;
+        }
+
+        .nav__link:hover {
+            color: var(--color-gold);
+        }
+
+        .nav-dropdown {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .nav-dropdown__trigger {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: 0;
+            background: transparent;
+            cursor: pointer;
+            font: inherit;
+            padding: 0;
+            min-height: 44px;
+        }
+
+        .nav-dropdown__icon {
+            width: 12px;
+            height: 8px;
+            flex: none;
+            color: currentColor;
+            transition: transform 160ms ease, color 160ms ease;
+        }
+
+        .nav-dropdown.is-open .nav-dropdown__icon {
+            transform: rotate(180deg);
+        }
+
+        .nav-dropdown__menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            z-index: 30;
+            min-width: 240px;
+            max-height: min(360px, calc(100vh - 96px));
+            overflow-x: hidden;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            display: grid;
+            gap: 2px;
+            padding: 5px;
+            border: 1px solid #DED8CC;
+            border-radius: var(--radius-media);
+            background: #FFFFFF;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateY(4px);
+            transition: opacity 140ms ease, transform 140ms ease, visibility 0s linear 140ms;
+            scrollbar-width: thin;
+            scrollbar-color: #0A0A0A transparent;
+        }
+
+        .nav-dropdown__menu::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .nav-dropdown__menu::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 0;
+        }
+
+        .nav-dropdown__menu::-webkit-scrollbar-thumb {
+            background: #0A0A0A;
+            border: 0;
+            border-radius: 0;
+        }
+
+        .nav-dropdown__menu::-webkit-scrollbar-button {
+            display: none;
+            width: 0;
+            height: 0;
+        }
+
+        .nav-dropdown__menu::-webkit-scrollbar-corner {
+            background: transparent;
+        }
+
+        .nav-dropdown.is-open .nav-dropdown__menu {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateY(0);
+            transition: opacity 140ms ease, transform 140ms ease, visibility 0s;
+        }
+
+        .nav-dropdown__group {
+            display: grid;
+            gap: 2px;
+            padding: 4px 0;
+        }
+
+        .nav-dropdown__group-title {
+            padding: 8px 12px 4px;
+            color: #7D7A6D;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            line-height: 1.2;
+            text-transform: uppercase;
+        }
+
+        .nav-dropdown__link {
+            display: flex;
+            align-items: center;
+            min-height: 44px;
+            border: 0;
+            border-radius: calc(var(--radius-media) - 2px);
+            background: transparent;
+            color: #0A0A0A;
+            padding: 10px 12px;
+            font-size: 0.84rem;
+            font-weight: 400;
+            letter-spacing: 0.01em;
+            line-height: 1.3;
+            white-space: nowrap;
+            transition: background 160ms ease, color 160ms ease;
+        }
+
+        .nav-dropdown__link--nested {
+            padding-left: 20px;
+        }
+
+        .nav-dropdown__link:hover,
+        .nav-dropdown__link:focus {
+            background: #F7F4ED;
+            color: #0A0A0A;
+            outline: 0;
+        }
+
+        .nav__actions {
+            display: inline-flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .portfolio-indicator {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 0 16px;
+            border: 0;
+            background: var(--color-nav-text);
+            color: #FFFFFF;
+            font-size: clamp(0.7rem, 0.85vw, 0.78rem);
+            font-weight: 600;
+            white-space: nowrap;
+            transition: background-color 160ms ease, color 160ms ease;
+        }
+
+        .portfolio-indicator:hover {
+            background: var(--color-gold);
+            color: var(--color-nav-text);
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .language-toggle {
+            position: relative;
+            min-width: 118px;
+        }
+
+        .language-toggle-form {
+            margin: 0;
+        }
+
+        .language-toggle .custom-select__trigger {
+            width: 100%;
+            min-height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            border: 0;
+            border-bottom: 1px solid #C8C2B8;
+            border-radius: 0;
+            background: transparent;
+            color: var(--color-nav-text);
+            cursor: pointer;
+            font: inherit;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 0 2px 8px;
+            text-align: left;
+        }
+
+        .language-toggle .custom-select__trigger:hover,
+        .language-toggle .custom-select__trigger:focus-visible,
+        .language-toggle.is-open .custom-select__trigger {
+            border-bottom-color: var(--color-nav-text);
+            outline: 0;
+        }
+
+        .language-toggle__label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
+        }
+
+        .language-toggle__flag {
+            width: 18px;
+            height: 12px;
+            flex: none;
+            border-radius: 1px;
+            object-fit: cover;
+            box-shadow: none;
+        }
+
+        .language-toggle .custom-select__chevron {
+            width: 12px;
+            height: 8px;
+            flex: none;
+            color: var(--color-nav-muted);
+            transition: transform var(--ease-standard), color var(--ease-standard);
+        }
+
+        .language-toggle.is-open .custom-select__chevron {
+            color: var(--color-nav-text);
+            transform: rotate(180deg);
+        }
+
+        .language-toggle .custom-select__menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            left: auto;
+            z-index: 40;
+            width: max(100%, 168px);
+            display: grid;
+            gap: 2px;
+            padding: 5px;
+            border: 1px solid #DED8CC;
+            border-radius: var(--radius-media);
+            background: #FFFFFF;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(6px);
+            transition: opacity var(--ease-standard), transform var(--ease-standard);
+        }
+
+        .language-toggle.is-open .custom-select__menu {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .language-toggle .custom-select__option {
+            width: 100%;
+            min-height: 38px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 0;
+            border-radius: calc(var(--radius-media) - 2px);
+            background: transparent;
+            color: #0A0A0A;
+            cursor: pointer;
+            font: inherit;
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            padding: 0 8px;
+            text-align: left;
+        }
+
+        .language-toggle .custom-select__option:hover,
+        .language-toggle .custom-select__option:focus-visible {
+            background: #F7F4ED;
+            color: #0A0A0A;
+            outline: 0;
+        }
+
+        .language-toggle .custom-select__option.is-selected {
+            background: #0A0A0A;
+            color: #FFFFFF;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 34px;
+            padding: 0 16px;
+            border: 1px solid var(--color-nav-text);
+            background: var(--color-nav-text);
+            color: #FFFFFF;
+            font-size: clamp(0.7rem, 0.85vw, 0.78rem);
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: none;
+            transition: background-color 160ms ease, color 160ms ease;
+        }
+
+        .button:hover {
+            background: var(--color-gold);
+            color: var(--color-nav-text);
+        }
+
+        .site-main {
+            flex: 1;
+            background: var(--color-black);
+        }
+
+        .content-frame {
+            padding: clamp(56px, 8vw, 112px) 0;
+            overflow-x: clip;
+        }
+
+        .message-stack {
+            position: fixed;
+            top: clamp(74px, 9vw, 96px);
+            right: clamp(14px, 2.8vw, 28px);
+            z-index: 350;
+            width: min(92vw, 380px);
+            display: grid;
+            gap: 10px;
+            pointer-events: none;
+        }
+
+        .toast {
+            position: relative;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: start;
+            gap: 10px;
+            border: 1px solid #2A2A2A;
+            background: #0A0A0A;
+            color: #FFFFFF;
+            padding: 12px;
+            font-size: 0.86rem;
+            line-height: 1.45;
+            pointer-events: auto;
+            transition: transform 200ms ease, opacity 200ms ease;
+        }
+
+        .toast.is-hiding {
+            opacity: 0;
+            transform: translateY(-6px);
+        }
+
+        .toast__close {
+            width: 26px;
+            height: 26px;
+            border: 0;
+            border-radius: 999px;
+            background: transparent;
+            color: #A8A8A8;
+            font-size: 1rem;
+            line-height: 1;
+            cursor: pointer;
+            transition: background-color 160ms ease, color 160ms ease;
+        }
+
+        .toast__close:hover,
+        .toast__close:focus-visible {
+            background: #1F1F1F;
+            color: #FFFFFF;
+            outline: 0;
+        }
+
+        .site-footer {
+            background: var(--color-nav-bg);
+            color: #0A0A0A;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: minmax(280px, 1.45fr) repeat(3, minmax(150px, 1fr));
+            gap: clamp(32px, 5vw, 64px);
+            padding: clamp(62px, 8vw, 92px) 0 clamp(42px, 6vw, 62px);
+        }
+
+        .footer-heading {
+            margin-bottom: 16px;
+            font-family: "Inter", var(--font-body);
+            color: #0A0A0A;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .footer-list {
+            display: grid;
+            gap: 10px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .footer-link,
+        .footer-copy {
+            color: #5F574C;
+            font-size: 0.9rem;
+            line-height: 1.65;
+        }
+
+        .footer-link:hover {
+            color: #0A0A0A;
+        }
+
+        .footer-socials {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            margin-top: 22px;
+        }
+
+        .footer-social {
+            width: 36px;
+            height: 36px;
+            display: inline-grid;
+            place-items: center;
+            border: 1px solid #DED8CC;
+            border-radius: var(--radius-media);
+            color: #5F574C;
+            transition: color var(--ease-standard), border-color var(--ease-standard), background-color var(--ease-standard);
+        }
+
+        .footer-social:hover,
+        .footer-social:focus-visible {
+            border-color: #0A0A0A;
+            background: #0A0A0A;
+            color: #FFFFFF;
+            outline: 0;
+        }
+
+        .footer-social svg {
+            width: 16px;
+            height: 16px;
+            display: block;
+        }
+
+        .footer-brand-logo {
+            width: clamp(150px, 13vw, 210px);
+            height: auto;
+            display: block;
+            margin-bottom: 24px;
+            background: transparent;
+            filter: grayscale(1);
+            opacity: 0.82;
+            transition: filter var(--ease-standard), opacity var(--ease-standard);
+        }
+
+        .footer-brand:hover .footer-brand-logo,
+        .footer-brand:focus-visible .footer-brand-logo {
+            filter: grayscale(0);
+            opacity: 1;
+        }
+
+        .legal-bar {
+            border-top: 1px solid #DED8CC;
+            padding: 18px 0;
+            color: #6E665A;
+            font-size: 0.78rem;
+        }
+
+        .legal-bar__inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .legal-links {
+            display: flex;
+            gap: 18px;
+        }
+
+        @media (max-width: 960px) {
+            :root {
+                --space-card: 24px;
+                --site-header-height: 62px;
+            }
+
+            .site-chrome {
+                position: sticky;
+                top: 0;
+                z-index: 200;
+                background: var(--color-nav-bg);
+            }
+
+            .site-header {
+                position: relative;
+                z-index: 1;
+                width: 100%;
+                background: var(--color-nav-bg);
+            }
+
+            .nav {
+                grid-template-columns: minmax(0, 1fr) auto;
+                min-height: var(--site-header-height);
+                padding: 8px 0;
+                align-items: center;
+                justify-items: stretch;
+                gap: 0 12px;
+            }
+
+            .brand {
+                justify-self: start;
+                justify-content: flex-start;
+            }
+
+            .nav-toggle {
+                display: inline-flex;
+                justify-self: end;
+            }
+
+            .message-stack {
+                top: 74px;
+                right: 10px;
+                left: 10px;
+                width: auto;
+            }
+
+            .nav__panel {
+                position: fixed;
+                inset: 0;
+                z-index: 200;
+                display: grid;
+                grid-template-rows: auto minmax(0, 1fr) auto;
+                align-content: start;
+                gap: 0;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                border: 0;
+                background: var(--color-nav-bg);
+                overflow: hidden;
+                overscroll-behavior: none;
+                visibility: hidden;
+                pointer-events: none;
+                transform: translateX(-100%);
+                transition: transform 280ms ease, visibility 0s linear 280ms;
+            }
+
+            .nav.is-open .nav__panel {
+                visibility: visible;
+                pointer-events: auto;
+                transform: translateX(0);
+                transition: transform 280ms ease, visibility 0s;
+            }
+
+            .nav-drawer__top {
+                display: block;
+                flex-shrink: 0;
+                background: var(--color-nav-bg);
+                border-bottom: 1px solid #D8D8D8;
+            }
+
+            .nav-drawer__bar {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) auto;
+                align-items: center;
+                justify-items: stretch;
+                gap: 0 12px;
+                min-height: 62px;
+                padding: 8px 0;
+            }
+
+            .nav-drawer__bar .brand {
+                justify-self: start;
+                justify-content: flex-start;
+            }
+
+            .nav-drawer__close {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                justify-self: end;
+                width: 44px;
+                height: 44px;
+                border: 0;
+                background: transparent;
+                color: var(--color-nav-text);
+                cursor: pointer;
+                padding: 0;
+            }
+
+            .nav-drawer__close svg {
+                display: block;
+                width: 18px;
+                height: 18px;
+            }
+
+            .nav__links,
+            .nav__actions {
+                width: min(100% - 32px, var(--container-width));
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .nav__links {
+                flex-direction: column;
+                align-items: stretch;
+                align-content: flex-start;
+                justify-content: flex-start;
+                gap: 0;
+                min-height: 0;
+                overflow-x: hidden;
+                overflow-y: auto;
+                overscroll-behavior: contain;
+                -webkit-overflow-scrolling: touch;
+                font-size: 0.88rem;
+                padding-bottom: 16px;
+            }
+
+            .nav__link,
+            .nav-dropdown__trigger {
+                width: 100%;
+                justify-content: space-between;
+                min-height: 48px;
+                padding: 0 4px;
+                border-bottom: 1px solid #E8E2D8;
+            }
+
+            .nav-dropdown {
+                width: 100%;
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .nav-dropdown__menu {
+                position: static;
+                min-width: 0;
+                max-height: none;
+                width: 100%;
+                margin: 0;
+                padding: 4px 0 8px 12px;
+                border: 0;
+                border-radius: 0;
+                background: transparent;
+                opacity: 1;
+                visibility: visible;
+                pointer-events: none;
+                transform: none;
+                display: none;
+                transition: none;
+            }
+
+            .nav-dropdown.is-open .nav-dropdown__menu {
+                display: grid;
+                pointer-events: auto;
+            }
+
+            .nav-dropdown__link {
+                min-height: 44px;
+                white-space: normal;
+            }
+
+            .nav__actions {
+                width: 100%;
+                justify-content: stretch;
+                flex-shrink: 0;
+                margin-top: auto;
+                padding: 16px 0 calc(16px + env(safe-area-inset-bottom, 0px));
+                border-top: 1px solid #E8E2D8;
+                background: var(--color-nav-bg);
+            }
+
+            .portfolio-indicator {
+                width: 100%;
+                min-height: 48px;
+            }
+
+            .button {
+                width: auto;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            :root {
+                --space-card: 28px;
+                --space-section: 36px;
+                --space-page: 28px 0 64px;
+            }
+
+            .container {
+                width: min(100% - 24px, var(--container-width));
+            }
+
+            .nav__links,
+            .nav__actions {
+                width: min(100% - 24px, var(--container-width));
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                padding: 42px 0;
+            }
+
+            .legal-bar__inner {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .legal-links {
+                flex-wrap: wrap;
+                gap: 12px 16px;
+            }
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+    <style>
+        body:not(.home-body) {
+            background: #F7F4ED;
+            color: #0A0A0A;
+        }
+
+        body:not(.home-body) {
+            font-family: var(--font-body);
+        }
+
+        body:not(.home-body) .site-main {
+            background: #F7F4ED;
+            color: #0A0A0A;
+        }
+
+        body:not(.home-body) .content-frame {
+            padding: clamp(34px, 6vw, 74px) 0;
+        }
+
+        body:not(.home-body) h1,
+        body:not(.home-body) h2,
+        body:not(.home-body) h3,
+        body:not(.home-body) h4 {
+            color: #0A0A0A;
+            font-family: var(--font-heading);
+            font-weight: 400;
+            letter-spacing: 0.02em;
+        }
+
+        body:not(.home-body) p {
+            color: #312B23;
+        }
+
+        body:not(.home-body) .listing-page,
+        body:not(.home-body) .package-list,
+        body:not(.home-body) .planner-page,
+        body:not(.home-body) .intake-page,
+        body:not(.home-body) .confirmation-page,
+        body:not(.home-body) .itinerary-page,
+        body:not(.home-body) .region-page,
+        body:not(.home-body) .course-page,
+        body:not(.home-body) .static-page {
+            display: grid;
+            gap: clamp(42px, 6vw, 70px);
+            color: #0A0A0A;
+        }
+
+        body:not(.home-body) .listing-hero,
+        body:not(.home-body) .list-hero,
+        body:not(.home-body) .planner-hero,
+        body:not(.home-body) .intake-panel,
+        body:not(.home-body) .confirmation-panel,
+        body:not(.home-body) .itinerary-hero,
+        body:not(.home-body) .course-hero,
+        body:not(.home-body) .region-hero__intro,
+        body:not(.home-body) .region-hero__panel,
+        body:not(.home-body) .static-panel {
+            border: 0;
+            background: transparent;
+            color: #0A0A0A;
+            min-height: auto;
+            padding: clamp(58px, 8vw, 96px) 0 clamp(20px, 4vw, 36px);
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        body:not(.home-body) .listing-hero,
+        body:not(.home-body) .list-hero,
+        body:not(.home-body) .planner-hero,
+        body:not(.home-body) .static-panel {
+            min-height: auto;
+        }
+
+        body:not(.home-body) .listing-title,
+        body:not(.home-body) .list-title,
+        body:not(.home-body) .planner-title,
+        body:not(.home-body) .intake-title,
+        body:not(.home-body) .confirmation-title,
+        body:not(.home-body) .itinerary-title,
+        body:not(.home-body) .course-title,
+        body:not(.home-body) .region-title,
+        body:not(.home-body) .static-title {
+            max-width: 920px;
+            color: #0A0A0A;
+            font-family: var(--font-heading);
+            font-size: clamp(1.9rem, 4.6vw, 4.4rem);
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            line-height: 1.05;
+            text-transform: uppercase;
+            margin-inline: auto;
+        }
+
+        body:not(.home-body) .listing-copy,
+        body:not(.home-body) .list-copy,
+        body:not(.home-body) .planner-copy,
+        body:not(.home-body) .intake-copy,
+        body:not(.home-body) .confirmation-copy,
+        body:not(.home-body) .itinerary-subtitle,
+        body:not(.home-body) .course-subtitle,
+        body:not(.home-body) .region-copy,
+        body:not(.home-body) .static-copy {
+            max-width: 650px;
+            margin-inline: auto;
+            font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+            line-height: 1.55;
+        }
+
+        body:not(.home-body) .eyebrow,
+        body:not(.home-body) .region-kicker,
+        body:not(.home-body) .course-kicker,
+        body:not(.home-body) .static-kicker,
+        body:not(.home-body) .package-card__meta,
+        body:not(.home-body) .course-card__region,
+        body:not(.home-body) .safari-card__region,
+        body:not(.home-body) .duration-tag,
+        body:not(.home-body) .spec-label,
+        body:not(.home-body) .stat-label,
+        body:not(.home-body) .timeline-label,
+        body:not(.home-body) .summary-label,
+        body:not(.home-body) .field label,
+        body:not(.home-body) .field-legend,
+        body:not(.home-body) .choice-heading {
+            color: #8B5B19;
+            font-family: var(--font-body);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        body:not(.home-body) .listing-copy,
+        body:not(.home-body) .list-copy,
+        body:not(.home-body) .planner-copy,
+        body:not(.home-body) .intake-copy,
+        body:not(.home-body) .confirmation-copy,
+        body:not(.home-body) .itinerary-subtitle,
+        body:not(.home-body) .course-subtitle,
+        body:not(.home-body) .region-copy,
+        body:not(.home-body) .static-copy,
+        body:not(.home-body) .analysis-copy,
+        body:not(.home-body) .region-card__copy,
+        body:not(.home-body) .course-card__spec {
+            color: #3B332A;
+            line-height: 1.55;
+        }
+
+        body:not(.home-body) .listing-grid,
+        body:not(.home-body) .package-grid,
+        body:not(.home-body) .choice-grid,
+        body:not(.home-body) .gallery-grid {
+            gap: clamp(18px, 3vw, 28px);
+            border: 0;
+        }
+
+        body:not(.home-body) .listing-card,
+        body:not(.home-body) .course-card,
+        body:not(.home-body) .safari-card,
+        body:not(.home-body) .package-card,
+        body:not(.home-body) .builder-panel,
+        body:not(.home-body) .choice-card,
+        body:not(.home-body) .portfolio-panel,
+        body:not(.home-body) .timeline-day,
+        body:not(.home-body) .course-panel,
+        body:not(.home-body) .gallery-card,
+        body:not(.home-body) .analysis-block,
+        body:not(.home-body) .region-block,
+        body:not(.home-body) .region-card,
+        body:not(.home-body) .summary-card,
+        body:not(.home-body) .schedule-widget,
+        body:not(.home-body) .intake-fields,
+        body:not(.home-body) .empty-state {
+            border: 0;
+            background: transparent;
+            color: #0A0A0A;
+        }
+
+        body:not(.home-body) .course-card,
+        body:not(.home-body) .safari-card,
+        body:not(.home-body) .listing-card,
+        body:not(.home-body) .package-card {
+            min-height: auto;
+            display: grid;
+            gap: 16px;
+            padding: 0;
+        }
+
+        body:not(.home-body) .listing-card::before,
+        body:not(.home-body) .course-card::before,
+        body:not(.home-body) .safari-card::before {
+            content: "";
+            display: block;
+            width: 100%;
+            aspect-ratio: 1.72;
+            background: #E7DFD1;
+            border-radius: var(--radius-media);
+        }
+
+        body:not(.home-body) .listing-card > div,
+        body:not(.home-body) .course-card > div,
+        body:not(.home-body) .safari-card > div {
+            display: grid;
+            gap: 10px;
+        }
+
+        body:not(.home-body) .package-card {
+            grid-template-columns: minmax(0, 1fr) minmax(240px, 0.34fr);
+            padding: clamp(24px, 4vw, 42px);
+            border: 1px solid #D5CAB8;
+            background: #F7F3EA;
+        }
+
+        body:not(.home-body) .listing-card,
+        body:not(.home-body) .course-card,
+        body:not(.home-body) .safari-card {
+            border: 0;
+            background: transparent;
+        }
+
+        body:not(.home-body) .package-card__actions,
+        body:not(.home-body) .course-hero__main,
+        body:not(.home-body) .schedule-widget,
+        body:not(.home-body) .legal-bar,
+        body:not(.home-body) .calendar-row,
+        body:not(.home-body) .timeline-card,
+        body:not(.home-body) .course-spec__row,
+        body:not(.home-body) .strategy-list li,
+        body:not(.home-body) .spec-list li,
+        body:not(.home-body) .stat-list li {
+            border-color: #D5CAB8;
+        }
+
+        body:not(.home-body) .section-title,
+        body:not(.home-body) .package-card__title,
+        body:not(.home-body) .course-card__title,
+        body:not(.home-body) .safari-card__title,
+        body:not(.home-body) .listing-card__title,
+        body:not(.home-body) .region-card__title,
+        body:not(.home-body) .timeline-day__title,
+        body:not(.home-body) .analysis-block .section-title,
+        body:not(.home-body) .summary-value,
+        body:not(.home-body) .price-tag,
+        body:not(.home-body) .spec-value,
+        body:not(.home-body) .stat-value {
+            color: #0A0A0A;
+            font-family: var(--font-heading);
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            line-height: 1.12;
+        }
+
+        body:not(.home-body) .listing-card__title,
+        body:not(.home-body) .course-card__title,
+        body:not(.home-body) .safari-card__title {
+            font-size: clamp(1.2rem, 1.8vw, 1.7rem);
+            max-width: 360px;
+        }
+
+        body:not(.home-body) .package-card__title {
+            font-size: clamp(1.8rem, 3.5vw, 4.2rem);
+        }
+
+        body:not(.home-body) .section-heading,
+        body:not(.home-body) .section-title {
+            font-size: clamp(1.8rem, 3.4vw, 3.8rem);
+        }
+
+        body:not(.home-body) .price-tag,
+        body:not(.home-body) .stat-value,
+        body:not(.home-body) .spec-value,
+        body:not(.home-body) .timeline-day__number {
+            color: #8B5B19;
+        }
+
+        body:not(.home-body) .text-cta,
+        body:not(.home-body) .course-link,
+        body:not(.home-body) .back-link,
+        body:not(.home-body) .journey-back,
+        body:not(.home-body) .xp-back,
+        body:not(.home-body) .detail-back,
+        body:not(.home-body) .article-back {
+            display: inline-block;
+            width: fit-content;
+            margin-top: 0;
+            padding-bottom: 3px;
+            border-bottom: 1px solid #0A0A0A;
+            color: #0A0A0A;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            transition: color var(--ease-standard), border-color var(--ease-standard);
+        }
+
+        body:not(.home-body) .text-cta:hover,
+        body:not(.home-body) .course-link:hover,
+        body:not(.home-body) .back-link:hover,
+        body:not(.home-body) .journey-back:hover,
+        body:not(.home-body) .xp-back:hover,
+        body:not(.home-body) .detail-back:hover,
+        body:not(.home-body) .article-back:hover {
+            border-color: #9A7A43;
+            color: #9A7A43;
+        }
+
+        body:not(.home-body) .submit-button,
+        body:not(.home-body) .portfolio-button,
+        body:not(.home-body) .journey-action-card__button {
+            border: 0;
+            border-radius: var(--radius-media);
+            background: #0A0A0A;
+            color: #FFFFFF;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: background-color var(--ease-standard), color var(--ease-standard);
+        }
+
+        body:not(.home-body) .submit-button:hover,
+        body:not(.home-body) .portfolio-button:hover,
+        body:not(.home-body) .journey-action-card__button:hover {
+            background: var(--color-gold);
+            color: #0A0A0A;
+        }
+
+        body:not(.home-body) input,
+        body:not(.home-body) select,
+        body:not(.home-body) textarea,
+        body:not(.home-body) .field input,
+        body:not(.home-body) .field select,
+        body:not(.home-body) .calendar-shell,
+        body:not(.home-body) .calendar-cell {
+            border-color: #D5CAB8;
+            background: #FFFFFF;
+            color: #0A0A0A;
+        }
+
+        body:not(.home-body) input,
+        body:not(.home-body) select,
+        body:not(.home-body) textarea {
+            border-radius: var(--radius-media);
+            transition: border-color var(--ease-standard);
+        }
+
+        body:not(.home-body) input:hover,
+        body:not(.home-body) select:hover,
+        body:not(.home-body) textarea:hover {
+            border-color: #9A7A43;
+        }
+
+        body:not(.home-body) img {
+            border-radius: var(--radius-media);
+        }
+
+        body:not(.home-body) .calendar-cell--active {
+            background: #0A0A0A;
+            color: #FFFFFF;
+        }
+
+        body:not(.home-body) .gallery-card__media,
+        body:not(.home-body) .choice-card,
+        body:not(.home-body) .founder-portrait__placeholder {
+            background: #E1D8CA;
+        }
+
+        body:not(.home-body) .site-footer h1,
+        body:not(.home-body) .site-footer h2,
+        body:not(.home-body) .site-footer h3,
+        body:not(.home-body) .site-footer h4,
+        body:not(.home-body) .site-footer .footer-heading,
+        .site-footer .footer-heading {
+            font-family: "Inter", var(--font-body);
+            font-weight: 600;
+            color: #0A0A0A;
+            letter-spacing: 0.14em;
+        }
+
+        body:not(.home-body) .site-footer p,
+        body:not(.home-body) .site-footer .footer-copy,
+        body:not(.home-body) .site-footer .footer-link {
+            color: #5F574C;
+        }
+
+        body:not(.home-body) .site-footer .footer-link:hover {
+            color: #9A7A43;
+        }
+
+        @media (max-width: 760px) {
+            body:not(.home-body) .content-frame {
+                padding: 28px 0 56px;
+            }
+
+            body:not(.home-body) .listing-title,
+            body:not(.home-body) .list-title,
+            body:not(.home-body) .planner-title,
+            body:not(.home-body) .intake-title,
+            body:not(.home-body) .confirmation-title,
+            body:not(.home-body) .itinerary-title,
+            body:not(.home-body) .course-title,
+            body:not(.home-body) .region-title,
+            body:not(.home-body) .static-title {
+                font-size: clamp(1.8rem, 10vw, 3.1rem);
+                letter-spacing: 0.01em;
+            }
+        }
+    </style>
+</head>
+<body
+    class="{% block body_class %}{% endblock %}"
+    data-analytics-collect="{% url 'analytics:collect' %}"
+>
+    <div class="site-shell">
+        <div class="site-chrome">
+        {% include "includes/promotional_banner.html" %}
+        <header class="site-header" aria-label="{% trans 'Primary navigation' %}">
+            <nav class="container nav" data-site-nav>
+                <a class="brand" href="/" aria-label="AfroLink Adventures">
+                    <img class="brand__logo" src="{% static 'images/logo.png' %}" alt="AfroLink Adventures">
+                </a>
+
+                <button
+                    class="nav-toggle"
+                    type="button"
+                    aria-expanded="false"
+                    aria-controls="primary-nav-panel"
+                    data-nav-toggle
+                >
+                    <span class="nav-toggle__bars" aria-hidden="true"></span>
+                    <span class="visually-hidden">{% trans 'Menu' %}</span>
+                </button>
+
+                <div class="nav__panel" id="primary-nav-panel" data-nav-panel>
+                    <div class="nav-drawer__top">
+                        <div class="container nav-drawer__bar">
+                            <a class="brand" href="/" aria-label="AfroLink Adventures">
+                                <img class="brand__logo" src="{% static 'images/logo.png' %}" alt="AfroLink Adventures">
+                            </a>
+                            <button
+                                class="nav-drawer__close"
+                                type="button"
+                                aria-label="{% trans 'Close menu' %}"
+                                data-nav-close
+                            >
+                                <svg viewBox="0 0 18 18" aria-hidden="true" focusable="false">
+                                    <path d="M2 2L16 16M16 2L2 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="nav__links">
+                        <a class="nav__link" href="/journeys/">{% trans 'Journeys' %}</a>
+                        <div class="nav-dropdown" data-nav-dropdown>
+                            <button
+                                class="nav__link nav-dropdown__trigger"
+                                type="button"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                data-nav-dropdown-trigger
+                            >
+                                <span>{% trans 'Destinations' %}</span>
+                                <svg class="nav-dropdown__icon" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                                    <path d="M1 1.5L7 7.5L13 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="nav-dropdown__menu" aria-label="{% trans 'Destination links' %}">
+                                <a class="nav-dropdown__link" href="/regions/">{% trans 'All Destinations' %}</a>
+                                {% if nav_region_grouped %}
+                                    {% for group in nav_region_groups %}
+                                        <div class="nav-dropdown__group" role="group" aria-label="{{ group.country }}">
+                                            <span class="nav-dropdown__group-title">{{ group.country }}</span>
+                                            {% for region in group.regions %}
+                                                <a class="nav-dropdown__link nav-dropdown__link--nested" href="{% url 'destination_cms:region_hub' region.slug %}">
+                                                    {% if request.LANGUAGE_CODE == 'de' %}{{ region.name_de }}{% else %}{{ region.name_en }}{% endif %}
+                                                </a>
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    {% for region in nav_regions %}
+                                        <a class="nav-dropdown__link" href="{% url 'destination_cms:region_hub' region.slug %}">
+                                            {% if request.LANGUAGE_CODE == 'de' %}{{ region.name_de }}{% else %}{{ region.name_en }}{% endif %}
+                                        </a>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <a class="nav__link" href="/events/">{% trans 'Events' %}</a>
+                        <a class="nav__link" href="/about/">{% trans 'About Us' %}</a>
+                        <a class="nav__link" href="/journal/">{% trans 'The Journal' %}</a>
+                    </div>
+                    <div class="nav__actions">
+                        {% get_current_language as CURRENT_LANGUAGE %}
+                        <div
+                            class="language-toggle custom-select"
+                            data-language-switcher
+                            data-current-language="{{ CURRENT_LANGUAGE }}"
+                        >
+                            <form
+                                class="language-toggle-form"
+                                action="{% url 'set_language' %}"
+                                method="post"
+                                autocomplete="off"
+                            >
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                                <input type="hidden" name="language" value="{{ CURRENT_LANGUAGE }}" data-language-input>
+                                <button
+                                    class="custom-select__trigger"
+                                    type="button"
+                                    aria-haspopup="listbox"
+                                    aria-expanded="false"
+                                    aria-label="{% trans 'Language' %}"
+                                    data-language-trigger
+                                >
+                                    <span class="language-toggle__label" data-language-label>
+                                        {% if CURRENT_LANGUAGE == 'de' %}
+                                            <img class="language-toggle__flag" src="{% static 'images/flags/de.svg' %}" alt="" width="18" height="12" decoding="async">
+                                            <span>Deutsch</span>
+                                        {% else %}
+                                            <img class="language-toggle__flag" src="{% static 'images/flags/gb.svg' %}" alt="" width="18" height="12" decoding="async">
+                                            <span>English</span>
+                                        {% endif %}
+                                    </span>
+                                    <svg class="custom-select__chevron" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                                        <path d="M1.25 1.5L7 7.25L12.75 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                                <div class="custom-select__menu" role="listbox" aria-label="{% trans 'Language' %}" data-language-menu>
+                                    <button
+                                        class="custom-select__option {% if CURRENT_LANGUAGE == 'en' %}is-selected{% endif %}"
+                                        type="button"
+                                        role="option"
+                                        data-language-option="en"
+                                        aria-selected="{% if CURRENT_LANGUAGE == 'en' %}true{% else %}false{% endif %}"
+                                    >
+                                        <img class="language-toggle__flag" src="{% static 'images/flags/gb.svg' %}" alt="" width="18" height="12" decoding="async">
+                                        <span>English</span>
+                                    </button>
+                                    <button
+                                        class="custom-select__option {% if CURRENT_LANGUAGE == 'de' %}is-selected{% endif %}"
+                                        type="button"
+                                        role="option"
+                                        data-language-option="de"
+                                        aria-selected="{% if CURRENT_LANGUAGE == 'de' %}true{% else %}false{% endif %}"
+                                    >
+                                        <img class="language-toggle__flag" src="{% static 'images/flags/de.svg' %}" alt="" width="18" height="12" decoding="async">
+                                        <span>Deutsch</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        {% with inquiry_count=request.session.inquiry_cart|length %}
+                            <a
+                                class="portfolio-indicator"
+                                data-inquiry-link
+                                data-inquire-label="{% trans 'Enquire' %}"
+                                data-aria-with-items="{% trans 'Complete enquiry for your shortlist' %}"
+                                data-aria-without-items="{% trans 'Start an enquiry or request a consultation' %}"
+                                href="{% if inquiry_count %}{% url 'inquiry_crm:custom_package' %}{% else %}{% url 'inquiry_crm:inquiry_start' %}{% endif %}"
+                                aria-label="{% if inquiry_count %}{% trans 'Complete enquiry for your shortlist' %}{% else %}{% trans 'Start an enquiry or request a consultation' %}{% endif %}"
+                            >
+                                {% if inquiry_count %}
+                                    {% trans 'Enquire' %} ({{ inquiry_count }})
+                                {% else %}
+                                    {% trans 'Enquire' %}
+                                {% endif %}
+                            </a>
+                        {% endwith %}
+                    </div>
+                </div>
+            </nav>
+        </header>
+        </div>
+
+        <div class="message-stack" aria-live="polite" aria-atomic="true">
+            {% for message in messages %}
+                <div class="toast{% if 'toast-rich' in message.tags %} toast--rich{% endif %}" data-toast>
+                    <div>{{ message }}</div>
+                    <button class="toast__close" type="button" data-toast-close aria-label="{% trans 'Close message' %}">&times;</button>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% include "includes/experience_inquiry_modal.html" %}
+
+        <main id="main-content" class="site-main">
+            <div class="container content-frame">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+
+        {% include "includes/inquiry_dock.html" %}
+
+        <footer class="site-footer">
+            <div class="container footer-grid">
+                <section aria-label="AfroLink Adventures">
+                    <a class="footer-brand" href="/" aria-label="AfroLink Adventures">
+                        <img class="footer-brand-logo" src="{% static 'images/logo.png' %}" alt="AfroLink Adventures">
+                    </a>
+                    <p class="footer-copy">
+                        {% trans 'Private golf, safari, and wellness journeys designed with local expertise, discreet service, and a long-term respect for place.' %}
+                    </p>
+                    <nav class="footer-socials" aria-label="{% trans 'Social media' %}">
+                        <a class="footer-social" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+                                <circle cx="12" cy="12" r="4.1" fill="none" stroke="currentColor" stroke-width="1.6"/>
+                                <circle cx="17.2" cy="6.8" r="1" fill="currentColor"/>
+                            </svg>
+                        </a>
+                        <a class="footer-social" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <path d="M14.5 8.5V6.9c0-.7.5-1.1 1.2-1.1H17V3h-2.2C12.1 3 10.5 4.6 10.5 7.1v1.4H8.5V11h2v10h3.5V11h2.4l.5-2.5h-2.9z" fill="currentColor"/>
+                            </svg>
+                        </a>
+                        <a class="footer-social" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <path d="M6.4 9.2H3.6V20h2.8V9.2zM5 3.8c-.9 0-1.6.7-1.6 1.6S4.1 7 5 7s1.6-.7 1.6-1.6S5.9 3.8 5 3.8zM20.4 13.1c0-2.4-1.3-4-3.4-4-1.1 0-1.9.5-2.3 1.2h-.1V9.2h-2.8c0 .7 0 10.8 0 10.8h2.8v-6c0-.3 0-.6.1-.8.3-.6.8-1.2 1.8-1.2 1.3 0 1.8.9 1.8 2.3V20h2.8v-6.9z" fill="currentColor"/>
+                            </svg>
+                        </a>
+                        <a class="footer-social" href="https://wa.me/254743113141" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <path d="M12.04 3.2A8.7 8.7 0 0 0 3.4 11.9c0 1.53.4 3.02 1.16 4.34L3.2 20.8l4.7-1.23a8.74 8.74 0 0 0 4.14 1.05h.01a8.7 8.7 0 0 0 8.7-8.72 8.7 8.7 0 0 0-8.71-8.7zm5.07 12.33c-.21.6-1.25 1.1-1.74 1.17-.45.07-1.01.1-1.63-.1-.38-.12-.86-.28-1.48-.55-2.61-1.13-4.31-3.76-4.44-3.94-.13-.17-1.07-1.42-1.07-2.71s.68-1.93.92-2.19c.24-.26.52-.33.7-.33h.5c.16 0 .38-.06.59.45.22.53.73 1.83.8 1.96.07.13.1.28.02.45-.08.17-.12.28-.24.43-.12.15-.25.33-.36.45-.12.12-.24.25-.1.49.14.24.62 1.02 1.33 1.65.91.81 1.68 1.06 1.92 1.18.24.12.38.1.52-.06.14-.16.6-.7.76-.94.16-.24.32-.2.54-.12.22.08 1.39.66 1.63.78.24.12.4.18.46.28.06.1.06.58-.15 1.18z" fill="currentColor"/>
+                            </svg>
+                        </a>
+                    </nav>
+                </section>
+
+                <section aria-labelledby="footer-explore-heading">
+                    <h2 id="footer-explore-heading" class="footer-heading">{% trans 'Explore' %}</h2>
+                    <ul class="footer-list">
+                        <li><a class="footer-link" href="/regions/">{% trans 'Regional Hubs' %}</a></li>
+                        <li><a class="footer-link" href="/journeys/">{% trans 'Signature Itineraries' %}</a></li>
+                        <li><a class="footer-link" href="/events/">{% trans 'Golf Events' %}</a></li>
+                        <li><a class="footer-link" href="{% url 'destination_cms:course_list' %}">{% trans 'Golf Courses' %}</a></li>
+                        <li><a class="footer-link" href="{% url 'destination_cms:safari_list' %}">{% trans 'Safari Extensions' %}</a></li>
+                    </ul>
+                </section>
+
+                <section aria-labelledby="footer-concierge-heading">
+                    <h2 id="footer-concierge-heading" class="footer-heading">{% trans 'Concierge' %}</h2>
+                    <ul class="footer-list">
+                        <li><a class="footer-link" href="{% url 'inquiry_crm:consultation' %}">{% trans 'Request a consultation' %}</a></li>
+                        <li><a class="footer-link" href="{% url 'destination_cms:package_list' %}">{% trans 'Signature journeys' %}</a></li>
+                        <li><a class="footer-link" href="{% url 'inquiry_crm:inquiry_start' %}">{% trans 'Start an enquiry' %}</a></li>
+                    </ul>
+                </section>
+
+                <section aria-labelledby="footer-sustainability-heading">
+                    <h2 id="footer-sustainability-heading" class="footer-heading">{% trans 'Sustainability' %}</h2>
+                    <p class="footer-copy">
+                        {% trans 'We prioritize owner-led lodges, conservation-minded partners, and itinerary design that keeps value connected to local communities.' %}
+                    </p>
+                </section>
+            </div>
+
+            <div class="legal-bar">
+                <div class="container legal-bar__inner">
+                    <span>&copy; {% now 'Y' %} AfroLink Adventures. {% trans 'All rights reserved.' %}</span>
+                    <div class="legal-links">
+                        <a class="footer-link" href="/privacy/">{% trans 'Privacy' %}</a>
+                        <a class="footer-link" href="/terms/">{% trans 'Terms' %}</a>
+                        <a class="footer-link" href="/legal/">{% trans 'Legal Notice' %}</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script>
+        (() => {
+            const nav = document.querySelector('[data-site-nav]');
+            if (!nav) {
+                return;
+            }
+
+            const toggle = nav.querySelector('[data-nav-toggle]');
+            const closeBtn = nav.querySelector('[data-nav-close]');
+            const panel = nav.querySelector('[data-nav-panel]');
+            const dropdown = nav.querySelector('[data-nav-dropdown]');
+            const dropdownTrigger = nav.querySelector('[data-nav-dropdown-trigger]');
+            const mobileQuery = window.matchMedia('(max-width: 960px)');
+
+            const setDropdownOpen = (open) => {
+                if (!dropdown) {
+                    return;
+                }
+                dropdown.classList.toggle('is-open', open);
+                if (dropdownTrigger) {
+                    dropdownTrigger.setAttribute('aria-expanded', String(open));
+                }
+            };
+
+            const setNavOpen = (open) => {
+                const shouldOpen = Boolean(open && mobileQuery.matches);
+                nav.classList.toggle('is-open', shouldOpen);
+                document.documentElement.classList.toggle('nav-drawer-open', shouldOpen);
+                document.body.classList.toggle('nav-drawer-open', shouldOpen);
+                if (toggle) {
+                    toggle.setAttribute('aria-expanded', String(shouldOpen));
+                }
+                if (!shouldOpen) {
+                    setDropdownOpen(false);
+                }
+            };
+
+            if (toggle) {
+                toggle.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    setNavOpen(!nav.classList.contains('is-open'));
+                });
+            }
+
+            if (closeBtn) {
+                closeBtn.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    setNavOpen(false);
+                });
+            }
+
+            if (dropdown && dropdownTrigger) {
+                dropdownTrigger.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    setDropdownOpen(!dropdown.classList.contains('is-open'));
+                });
+            }
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    setDropdownOpen(false);
+                    setNavOpen(false);
+                }
+            });
+
+            document.addEventListener('click', (event) => {
+                if (dropdown && !dropdown.contains(event.target)) {
+                    setDropdownOpen(false);
+                }
+                if (!panel || !nav.classList.contains('is-open')) {
+                    return;
+                }
+                if (!panel.contains(event.target) && !toggle?.contains(event.target)) {
+                    setNavOpen(false);
+                }
+            });
+
+            const syncDesktop = () => {
+                if (!mobileQuery.matches) {
+                    setNavOpen(false);
+                    setDropdownOpen(false);
+                }
+            };
+
+            if (typeof mobileQuery.addEventListener === 'function') {
+                mobileQuery.addEventListener('change', syncDesktop);
+            } else if (typeof mobileQuery.addListener === 'function') {
+                mobileQuery.addListener(syncDesktop);
+            }
+        })();
+    </script>
+    <script>
+        (() => {
+            const TOAST_DURATION = 5200;
+            const TOAST_RESUME_DURATION = 2600;
+
+            const getMessageStack = () => {
+                let stack = document.querySelector('.message-stack');
+                if (!stack) {
+                    stack = document.createElement('div');
+                    stack.className = 'message-stack';
+                    stack.setAttribute('aria-live', 'polite');
+                    stack.setAttribute('aria-atomic', 'true');
+                    const header = document.querySelector('.site-header');
+                    if (header) {
+                        header.insertAdjacentElement('afterend', stack);
+                    } else {
+                        document.body.prepend(stack);
+                    }
+                }
+                return stack;
+            };
+
+            const removeToast = (toast) => {
+                if (!toast || toast.classList.contains('is-hiding')) {
+                    return;
+                }
+                toast.classList.add('is-hiding');
+                window.setTimeout(() => toast.remove(), 200);
+            };
+
+            const initToast = (toast) => {
+                const closeBtn = toast.querySelector('[data-toast-close]');
+                let timer = window.setTimeout(() => removeToast(toast), TOAST_DURATION);
+
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', () => removeToast(toast));
+                }
+
+                toast.addEventListener('mouseenter', () => {
+                    window.clearTimeout(timer);
+                });
+
+                toast.addEventListener('mouseleave', () => {
+                    timer = window.setTimeout(() => removeToast(toast), TOAST_RESUME_DURATION);
+                });
+            };
+
+            window.showToast = (message) => {
+                if (!message) {
+                    return;
+                }
+
+                const stack = getMessageStack();
+                const toast = document.createElement('div');
+                toast.className = 'toast';
+                toast.setAttribute('data-toast', '');
+
+                const text = document.createElement('div');
+                text.textContent = message;
+
+                const closeBtn = document.createElement('button');
+                closeBtn.className = 'toast__close';
+                closeBtn.type = 'button';
+                closeBtn.setAttribute('data-toast-close', '');
+                closeBtn.setAttribute('aria-label', 'Close message');
+                closeBtn.innerHTML = '&times;';
+
+                toast.append(text, closeBtn);
+                stack.appendChild(toast);
+                initToast(toast);
+            };
+
+            document.querySelectorAll('[data-toast]').forEach(initToast);
+        })();
+    </script>
+    <script src="{% static 'js/engagement.js' %}" defer></script>
+    <script src="{% static 'js/experience-inquiry.js' %}" defer></script>
+    <script src="{% static 'js/promotional-banner.js' %}" defer></script>
+    <script src="{% static 'js/language-switcher.js' %}" defer></script>
+    <script src="{% static 'js/detail-cta.js' %}" defer></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

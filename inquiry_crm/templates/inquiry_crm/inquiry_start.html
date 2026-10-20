@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block meta_title %}{% trans 'Start your enquiry' %} | AfroLink Adventures{% endblock %}
+{% block meta_description %}{% trans 'Enquire on a signature journey, build a shortlist, or request a video consultation with AfroLink.' %}{% endblock %}
+{% block body_class %}inquiry-start-body{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/inquiry-ux.css' %}">
+<style>
+    .start-page,
+    .start-page * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    .start-page {
+        padding: var(--space-page);
+        display: grid;
+        gap: clamp(28px, 4vw, 40px);
+        max-width: 920px;
+        margin: 0 auto;
+    }
+
+    body.inquiry-start-body:not(.home-body),
+    body.inquiry-start-body:not(.home-body) .site-main,
+    body.inquiry-start-body:not(.home-body) .content-frame {
+        background: #FFFFFF;
+    }
+
+    .start-header {
+        display: grid;
+        gap: 12px;
+        max-width: 640px;
+    }
+
+    .start-eyebrow {
+        margin: 0;
+        color: #9A7A43;
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+    }
+
+    .start-title {
+        margin: 0;
+        color: #0A0A0A;
+        font-size: clamp(1.85rem, 3.6vw, 3rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.1;
+        text-transform: uppercase;
+    }
+
+    .start-copy {
+        margin: 0;
+        color: #5F574C;
+        font-size: 0.95rem;
+        line-height: 1.7;
+        max-width: 540px;
+    }
+
+    .start-paths {
+        display: grid;
+        gap: 0;
+        border-top: 1px solid #DED8CC;
+    }
+
+    .start-path {
+        display: grid;
+        gap: 10px;
+        padding: 28px 0;
+        border-bottom: 1px solid #DED8CC;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .start-path:hover .start-path__title {
+        color: #9A7A43;
+    }
+
+    .start-path__label {
+        margin: 0;
+        color: #7A6A55;
+        font-size: 0.64rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .start-path__title {
+        margin: 0;
+        color: #0A0A0A;
+        font-size: clamp(1.2rem, 2vw, 1.55rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.2;
+        text-transform: uppercase;
+        transition: color 160ms ease;
+    }
+
+    .start-path__copy {
+        margin: 0;
+        max-width: 520px;
+        color: #5F574C;
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+
+    .start-path__cta {
+        margin-top: 4px;
+        color: #0A0A0A;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .start-note {
+        margin: 0;
+        color: #6E6254;
+        font-size: 0.82rem;
+        line-height: 1.55;
+        max-width: 560px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<article class="start-page">
+    <header class="start-header">
+        <p class="start-eyebrow">{% trans 'Concierge enquiry' %}</p>
+        <h1 class="start-title">{% trans 'How would you like to begin?' %}</h1>
+        <p class="start-copy">
+            {% trans 'Every path ends in a video consultation with our team. Nothing is confirmed until that call.' %}
+        </p>
+    </header>
+
+    <div class="start-paths" role="list">
+        <a class="start-path" href="/journeys/" role="listitem">
+            <p class="start-path__label">{% trans '01 · Signature' %}</p>
+            <h2 class="start-path__title">{% trans 'Enquire on a signature journey' %}</h2>
+            <p class="start-path__copy">
+                {% trans 'Start from a proven AfroLink route, then note any changes before we refine it together on a consultation.' %}
+            </p>
+            <span class="start-path__cta">{% trans 'Browse journeys' %} →</span>
+        </a>
+
+        <a class="start-path" href="{% url 'destination_cms:course_list' %}" role="listitem">
+            <p class="start-path__label">{% trans '02 · Shortlist' %}</p>
+            <h2 class="start-path__title">{% trans 'Build a custom shortlist' %}</h2>
+            <p class="start-path__copy">
+                {% trans 'Add golf, safari, stays, wellness, or events to a shortlist. When you are ready, request a consultation.' %}
+            </p>
+            <span class="start-path__cta">{% trans 'Start shortlisting' %} →</span>
+        </a>
+
+        <a class="start-path" href="{% url 'inquiry_crm:inquiry_intake' %}?intent=consultation" role="listitem">
+            <p class="start-path__label">{% trans '03 · Consultation' %}</p>
+            <h2 class="start-path__title">{% trans 'Request a consultation' %}</h2>
+            <p class="start-path__copy">
+                {% trans 'Share a few essentials now. Optional planning notes can come later — we will email consultation details within two hours.' %}
+            </p>
+            <span class="start-path__cta">{% trans 'Continue to enquiry' %} →</span>
+        </a>
+    </div>
+
+    <p class="start-note">
+        {% trans 'Prefer to sketch preferences first?' %}
+        <a href="{% url 'inquiry_crm:custom_planner' %}">{% trans 'Add optional planning notes' %}</a>.
+    </p>
+</article>
+{% endblock %}

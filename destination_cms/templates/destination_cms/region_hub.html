@@ -1,0 +1,572 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block meta_title %}{% if region.meta_title %}{{ region.meta_title }}{% else %}{{ region.name_en }} | Destination Hub{% endif %}{% endblock %}
+{% block meta_description %}{% if region.meta_description %}{{ region.meta_description }}{% else %}Explore golf, safari, wellness, and accommodation planning for {{ region.name_en }}.{% endif %}{% endblock %}
+{% block body_class %}region-detail-body{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/listing-filters.css' %}">
+<style>
+    .destination-detail,
+    .destination-detail * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    body.region-detail-body:not(.home-body),
+    body.region-detail-body:not(.home-body) .site-main,
+    body.region-detail-body:not(.home-body) .content-frame {
+        background: #FFFFFF;
+    }
+
+    .destination-detail {
+        --destination-card-gap: clamp(32px, 4vw, 44px);
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        padding: var(--space-page);
+    }
+
+    .destination-detail > .back-link {
+        margin-bottom: 20px;
+    }
+
+    .destination-header {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        align-items: end;
+        justify-content: space-between;
+        margin-bottom: 28px;
+    }
+
+    .destination-header__intro {
+        display: grid;
+        gap: 8px;
+        max-width: 760px;
+    }
+
+    .destination-title {
+        color: #0A0A0A;
+        font-size: clamp(1.75rem, 3.4vw, 3.1rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.1;
+        text-transform: uppercase;
+    }
+
+    .destination-copy {
+        max-width: 650px;
+        color: #5F574C;
+        font-size: 0.92rem;
+        line-height: 1.65;
+    }
+
+    .destination-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 18px;
+        justify-content: flex-end;
+        color: #7A6A55;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .destination-rule {
+        display: none;
+    }
+
+    .destination-hero-media {
+        width: 100%;
+        margin-bottom: 40px;
+        overflow: hidden;
+        border-radius: var(--radius-media);
+        background: #E7DFD1;
+    }
+
+    .destination-hero-media img,
+    .destination-hero-media__placeholder {
+        width: 100%;
+        min-height: clamp(260px, 42vw, 460px);
+        max-height: 480px;
+    }
+
+    .destination-hero-media img {
+        display: block;
+        object-fit: cover;
+    }
+
+    .destination-hero-media__placeholder {
+        display: grid;
+        place-items: center;
+        color: #7A6A55;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+    }
+
+    .destination-filters {
+        display: grid;
+        grid-template-columns: minmax(0, 1.5fr) minmax(220px, 0.7fr);
+        gap: clamp(18px, 3vw, 28px);
+        align-items: end;
+        margin-bottom: 24px;
+    }
+
+    .filter-field {
+        display: grid;
+        gap: 7px;
+    }
+
+    .filter-field label {
+        color: #7A6A55;
+        font-size: 0.64rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .filter-field input {
+        width: 100%;
+        min-height: 44px;
+        border: 0;
+        border-bottom: 1px solid #D5CAB8;
+        background: transparent;
+        color: #0A0A0A;
+        padding: 0 8px 10px;
+        font: inherit;
+        font-size: 0.88rem;
+    }
+
+    .filter-field input:focus {
+        border-color: #0A0A0A;
+        outline: 0;
+    }
+
+    .filter-field input::placeholder {
+        color: #9C9081;
+    }
+
+    .custom-select {
+        position: relative;
+    }
+
+    .custom-select__trigger {
+        width: 100%;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        border: 0;
+        border-bottom: 1px solid #D5CAB8;
+        background: transparent;
+        color: #0A0A0A;
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.88rem;
+        padding: 0 8px 10px;
+        text-align: left;
+    }
+
+    .custom-select__trigger:focus-visible,
+    .custom-select.is-open .custom-select__trigger {
+        border-color: #0A0A0A;
+        outline: 0;
+    }
+
+    .custom-select__chevron {
+        width: 14px;
+        height: 9px;
+        flex: none;
+        color: #7A6A55;
+        transition: transform var(--ease-standard), color var(--ease-standard);
+    }
+
+    .custom-select.is-open .custom-select__chevron {
+        color: #0A0A0A;
+        transform: rotate(180deg);
+    }
+
+    .custom-select__menu {
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        z-index: 15;
+        width: 100%;
+        display: grid;
+        gap: 2px;
+        padding: 5px;
+        border: 1px solid #DED8CC;
+        border-radius: var(--radius-media);
+        background: #FFFFFF;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(6px);
+        transition: opacity var(--ease-standard), transform var(--ease-standard);
+    }
+
+    .custom-select.is-open .custom-select__menu {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    .custom-select__option {
+        width: 100%;
+        min-height: 38px;
+        border: 0;
+        border-radius: calc(var(--radius-media) - 2px);
+        background: transparent;
+        color: #0A0A0A;
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.84rem;
+        padding: 0 8px;
+        text-align: left;
+    }
+
+    .custom-select__option:hover,
+    .custom-select__option:focus-visible {
+        background: #F7F4ED;
+        color: #0A0A0A;
+        outline: 0;
+    }
+
+    .custom-select__option.is-selected {
+        background: #0A0A0A;
+        color: #FFFFFF;
+    }
+
+    .content-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--destination-card-gap);
+    }
+
+    .content-card {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        gap: 14px;
+        background: transparent;
+    }
+
+    .content-card[hidden] {
+        display: none;
+    }
+
+    .content-card__media {
+        aspect-ratio: 16 / 10;
+        overflow: hidden;
+        border-radius: var(--radius-media);
+        background: #E7DFD1;
+    }
+
+    .content-card__media img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        transition: transform 400ms ease;
+    }
+
+    .content-card:hover .content-card__media img {
+        transform: scale(1.03);
+    }
+
+    .content-card__placeholder {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        place-items: center;
+        color: #7A6A55;
+        font-size: 0.66rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .content-card__body {
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .content-label {
+        color: #7A6A55;
+        font-size: 0.66rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .content-title {
+        color: #0A0A0A;
+        font-size: clamp(1.05rem, 1.7vw, 1.35rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.18;
+        text-transform: uppercase;
+    }
+
+    .content-copy {
+        color: #5F574C;
+        font-size: 0.84rem;
+        line-height: 1.55;
+    }
+
+    .content-link {
+        width: fit-content;
+        margin-top: auto;
+        padding-bottom: 3px;
+        border-bottom: 1px solid currentColor;
+        color: #0A0A0A;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .content-link:hover {
+        color: #9A7A43;
+    }
+
+    .empty-state {
+        border-top: 1px solid #D5CAB8;
+        padding: 32px 0;
+        color: #5F574C;
+        font-size: 0.92rem;
+        line-height: 1.65;
+    }
+
+    @media (max-width: 980px) {
+        .destination-detail {
+            --destination-card-gap: 40px;
+        }
+
+        .content-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 44px;
+        }
+    }
+
+    @media (max-width: 720px) {
+        .destination-detail {
+            --destination-card-gap: 44px;
+            padding: 24px 0 56px;
+        }
+
+        .destination-detail > .back-link {
+            margin-bottom: 16px;
+        }
+
+        .destination-header {
+            align-items: flex-start;
+            flex-direction: column;
+            margin-bottom: 24px;
+        }
+
+        .destination-stats {
+            justify-content: flex-start;
+        }
+
+        .destination-hero-media {
+            margin-bottom: 48px;
+        }
+
+        .destination-filters {
+            grid-template-columns: 1fr;
+            margin-bottom: 18px;
+        }
+
+        .content-grid {
+            grid-template-columns: 1fr;
+            gap: 48px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<article class="destination-detail" data-listing-root>
+    <a class="back-link" href="{% url 'destination_cms:region_list' %}">← {% trans 'Back To Destinations' %}</a>
+
+    <header class="destination-header" aria-labelledby="destination-title">
+        <div class="destination-header__intro">
+            <h1 id="destination-title" class="destination-title">
+                {% if request.LANGUAGE_CODE == 'de' %}{{ region.name_de }}{% else %}{{ region.name_en }}{% endif %}
+            </h1>
+            <p class="destination-copy">
+                {% if request.LANGUAGE_CODE == 'de' and region.description_de %}{{ region.description_de }}{% else %}{{ region.description_en }}{% endif %}
+            </p>
+        </div>
+        <div class="destination-stats" aria-label="{% trans 'Destination planning stats' %}">
+            <span>{{ golf_courses|length }} {% trans 'Golf' %}</span>
+            <span>{{ accommodations|length }} {% trans 'Stays' %}</span>
+            <span>{{ safari_extensions|length }} {% trans 'Safari destinations' %}</span>
+            <span>{{ wellness_experiences|length }} {% trans 'Wellness' %}</span>
+        </div>
+    </header>
+
+    <div class="destination-hero-media">
+        {% if hero_image %}
+            <img src="{{ hero_image.image_url }}" alt="{% if request.LANGUAGE_CODE == 'de' and hero_image.caption_de %}{{ hero_image.caption_de }}{% elif hero_image.caption_en %}{{ hero_image.caption_en }}{% else %}{{ region.name_en }}{% endif %}">
+        {% else %}
+            <div class="destination-hero-media__placeholder">{% trans 'Destination image' %}</div>
+        {% endif %}
+    </div>
+
+    <hr class="destination-rule" aria-hidden="true">
+
+    <section class="destination-filters" aria-label="{% trans 'Filter regional experiences' %}">
+        <div class="filter-field">
+            <label for="region-search">{% trans 'Search' %}</label>
+            <input id="region-search" type="search" placeholder="{% trans 'Search this destination' %}" data-region-search>
+        </div>
+
+        <div class="filter-field">
+            <label id="region-type-label">{% trans 'View' %}</label>
+            <div class="custom-select" data-region-select>
+                <input type="hidden" value="all" data-region-type>
+                <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="region-type-label">
+                    <span data-region-select-label>{% trans 'All experiences' %}</span>
+                    <svg class="custom-select__chevron" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                        <path d="M1.25 1.5L7 7.25L12.75 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div class="custom-select__menu" role="listbox" aria-labelledby="region-type-label">
+                    <button class="custom-select__option is-selected" type="button" role="option" data-value="all" aria-selected="true">{% trans 'All experiences' %}</button>
+                    <button class="custom-select__option" type="button" role="option" data-value="golf" aria-selected="false">{% trans 'Golf' %}</button>
+                    <button class="custom-select__option" type="button" role="option" data-value="stay" aria-selected="false">{% trans 'Stays' %}</button>
+                    <button class="custom-select__option" type="button" role="option" data-value="safari" aria-selected="false">{% trans 'Safari destinations' %}</button>
+                    <button class="custom-select__option" type="button" role="option" data-value="wellness" aria-selected="false">{% trans 'Wellness' %}</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-grid" aria-label="{% trans 'Regional experiences' %}" data-region-grid>
+        {% for course in golf_courses %}
+            <article class="content-card" data-filter-item data-type="golf" data-search="{{ course.name }} {{ course.holes_and_par }} {{ course.signature_features }}">
+                <div class="content-card__media">
+                    {% with image=course.gallery_images.all.0 %}
+                        {% if image %}
+                            <img src="{{ image.image_url }}" alt="{% if request.LANGUAGE_CODE == 'de' and image.caption_de %}{{ image.caption_de }}{% elif image.caption_en %}{{ image.caption_en }}{% else %}{{ course.name }}{% endif %}">
+                        {% else %}
+                            <div class="content-card__placeholder">{% trans 'Golf image' %}</div>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                <div class="content-card__body">
+                    <span class="content-label">{{ course.holes_and_par|default:"Golf guide" }}</span>
+                    <h2 class="content-title">{{ course.name }}</h2>
+                    <p class="content-copy">{{ course.signature_features|truncatewords:22 }}</p>
+                    <a class="content-link" href="{% url 'destination_cms:course_detail' course.slug %}">{% trans 'Open Course →' %}</a>
+                    {% include "includes/quick_shortlist.html" with interest_type="golf_course" object_id=course.pk %}
+                </div>
+            </article>
+        {% endfor %}
+
+        {% for accommodation in accommodations %}
+            <article class="content-card" data-filter-item data-type="stay" data-search="{{ accommodation.name }} {{ accommodation.star_rating }} {% if request.LANGUAGE_CODE == 'de' and accommodation.description_de %}{{ accommodation.description_de }}{% else %}{{ accommodation.description_en }}{% endif %}">
+                <div class="content-card__media">
+                    {% with image=accommodation.gallery_images.all.0 %}
+                        {% if image %}
+                            <img src="{{ image.image_url }}" alt="{% if request.LANGUAGE_CODE == 'de' and image.caption_de %}{{ image.caption_de }}{% elif image.caption_en %}{{ image.caption_en }}{% else %}{{ accommodation.name }}{% endif %}">
+                        {% else %}
+                            <div class="content-card__placeholder">{% trans 'Stay image' %}</div>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                <div class="content-card__body">
+                    <span class="content-label">{{ accommodation.star_rating }} {% trans 'Star Stay' %}</span>
+                    <h2 class="content-title">{{ accommodation.name }}</h2>
+                    <p class="content-copy">
+                        {% if request.LANGUAGE_CODE == 'de' and accommodation.description_de %}{{ accommodation.description_de|truncatewords:22 }}{% else %}{{ accommodation.description_en|truncatewords:22 }}{% endif %}
+                    </p>
+                    {% if accommodation.slug %}
+                        <a class="content-link" href="{% url 'destination_cms:accommodation_detail' accommodation.slug %}">{% trans 'Open Stay →' %}</a>
+                    {% endif %}
+                    {% include "includes/quick_shortlist.html" with interest_type="accommodation" object_id=accommodation.pk %}
+                </div>
+            </article>
+        {% endfor %}
+
+        {% for safari in safari_extensions %}
+            <article class="content-card" data-filter-item data-type="safari" data-search="{{ safari.name }} {{ safari.key_wildlife }}">
+                <div class="content-card__media">
+                    {% with image=safari.gallery_images.all.0 %}
+                        {% if image %}
+                            <img src="{{ image.image_url }}" alt="{% if request.LANGUAGE_CODE == 'de' and image.caption_de %}{{ image.caption_de }}{% elif image.caption_en %}{{ image.caption_en }}{% else %}{{ safari.name }}{% endif %}">
+                        {% else %}
+                            <div class="content-card__placeholder">{% trans 'Safari image' %}</div>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                <div class="content-card__body">
+                    <span class="content-label">{% trans 'Safari Destination' %}</span>
+                    <h2 class="content-title">{{ safari.name }}</h2>
+                    <p class="content-copy">{{ safari.key_wildlife|truncatewords:22 }}</p>
+                    {% if safari.slug %}
+                        <a class="content-link" href="{% url 'destination_cms:safari_detail' safari.slug %}">{% trans 'Open destination →' %}</a>
+                    {% endif %}
+                    {% include "includes/quick_shortlist.html" with interest_type="safari_extension" object_id=safari.pk %}
+                </div>
+            </article>
+        {% endfor %}
+
+        {% for wellness in wellness_experiences %}
+            <article class="content-card" data-filter-item data-type="wellness" data-search="{% if request.LANGUAGE_CODE == 'de' %}{{ wellness.name_de }}{% else %}{{ wellness.name_en }}{% endif %}">
+                <div class="content-card__media">
+                    {% with image=wellness.gallery_images.all.0 %}
+                        {% if image %}
+                            <img src="{{ image.image_url }}" alt="{% if request.LANGUAGE_CODE == 'de' and image.caption_de %}{{ image.caption_de }}{% elif image.caption_en %}{{ image.caption_en }}{% else %}{{ wellness.name_en }}{% endif %}">
+                        {% else %}
+                            <div class="content-card__placeholder">{% trans 'Wellness image' %}</div>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                <div class="content-card__body">
+                    <span class="content-label">{% trans 'Recovery Ritual' %}</span>
+                    <h2 class="content-title">
+                        {% if request.LANGUAGE_CODE == 'de' %}{{ wellness.name_de }}{% else %}{{ wellness.name_en }}{% endif %}
+                    </h2>
+                    <p class="content-copy">{% trans 'A restorative counterpoint to tournament-grade play and safari movement.' %}</p>
+                    {% if wellness.slug %}
+                        <a class="content-link" href="{% url 'destination_cms:wellness_detail' wellness.slug %}">{% trans 'Open Wellness →' %}</a>
+                    {% endif %}
+                    {% include "includes/quick_shortlist.html" with interest_type="wellness_experience" object_id=wellness.pk %}
+                </div>
+            </article>
+        {% endfor %}
+
+        {% if not golf_courses and not accommodations and not safari_extensions and not wellness_experiences %}
+            {% include "includes/listing_empty.html" %}
+        {% endif %}
+    </section>
+
+    <section class="region-inquire" aria-label="{% trans 'Enquire about this region' %}">
+        <h2 class="region-inquire__title">{% trans 'Planning around this region?' %}</h2>
+        <p class="region-inquire__copy">
+            {% trans 'Shortlist experiences above, or request a consultation and we will shape the route with you.' %}
+        </p>
+        <div class="region-inquire__actions">
+            <a class="region-inquire__cta" href="{% url 'inquiry_crm:inquiry_intake' %}?intent=consultation">{% trans 'Request consultation' %}</a>
+            <button type="button" class="content-link" data-open-experience-inquiry data-inquiry-context="{% if request.LANGUAGE_CODE == 'de' %}{{ region.name_de }}{% else %}{{ region.name_en }}{% endif %}">
+                {% trans "Can't find something? Tell us →" %}
+            </button>
+        </div>
+    </section>
+
+    {% include "includes/filter_empty.html" %}
+</article>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/listing-filters.js' %}" defer></script>
+{% endblock %}

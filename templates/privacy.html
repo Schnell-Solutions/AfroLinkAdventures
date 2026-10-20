@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block meta_title %}{% trans 'Privacy' %} | AfroLink Adventures{% endblock %}
+{% block meta_description %}{% trans 'How AfroLink Adventures collects, uses, and protects personal information shared through our website and enquiry process.' %}{% endblock %}
+{% block body_class %}legal-body{% endblock %}
+
+{% block extra_head %}
+{% include "includes/legal_page_styles.html" %}
+{% endblock %}
+
+{% block content %}
+<article class="legal-page">
+    <header class="legal-header">
+        <p class="legal-kicker">{% trans 'Legal' %}</p>
+        <h1 class="legal-title">{% trans 'Privacy' %}</h1>
+        <p class="legal-lede">
+            {% trans 'This notice explains how AfroLink Adventures handles personal information when you browse our site, start a planner brief, or submit an enquiry for a private journey.' %}
+        </p>
+        <p class="legal-meta">{% trans 'Last updated' %}: {% now "F Y" %}</p>
+    </header>
+
+    <div class="legal-sections">
+        <section class="legal-section">
+            <h2 class="legal-section__title">{% trans 'Who we are' %}</h2>
+            <p>
+                {% trans 'AfroLink Adventures designs private golf, safari, and wellness journeys across East Africa. For privacy questions related to this website or an enquiry, contact us through our inquiry form or your assigned founder contact.' %}
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2 class="legal-section__title">{% trans 'Information we collect' %}</h2>
+            <p>{% trans 'Depending on how you use the site, we may collect:' %}</p>
+            <ul>
+                <li>{% trans 'Contact and travel-planning details you submit in the planner or enquiry forms, such as name, email, preferred language, party size, dates, and journey preferences.' %}</li>
+                <li>{% trans 'Custom package selections stored in your browser session while you build an enquiry.' %}</li>
+                <li>{% trans 'Basic technical data needed to operate the site securely, such as device type, browser information, and approximate location derived from IP address.' %}</li>
+                <li>{% trans 'Communication you send us by email or during a consultation about your itinerary.' %}</li>
+            </ul>
+        </section>
+
+        <section class="legal-section">
+            <h2 class="legal-section__title">{% trans 'How we use information' %}</h2>
+            <ul>
+                <li>{% trans 'To respond to enquiries and prepare route briefs, quotes, and itineraries.' %}</li>
+                <li>{% trans 'To coordinate with lodges, courses, guides, and transfer partners needed to deliver a journey you ask us to plan.' %}</li>
+                <li>{% trans 'To improve the clarity and performance of our website and enquiry flow.' %}</li>
+                <li>{% trans 'To meet legal, accounting, and operational obligations tied to travel arrangements.' %}</li>
+            </ul>
+        </section>
+
+        <section class="legal-section">
+            <h2 class="legal-section__title">{% trans 'Sharing' %}</h2>
+            <p>
+                {% trans 'We do not sell personal information. We share details only where necessary to plan or deliver your journey — for example with accommodation, golf, safari, wellness, or transport partners — or where required by law. Partners receive only what they need to fulfil their part of the arrangement.' %}
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2 class="legal-section__title">{% trans 'Retention' %}</h2>
+            <p>
+                {% trans 'Enquiry and planning records are kept for as long as needed to manage your request, complete a booking, and meet ordinary business and legal retention requirements. Session-based package selections expire with your browser session unless converted into an enquiry.' %}
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2 class="legal-section__title">{% trans 'Your choices' %}</h2>
+            <p>
+                {% trans 'You may ask us to access, correct, or delete personal information we hold about you, or to limit how it is used for marketing or follow-up, subject to any legal retention duties. To make a request, use the inquiry form and mark the message as a privacy request.' %}
+            </p>
+        </section>
+
+        <section class="legal-section">
+            <h2 class="legal-section__title">{% trans 'Cookies and similar tools' %}</h2>
+            <p>
+                {% trans 'We use essential session tools so the site and enquiry cart can function. If we introduce analytics or additional cookies, we will update this notice and, where required, ask for consent.' %}
+            </p>
+        </section>
+    </div>
+
+    <p class="legal-footer-note">
+        {% trans 'Related pages:' %}
+        <a href="{% url 'terms' %}">{% trans 'Terms' %}</a>
+        ·
+        <a href="{% url 'legal' %}">{% trans 'Legal Notice' %}</a>
+    </p>
+</article>
+{% endblock %}

@@ -1,0 +1,270 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block meta_title %}{% if event.meta_title %}{{ event.meta_title }}{% elif request.LANGUAGE_CODE == 'de' and event.title_de %}{{ event.title_de }} | Golf Events{% else %}{{ event.title_en }} | Golf Events{% endif %}{% endblock %}
+{% block meta_description %}{% if event.meta_description %}{{ event.meta_description }}{% elif request.LANGUAGE_CODE == 'de' and event.summary_de %}{{ event.summary_de|truncatewords:28 }}{% else %}{{ event.summary_en|truncatewords:28 }}{% endif %}{% endblock %}
+{% block body_class %}event-detail-body{% endblock %}
+
+{% block extra_head %}
+{% include "destination_cms/includes/experience_detail_styles.html" %}
+<style>
+    body.event-detail-body:not(.home-body),
+    body.event-detail-body:not(.home-body) .site-main,
+    body.event-detail-body:not(.home-body) .content-frame {
+        background: #FFFFFF;
+    }
+
+    .event-detail-body .xp-media {
+        aspect-ratio: 21 / 9;
+        max-height: min(58vh, 520px);
+    }
+
+    .event-detail-body .xp-media img {
+        min-height: 0;
+        height: 100%;
+    }
+
+    .event-detail-body .xp-media__placeholder {
+        min-height: 240px;
+        height: 100%;
+    }
+
+    .event-byline {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 18px;
+        margin-top: 16px;
+        color: var(--xp-soft);
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+
+    @media (max-width: 900px) {
+        .event-detail-body .xp-media {
+            aspect-ratio: 16 / 10;
+            max-height: none;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="xp-page">
+    <div class="xp-main">
+        <a class="back-link" href="{% url 'destination_cms:event_list' %}">← {% trans 'Back to events' %}</a>
+
+        <header class="xp-hero">
+            <div class="xp-media">
+                {% if event.image_url %}
+                    <img src="{{ event.image_url }}" alt="{% if request.LANGUAGE_CODE == 'de' and event.title_de %}{{ event.title_de }}{% else %}{{ event.title_en }}{% endif %}">
+                {% else %}
+                    <div class="xp-media__placeholder">{% trans 'Event image' %}</div>
+                {% endif %}
+            </div>
+            <div class="xp-hero__copy">
+                <p class="xp-kicker">
+                    {% if event.format_label %}
+                        {{ event.format_label }}
+                    {% elif event.golf_course %}
+                        {{ event.golf_course.name }}
+                    {% else %}
+                        {% trans 'Golf Event' %}
+                    {% endif %}
+                </p>
+                <h1 class="xp-title">
+                    {% if request.LANGUAGE_CODE == 'de' and event.title_de %}{{ event.title_de }}{% else %}{{ event.title_en }}{% endif %}
+                </h1>
+                {% if event.summary_en or event.summary_de %}
+                    <p class="xp-lede">
+                        {% if request.LANGUAGE_CODE == 'de' and event.summary_de %}{{ event.summary_de }}{% else %}{{ event.summary_en }}{% endif %}
+                    </p>
+                {% endif %}
+                <div class="event-byline">
+                    <span>
+                        {% if event.is_recurring %}
+                            {% trans 'Every' %} {{ event.get_recurrence_weekday_display }}
+                        {% else %}
+                            {{ event.event_date|date:"F j, Y" }}
+                        {% endif %}
+                    </span>
+                    {% if event.start_time %}
+                        <span>{{ event.start_time|time:"g:i A" }}</span>
+                    {% endif %}
+                    {% if event.duration_label %}
+                        <span>{{ event.duration_label }}</span>
+                    {% endif %}
+                    <span>
+                        {% if request.LANGUAGE_CODE == 'de' %}{{ event.region.name_de }}{% else %}{{ event.region.name_en }}{% endif %}
+                    </span>
+                </div>
+            </div>
+        </header>
+
+        {% if event.description_en or event.description_de or event.summary_en %}
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Overview' %}</h2>
+            <div class="xp-prose">
+                {% if request.LANGUAGE_CODE == 'de' and event.description_de %}
+                    {{ event.description_de }}
+                {% elif event.description_en %}
+                    {{ event.description_en }}
+                {% elif request.LANGUAGE_CODE == 'de' and event.summary_de %}
+                    {{ event.summary_de }}
+                {% else %}
+                    {{ event.summary_en }}
+                {% endif %}
+            </div>
+        </section>
+        {% endif %}
+
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Event details' %}</h2>
+            <div class="xp-grid">
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Schedule' %}</span>
+                    <div class="xp-fact__value">
+                        {% if event.is_recurring %}
+                            {% trans 'Every' %} {{ event.get_recurrence_weekday_display }}
+                            <br>{% trans 'From' %} {{ event.event_date|date:"M j, Y" }}
+                        {% else %}
+                            {{ event.event_date|date:"M j, Y" }}
+                        {% endif %}
+                        {% if event.end_date and event.end_date != event.event_date %}
+                            <br>{% trans 'Through' %} {{ event.end_date|date:"M j, Y" }}
+                        {% endif %}
+                        {% if event.start_time %}
+                            <br>{{ event.start_time|time:"g:i A" }}
+                        {% endif %}
+                    </div>
+                </div>
+                {% if event.format_label %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Format' %}</span>
+                    <div class="xp-fact__value">{{ event.format_label }}</div>
+                </div>
+                {% endif %}
+                {% if event.duration_label %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Duration' %}</span>
+                    <div class="xp-fact__value">{{ event.duration_label }}</div>
+                </div>
+                {% endif %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Region' %}</span>
+                    <div class="xp-fact__value">
+                        <a href="{% url 'destination_cms:region_hub' event.region.slug %}">
+                            {% if request.LANGUAGE_CODE == 'de' %}{{ event.region.name_de }}{% else %}{{ event.region.name_en }}{% endif %}
+                        </a>
+                    </div>
+                </div>
+                {% if event.golf_course %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Course' %}</span>
+                    <div class="xp-fact__value">
+                        <a href="{% url 'destination_cms:course_detail' event.golf_course.slug %}">{{ event.golf_course.name }}</a>
+                    </div>
+                </div>
+                {% endif %}
+                {% if event.dress_code %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Dress code' %}</span>
+                    <div class="xp-fact__value">{{ event.dress_code }}</div>
+                </div>
+                {% endif %}
+            </div>
+            {% if event.eligibility_notes %}
+            <div class="xp-prose" style="margin-top:18px;">
+                <p class="xp-fact__label">{% trans 'Eligibility' %}</p>
+                <div>{{ event.eligibility_notes }}</div>
+            </div>
+            {% endif %}
+            {% if event.venue_notes %}
+            <div class="xp-prose" style="margin-top:18px;">
+                <p class="xp-fact__label">{% trans 'Venue & access' %}</p>
+                <div>{{ event.venue_notes }}</div>
+            </div>
+            {% endif %}
+        </section>
+
+        {% if event.get_inclusions %}
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Included' %}</h2>
+            <ul class="xp-list">
+                {% for item in event.get_inclusions %}<li>{{ item }}</li>{% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+
+        {% if event.get_need_to_know %}
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Need to know' %}</h2>
+            <ul class="xp-list">
+                {% for note in event.get_need_to_know %}<li>{{ note }}</li>{% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+
+        {% if related_events %}
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Related events' %}</h2>
+            <div class="xp-related">
+                {% for related in related_events %}
+                <a href="{% url 'destination_cms:event_detail' related.slug %}">
+                    <div class="xp-related__media">
+                        {% if related.image_url %}
+                            <img src="{{ related.image_url }}" alt="{% if request.LANGUAGE_CODE == 'de' and related.title_de %}{{ related.title_de }}{% else %}{{ related.title_en }}{% endif %}">
+                        {% endif %}
+                    </div>
+                    {% if related.format_label %}
+                        <div class="xp-related__label">{{ related.format_label }}</div>
+                    {% endif %}
+                    <div class="xp-related__title">
+                        {% if request.LANGUAGE_CODE == 'de' and related.title_de %}{{ related.title_de }}{% else %}{{ related.title_en }}{% endif %}
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+    </div>
+
+    <aside class="xp-aside" data-detail-cta-panel>
+        <div class="xp-cta">
+            <div class="xp-cta__eyebrow">{% trans 'Shortlist' %}</div>
+            <h2 class="xp-cta__title">{% trans 'Add to shortlist' %}</h2>
+            <p class="xp-cta__copy">
+                {% trans 'Add this event as an anchor date. We will confirm access, guest numbers, and the best surrounding golf, stay, and safari routing.' %}
+            </p>
+            {% if event.accepts_inquiries %}
+                <form method="post" action="{% url 'inquiry_crm:add_interest_to_inquiry_list' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="interest_type" value="golf_event">
+                    <input type="hidden" name="object_id" value="{{ event.id }}">
+                    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                    <button class="xp-cta__btn" type="submit">{% trans 'Add to shortlist' %} →</button>
+                </form>
+                {% include "includes/inquiry_commitment_note.html" with compact=True %}
+            {% else %}
+                <p class="xp-cta__copy">{% trans 'This event is not open for direct enquiry right now. Ask our team if a private arrangement is possible.' %}</p>
+                <button type="button" class="xp-cta__btn" data-open-experience-inquiry data-inquiry-context="{{ event.title_en }}">
+                    {% trans 'Ask the team' %} →
+                </button>
+            {% endif %}
+            {% if event.registration_url %}
+                <a class="xp-cta__btn" href="{{ event.registration_url }}" target="_blank" rel="noopener" style="margin-top:10px;background:transparent;border:1px solid rgba(245,240,232,0.35);color:#F5F0E8 !important;">
+                    {% trans 'Official event link' %}
+                </a>
+            {% endif %}
+        </div>
+    </aside>
+</div>
+{% if event.accepts_inquiries %}
+    {% include "includes/detail_cta_bar.html" %}
+{% else %}
+    {% trans 'Ask our team' as event_sticky_value %}
+    {% trans 'Ask' as event_sticky_action %}
+    {% include "includes/detail_cta_bar.html" with sticky_value=event_sticky_value sticky_action=event_sticky_action %}
+{% endif %}
+{% endblock %}

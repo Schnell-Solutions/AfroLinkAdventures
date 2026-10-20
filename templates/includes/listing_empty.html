@@ -1,0 +1,22 @@
+{% load i18n %}
+<div class="filter-empty listing-empty" role="status">
+    <div class="filter-empty__icon" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none" focusable="false">
+            <circle cx="21" cy="21" r="12" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M30.5 30.5L38 38" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+    </div>
+    <p class="filter-empty__title">{% trans "Can't find what you're looking for?" %}</p>
+    <p class="filter-empty__copy">
+        {% if empty_copy %}
+            {{ empty_copy }}
+        {% else %}
+            {% trans 'Tell us about the destination, golf course, safari package, stay, or experience you had in mind — we will help you find it.' %}
+        {% endif %}
+    </p>
+    <div class="filter-empty__actions">
+        <button type="button" class="filter-empty__inquire" data-open-experience-inquiry>
+            {% trans 'Make an Inquiry' %}
+        </button>
+    </div>
+</div>

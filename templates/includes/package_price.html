@@ -1,0 +1,31 @@
+{% load i18n %}
+<div class="package-price{% if compact %} package-price--compact{% endif %}">
+    {% if not compact and promo_label %}
+        <div class="package-price__badges">
+            <span class="package-price__badge">{{ promo_label }}</span>
+        </div>
+    {% endif %}
+
+    {% if has_promo_price %}
+        {% if compact %}
+            <p class="package-price__row">
+                <span class="package-price__current">{{ promo_price_label|default:starting_price_label }}</span>
+                <span class="package-price__original">
+                    <span class="visually-hidden">{% trans 'Original price' %}</span>
+                    <s>{{ original_price_label }}</s>
+                </span>
+            </p>
+        {% else %}
+            <p class="package-price__current">{{ promo_price_label|default:starting_price_label }}</p>
+            <p class="package-price__original">
+                <span class="visually-hidden">{% trans 'Original price' %}</span>
+                <s>{{ original_price_label }}</s>
+            </p>
+            {% if savings_label %}
+                <p class="package-price__savings">{{ savings_label }}</p>
+            {% endif %}
+        {% endif %}
+    {% else %}
+        <p class="package-price__current">{{ starting_price_label }}</p>
+    {% endif %}
+</div>

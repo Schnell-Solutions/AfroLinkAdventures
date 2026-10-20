@@ -1,0 +1,1036 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block meta_title %}{% trans 'Enquiry' %} | AfroLink Adventures{% endblock %}
+{% block meta_description %}{% trans 'Confirm your AfroLink enquiry details and request a private concierge video consultation.' %}{% endblock %}
+{% block body_class %}inquiry-body{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/inquiry-ux.css' %}">
+<style>
+    .inquiry-page,
+    .inquiry-page * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    .inquiry-page {
+        display: grid;
+        gap: var(--space-section);
+        padding: var(--space-page);
+    }
+
+    body.inquiry-body:not(.home-body),
+    body.inquiry-body:not(.home-body) .site-main,
+    body.inquiry-body:not(.home-body) .content-frame {
+        background: #FFFFFF;
+    }
+
+    .inquiry-header {
+        display: grid;
+        gap: 8px;
+        max-width: 640px;
+    }
+
+    .inquiry-title {
+        color: #0A0A0A;
+        font-size: clamp(1.75rem, 3.4vw, 3rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.1;
+        text-transform: uppercase;
+    }
+
+    .inquiry-copy {
+        color: #5F574C;
+        font-size: 0.92rem;
+        line-height: 1.65;
+        max-width: 540px;
+    }
+
+    .form-promise {
+        margin: 8px 0 0;
+        color: #6E6254;
+        font-size: 0.82rem;
+        line-height: 1.5;
+        max-width: 520px;
+    }
+
+    .field-help {
+        margin: 8px 0 0;
+        color: #7A6A55;
+        font-size: 0.75rem;
+        line-height: 1.45;
+    }
+
+    .inquiry-submit-row {
+        display: grid;
+        gap: 12px;
+        justify-items: start;
+    }
+
+    .inquiry-whatsapp {
+        color: #0A0A0A;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        border-bottom: 1px solid currentColor;
+        padding-bottom: 2px;
+    }
+
+    .inquiry-whatsapp:hover {
+        color: #9A7A43;
+    }
+
+    .inquiry-rule {
+        width: 100%;
+        margin: 0;
+        border: 0;
+        border-top: 1px solid #DED8CC;
+    }
+
+    .inquiry-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+        gap: var(--space-section);
+        align-items: start;
+    }
+
+    .inquiry-form-panel,
+    .inquiry-summary {
+        background: transparent;
+    }
+
+    .inquiry-summary {
+        position: sticky;
+        top: 92px;
+        display: grid;
+        gap: 18px;
+        padding-top: 4px;
+    }
+
+    .summary-label {
+        color: #7A6A55;
+        font-size: 0.64rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .inquiry-summary > .summary-heading {
+        display: grid;
+        gap: 12px;
+        margin-bottom: 8px;
+    }
+
+    .summary-title {
+        margin-top: 0;
+        color: #0A0A0A;
+        font-size: clamp(1.15rem, 2vw, 1.45rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.2;
+        text-transform: uppercase;
+    }
+
+    .summary-list,
+    .error-list {
+        display: grid;
+        gap: 0;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        border-top: 1px solid #DED8CC;
+    }
+
+    .summary-item {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 12px;
+        align-items: start;
+        padding: 14px 0;
+        border-bottom: 1px solid #DED8CC;
+    }
+
+    .summary-item__type {
+        display: block;
+        margin-bottom: 4px;
+        color: #7A6A55;
+        font-size: 0.62rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .summary-item__title {
+        color: #0A0A0A;
+        font-size: 0.92rem;
+        line-height: 1.4;
+    }
+
+    .summary-item__remove {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border: 0;
+        background: transparent;
+        color: #7A6A55;
+        cursor: pointer;
+        font-size: 1.1rem;
+        line-height: 1;
+        transition: color var(--ease-standard);
+    }
+
+    .summary-item__remove:hover {
+        color: #0A0A0A;
+    }
+
+    .summary-empty {
+        color: #5F574C;
+        font-size: 0.88rem;
+        line-height: 1.6;
+        padding-top: 4px;
+    }
+
+    .summary-empty__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 14px;
+    }
+
+    .summary-link {
+        border-bottom: 1px solid currentColor;
+        color: #0A0A0A;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .summary-link:hover {
+        color: #9A7A43;
+    }
+
+    .summary-note {
+        color: #7A6A55;
+        font-size: 0.82rem;
+        line-height: 1.55;
+    }
+
+    .form-heading {
+        display: grid;
+        gap: 6px;
+        margin-bottom: clamp(22px, 3vw, 28px);
+    }
+
+    .form-heading h2 {
+        color: #0A0A0A;
+        font-size: clamp(1.2rem, 2vw, 1.5rem);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+    }
+
+    .error-list {
+        margin-bottom: 22px;
+        border: 0;
+        border-top: 1px solid #C9A66B;
+        border-bottom: 1px solid #C9A66B;
+    }
+
+    .error-list li {
+        padding: 12px 0;
+        border-bottom: 1px solid #E8DFD0;
+        color: #0A0A0A;
+        font-size: 0.88rem;
+    }
+
+    .error-list li:last-child {
+        border-bottom: 0;
+    }
+
+    .field-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-card);
+    }
+
+    .field {
+        display: grid;
+        gap: 7px;
+    }
+
+    .field--full {
+        grid-column: 1 / -1;
+    }
+
+    .field label,
+    .field-legend {
+        color: #7A6A55;
+        font-size: 0.64rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .field input {
+        min-height: 44px;
+        width: 100%;
+        border: 0;
+        border-bottom: 1px solid #D5CAB8;
+        border-radius: 0;
+        background: transparent;
+        color: #0A0A0A;
+        padding: 0 8px 10px;
+        font: inherit;
+        font-size: 0.88rem;
+        transition: border-color var(--ease-standard);
+    }
+
+    .field input:focus {
+        border-color: #0A0A0A;
+        outline: 0;
+    }
+
+    .field input::placeholder {
+        color: #9C9081;
+    }
+
+    .field textarea {
+        min-height: 120px;
+        width: 100%;
+        border: 0;
+        border-bottom: 1px solid #D5CAB8;
+        border-radius: 0;
+        background: transparent;
+        color: #0A0A0A;
+        padding: 8px 8px 10px;
+        font: inherit;
+        font-size: 0.88rem;
+        line-height: 1.55;
+        resize: vertical;
+        transition: border-color var(--ease-standard);
+    }
+
+    .field textarea:focus {
+        border-color: #0A0A0A;
+        outline: 0;
+    }
+
+    .field textarea::placeholder {
+        color: #9C9081;
+    }
+
+    .form-notice {
+        grid-column: 1 / -1;
+        padding: 14px 16px;
+        border-left: 2px solid #9A7A43;
+        background: #F7F4ED;
+        color: #5F574C;
+        font-size: 0.88rem;
+        line-height: 1.55;
+    }
+
+    .custom-select {
+        position: relative;
+    }
+
+    .custom-select__trigger {
+        width: 100%;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        border: 0;
+        border-bottom: 1px solid #D5CAB8;
+        background: transparent;
+        color: #0A0A0A;
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.88rem;
+        padding: 0 8px 10px;
+        text-align: left;
+    }
+
+    .custom-select__trigger:focus-visible,
+    .custom-select.is-open .custom-select__trigger {
+        border-color: #0A0A0A;
+        outline: 0;
+    }
+
+    .custom-select__chevron {
+        width: 14px;
+        height: 9px;
+        flex: none;
+        color: #7A6A55;
+        transition: transform var(--ease-standard), color var(--ease-standard);
+    }
+
+    .custom-select.is-open .custom-select__chevron {
+        color: #0A0A0A;
+        transform: rotate(180deg);
+    }
+
+    .custom-select__menu {
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        z-index: 15;
+        width: 100%;
+        display: grid;
+        gap: 2px;
+        padding: 5px;
+        border: 1px solid #DED8CC;
+        border-radius: var(--radius-media);
+        background: #FFFFFF;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(6px);
+        transition: opacity var(--ease-standard), transform var(--ease-standard);
+    }
+
+    .custom-select.is-open .custom-select__menu {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    .custom-select__option {
+        width: 100%;
+        min-height: 38px;
+        border: 0;
+        border-radius: calc(var(--radius-media) - 2px);
+        background: transparent;
+        color: #0A0A0A;
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.84rem;
+        padding: 0 8px;
+        text-align: left;
+    }
+
+    .custom-select__option:hover,
+    .custom-select__option:focus-visible {
+        background: #F7F4ED;
+        color: #0A0A0A;
+        outline: 0;
+    }
+
+    .custom-select__option.is-selected {
+        background: #0A0A0A;
+        color: #FFFFFF;
+    }
+
+    .acknowledgement input {
+        accent-color: #0A0A0A;
+    }
+
+    .acknowledgement {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 12px;
+        align-items: start;
+        color: #5F574C;
+        font-size: 0.86rem;
+        line-height: 1.6;
+        padding-top: 4px;
+    }
+
+    .submit-button {
+        justify-self: start;
+        min-height: 48px;
+        border: 0;
+        border-radius: var(--radius-media);
+        background: #0A0A0A;
+        color: #FFFFFF;
+        cursor: pointer;
+        padding: 0 24px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        transition: background-color var(--ease-standard), color var(--ease-standard);
+    }
+
+    .submit-button:hover {
+        background: var(--color-gold);
+        color: #0A0A0A;
+    }
+
+    @media (max-width: 940px) {
+        .inquiry-layout {
+            grid-template-columns: 1fr;
+        }
+
+        .inquiry-form-panel {
+            order: 1;
+        }
+
+        .inquiry-summary {
+            position: static;
+            order: 2;
+        }
+    }
+
+    @media (max-width: 680px) {
+        .field-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .submit-button {
+            width: 100%;
+            justify-self: stretch;
+        }
+
+        .inquiry-submit-row {
+            width: 100%;
+        }
+
+        .inquiry-whatsapp {
+            width: 100%;
+            text-align: center;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<article class="inquiry-page">
+    {% include "includes/inquiry_progress.html" with flow=inquiry_flow|default:'custom' step=inquiry_step|default:'details' %}
+
+    <header class="inquiry-header">
+        <h1 class="inquiry-title">
+            {% if has_package_enquiry %}
+                {% trans 'Enquire about this journey' %}
+            {% elif has_custom_package %}
+                {% trans 'Request consultation for your shortlist' %}
+            {% else %}
+                {% trans 'Request a consultation' %}
+            {% endif %}
+        </h1>
+        <p class="inquiry-copy">
+            {% if has_package_enquiry %}
+                {% trans 'Confirm a few travel details. We will refine availability and routing on your consultation — nothing is booked yet.' %}
+            {% elif has_custom_package %}
+                {% trans 'Review your shortlist, confirm the essentials, and request a video consultation. We email details within two hours.' %}
+            {% else %}
+                {% trans 'Share the essentials so we can prepare your consultation. Optional planning notes can be added later.' %}
+            {% endif %}
+        </p>
+        {% include "includes/inquiry_commitment_note.html" %}
+    </header>
+
+    <hr class="inquiry-rule" aria-hidden="true">
+
+    <form class="inquiry-layout" method="post" action="{% url 'inquiry_crm:inquiry_intake' %}" data-remove-url="{% url 'inquiry_crm:remove_from_inquiry_list' %}">
+        {% csrf_token %}
+        <div hidden aria-hidden="true">
+            {% for package in selected_packages %}
+                <input type="hidden" name="package_ids" value="{{ package.id }}">
+            {% endfor %}
+            {% for interest in selected_interests %}
+                <div data-interest-fields="{{ interest.interest_type }}:{{ interest.object_id }}">
+                    <input type="hidden" name="interest_type" value="{{ interest.interest_type }}">
+                    <input type="hidden" name="interest_content_type_id" value="{{ interest.content_type_id }}">
+                    <input type="hidden" name="interest_object_id" value="{{ interest.object_id }}">
+                    <input type="hidden" name="interest_title" value="{{ interest.title }}">
+                </div>
+            {% endfor %}
+            {% if selected_region %}
+                <input type="hidden" name="region_id" value="{{ selected_region.id }}">
+            {% endif %}
+            <input type="hidden" name="day_count" value="{{ day_count }}">
+            <input type="hidden" name="planning_focus" value="{{ planning_focus }}">
+            <input type="hidden" name="travel_pace" value="{{ travel_pace }}">
+            <input type="hidden" name="accommodation_style" value="{{ accommodation_style }}">
+            {% for golf_course_id in golf_course_ids %}
+                <input type="hidden" name="golf_course_ids" value="{{ golf_course_id }}">
+            {% endfor %}
+            {% for safari_extension_id in safari_extension_ids %}
+                <input type="hidden" name="safari_extension_ids" value="{{ safari_extension_id }}">
+            {% endfor %}
+        </div>
+
+        <section class="inquiry-form-panel" aria-labelledby="traveler-details-title">
+            <div class="form-heading">
+                <p class="summary-label">{% trans 'Traveler details' %}</p>
+                <h2 id="traveler-details-title">{% trans 'Confirm the essentials' %}</h2>
+                <p class="form-promise">{% trans 'Founders reply within two hours with consultation details. Nothing is booked until you confirm together.' %}</p>
+            </div>
+
+            {% if errors %}
+                <ul class="error-list">
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            {% if intent %}<input type="hidden" name="intent" value="{{ intent }}">{% endif %}
+
+            <div class="field-grid">
+                <div class="field">
+                    <label for="full_name">{% trans 'Full Name' %}</label>
+                    <input id="full_name" name="full_name" type="text" value="{{ form_values.full_name }}" autocomplete="name" required>
+                </div>
+                <div class="field">
+                    <label for="email">{% trans 'Email' %}</label>
+                    <input id="email" name="email" type="email" value="{{ form_values.email }}" autocomplete="email" required>
+                </div>
+                <div class="field">
+                    <label for="phone">{% trans 'Phone / WhatsApp' %}</label>
+                    <input id="phone" name="phone" type="tel" value="{{ form_values.phone }}" autocomplete="tel" placeholder="+254…">
+                </div>
+                <div class="field">
+                    <label id="preferred-contact-label">{% trans 'Preferred contact' %}</label>
+                    <div class="custom-select" data-custom-select>
+                        <input type="hidden" name="preferred_contact" value="{{ form_values.preferred_contact|default:'email' }}" data-custom-select-input required>
+                        <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="preferred-contact-label">
+                            <span data-custom-select-label>
+                                {% if form_values.preferred_contact == 'phone' %}{% trans 'Phone' %}
+                                {% elif form_values.preferred_contact == 'whatsapp' %}WhatsApp
+                                {% else %}{% trans 'Email' %}{% endif %}
+                            </span>
+                            <svg class="custom-select__chevron" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                                <path d="M1.25 1.5L7 7.25L12.75 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="custom-select__menu" role="listbox" aria-labelledby="preferred-contact-label">
+                            {% for value, label in preferred_contact_choices %}
+                                <button class="custom-select__option {% if form_values.preferred_contact|default:'email' == value %}is-selected{% endif %}" type="button" role="option" data-value="{{ value }}" aria-selected="{% if form_values.preferred_contact|default:'email' == value %}true{% else %}false{% endif %}">{{ label }}</button>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="target_start_date">{% trans 'Target Start Date' %}</label>
+                    <input id="target_start_date" name="target_start_date" type="date" value="{{ form_values.target_start_date }}">
+                </div>
+                <div class="field">
+                    <label id="trip-flexibility-label">{% trans 'Date flexibility' %}</label>
+                    <div class="custom-select" data-custom-select>
+                        <input type="hidden" name="trip_flexibility" value="{{ form_values.trip_flexibility|default:'' }}" data-custom-select-input>
+                        <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="trip-flexibility-label">
+                            <span data-custom-select-label>
+                                {% if form_values.trip_flexibility == 'fixed' %}{% trans 'Fixed dates' %}
+                                {% elif form_values.trip_flexibility == 'few_days' %}{% trans 'Flexible by a few days' %}
+                                {% elif form_values.trip_flexibility == 'month' %}{% trans 'Flexible within the month' %}
+                                {% elif form_values.trip_flexibility == 'fully' %}{% trans 'Fully flexible' %}
+                                {% else %}{% trans 'Select flexibility' %}{% endif %}
+                            </span>
+                            <svg class="custom-select__chevron" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                                <path d="M1.25 1.5L7 7.25L12.75 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="custom-select__menu" role="listbox" aria-labelledby="trip-flexibility-label">
+                            <button class="custom-select__option {% if not form_values.trip_flexibility %}is-selected{% endif %}" type="button" role="option" data-value="" aria-selected="{% if not form_values.trip_flexibility %}true{% else %}false{% endif %}">{% trans 'Select flexibility' %}</button>
+                            {% for value, label in trip_flexibility_choices %}
+                                <button class="custom-select__option {% if form_values.trip_flexibility == value %}is-selected{% endif %}" type="button" role="option" data-value="{{ value }}" aria-selected="{% if form_values.trip_flexibility == value %}true{% else %}false{% endif %}">{{ label }}</button>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="guest_count">{% trans 'Guests' %}</label>
+                    <input id="guest_count" name="guest_count" type="number" min="1" max="12" step="1" value="{{ form_values.guest_count|default:'2' }}" required>
+                </div>
+                <div class="field">
+                    <label id="budget-band-label">{% trans 'Budget band (soft)' %}</label>
+                    <div class="custom-select" data-custom-select>
+                        <input type="hidden" name="budget_band" value="{{ form_values.budget_band|default:'' }}" data-custom-select-input>
+                        <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="budget-band-label">
+                            <span data-custom-select-label>
+                                {% if form_values.budget_band == 'under_15k' %}{% trans 'Under $15,000' %}
+                                {% elif form_values.budget_band == '15_30k' %}$15,000 – $30,000
+                                {% elif form_values.budget_band == '30_50k' %}$30,000 – $50,000
+                                {% elif form_values.budget_band == 'over_50k' %}$50,000+
+                                {% elif form_values.budget_band == 'open' %}{% trans 'Open / discuss on the call' %}
+                                {% else %}{% trans 'Prefer to discuss' %}{% endif %}
+                            </span>
+                            <svg class="custom-select__chevron" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                                <path d="M1.25 1.5L7 7.25L12.75 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="custom-select__menu" role="listbox" aria-labelledby="budget-band-label">
+                            <button class="custom-select__option {% if not form_values.budget_band %}is-selected{% endif %}" type="button" role="option" data-value="" aria-selected="{% if not form_values.budget_band %}true{% else %}false{% endif %}">{% trans 'Prefer to discuss' %}</button>
+                            {% for value, label in budget_band_choices %}
+                                <button class="custom-select__option {% if form_values.budget_band == value %}is-selected{% endif %}" type="button" role="option" data-value="{{ value }}" aria-selected="{% if form_values.budget_band == value %}true{% else %}false{% endif %}">{{ label }}</button>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="field field--full">
+                    <label id="accommodation-tier-label">{% trans 'Stay Preference' %}</label>
+                    <div class="custom-select" data-custom-select>
+                        <input type="hidden" name="accommodation_tier" value="{% if form_values.accommodation_tier == 'premium_charter' %}premium_charter{% else %}standard_luxury{% endif %}" data-custom-select-input required>
+                        <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="accommodation-tier-label">
+                            <span data-custom-select-label>
+                                {% if form_values.accommodation_tier == 'premium_charter' %}
+                                    {% trans 'Premium Charter' %}
+                                {% else %}
+                                    {% trans 'Standard Luxury' %}
+                                {% endif %}
+                            </span>
+                            <svg class="custom-select__chevron" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                                <path d="M1.25 1.5L7 7.25L12.75 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="custom-select__menu" role="listbox" aria-labelledby="accommodation-tier-label">
+                            <button class="custom-select__option {% if form_values.accommodation_tier != 'premium_charter' %}is-selected{% endif %}" type="button" role="option" data-value="standard_luxury" aria-selected="{% if form_values.accommodation_tier != 'premium_charter' %}true{% else %}false{% endif %}">{% trans 'Standard Luxury' %}</button>
+                            <button class="custom-select__option {% if form_values.accommodation_tier == 'premium_charter' %}is-selected{% endif %}" type="button" role="option" data-value="premium_charter" aria-selected="{% if form_values.accommodation_tier == 'premium_charter' %}true{% else %}false{% endif %}">{% trans 'Premium Charter' %}</button>
+                        </div>
+                    </div>
+                    <p class="field-help">
+                        {% trans 'Standard Luxury: top lodges and clubs with private transfers. Premium Charter: adds helicopter or charter flights where they meaningfully protect time and access.' %}
+                    </p>
+                </div>
+                <div class="field">
+                    <label for="preferred_consultation_date">{% trans 'Preferred consultation date' %}</label>
+                    <input
+                        id="preferred_consultation_date"
+                        name="preferred_consultation_date"
+                        type="date"
+                        min="{{ min_consultation_date }}"
+                        value="{{ form_values.preferred_consultation_date }}"
+                        required
+                    >
+                </div>
+                <div class="field">
+                    <label id="consultation-window-label">{% trans 'Preferred window (East Africa Time)' %}</label>
+                    <div class="custom-select" data-custom-select>
+                        <input type="hidden" name="preferred_consultation_window" value="{{ form_values.preferred_consultation_window|default:'afternoon' }}" data-custom-select-input required>
+                        <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="consultation-window-label">
+                            <span data-custom-select-label>
+                                {% if form_values.preferred_consultation_window == 'morning' %}{% trans 'Morning (09:00–12:00 EAT)' %}
+                                {% elif form_values.preferred_consultation_window == 'evening' %}{% trans 'Evening (17:00–20:00 EAT)' %}
+                                {% else %}{% trans 'Afternoon (12:00–17:00 EAT)' %}{% endif %}
+                            </span>
+                            <svg class="custom-select__chevron" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                                <path d="M1.25 1.5L7 7.25L12.75 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="custom-select__menu" role="listbox" aria-labelledby="consultation-window-label">
+                            {% for value, label in consultation_window_choices %}
+                                <button class="custom-select__option {% if form_values.preferred_consultation_window|default:'afternoon' == value %}is-selected{% endif %}" type="button" role="option" data-value="{{ value }}" aria-selected="{% if form_values.preferred_consultation_window|default:'afternoon' == value %}true{% else %}false{% endif %}">{{ label }}</button>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <p class="field-help">{% trans 'This is a preference only. We confirm the exact time and join link by email within two hours.' %}</p>
+                </div>
+                <div class="field">
+                    <label id="preferred-language-label">{% trans 'Preferred Language' %}</label>
+                    <div class="custom-select" data-custom-select>
+                        <input type="hidden" name="preferred_language" value="{% if form_values.preferred_language == 'de' %}de{% else %}en{% endif %}" data-custom-select-input required>
+                        <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="preferred-language-label">
+                            <span data-custom-select-label>
+                                {% if form_values.preferred_language == 'de' %}Deutsch{% else %}English{% endif %}
+                            </span>
+                            <svg class="custom-select__chevron" viewBox="0 0 14 9" aria-hidden="true" focusable="false">
+                                <path d="M1.25 1.5L7 7.25L12.75 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="custom-select__menu" role="listbox" aria-labelledby="preferred-language-label">
+                            <button class="custom-select__option {% if form_values.preferred_language != 'de' %}is-selected{% endif %}" type="button" role="option" data-value="en" aria-selected="{% if form_values.preferred_language != 'de' %}true{% else %}false{% endif %}">English</button>
+                            <button class="custom-select__option {% if form_values.preferred_language == 'de' %}is-selected{% endif %}" type="button" role="option" data-value="de" aria-selected="{% if form_values.preferred_language == 'de' %}true{% else %}false{% endif %}">Deutsch</button>
+                        </div>
+                    </div>
+                </div>
+                <label class="acknowledgement field--full">
+                    <input type="checkbox" name="luggage_limit_acknowledged" {% if form_values.luggage_limit_acknowledged %}checked{% endif %} required>
+                    <span>{% trans 'I acknowledge the 22kg golf bag luggage limit and that excess bags may need advance handling.' %}</span>
+                </label>
+                <p class="form-notice" role="note">
+                    {% trans 'This itinerary can be customized or extended at an additional cost.' %}
+                </p>
+                {% trans "Tell us about any preferences, changes, accessibility needs, accommodation preferences, dietary requirements, or anything else you'd like us to consider." as additional_requirements_placeholder %}
+                <div class="field field--full">
+                    <label for="additional_requirements">{% trans 'Additional Requirements' %}</label>
+                    <textarea
+                        id="additional_requirements"
+                        name="additional_requirements"
+                        rows="5"
+                        maxlength="4000"
+                        placeholder="{{ additional_requirements_placeholder }}"
+                    >{{ form_values.additional_requirements }}</textarea>
+                </div>
+                <div class="field field--full inquiry-submit-row">
+                    <button class="submit-button" type="submit">
+                        {% trans 'Request consultation' %}
+                    </button>
+                    <a class="inquiry-whatsapp" href="https://wa.me/254743113141" target="_blank" rel="noopener noreferrer">
+                        {% trans 'Or message us on WhatsApp' %}
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <aside class="inquiry-summary" aria-label="{% trans 'Enquiry summary' %}">
+            <div class="summary-heading">
+                <p class="summary-label">
+                    {% if has_package_enquiry %}
+                        {% trans 'Selected journey' %}
+                    {% elif has_custom_package %}
+                        {% trans 'Your shortlist' %}
+                    {% else %}
+                        {% trans 'Planning notes' %}
+                    {% endif %}
+                </p>
+                <h2 class="summary-title">{% trans 'Review' %}</h2>
+            </div>
+
+            {% if selected_packages or selected_interests or selected_region or planning_focus %}
+                <ul class="summary-list" id="inquiry-summary-list">
+                    {% for package in selected_packages %}
+                        <li class="summary-item">
+                            <div>
+                                <span class="summary-item__type">{% trans 'Package' %}</span>
+                                <span class="summary-item__title">{% if request.LANGUAGE_CODE == 'de' %}{{ package.title_de }}{% else %}{{ package.title_en }}{% endif %}</span>
+                            </div>
+                        </li>
+                    {% endfor %}
+                    {% for interest in selected_interests %}
+                        <li class="summary-item" data-summary-item data-remove-key="{{ interest.interest_type }}:{{ interest.object_id }}">
+                            <div>
+                                <span class="summary-item__type">
+                                    {% if interest.interest_type == 'golf_course' %}{% trans 'Golf course' %}
+                                    {% elif interest.interest_type == 'safari_extension' %}{% trans 'Safari' %}
+                                    {% elif interest.interest_type == 'accommodation' %}{% trans 'Stay' %}
+                                    {% elif interest.interest_type == 'wellness_experience' %}{% trans 'Wellness' %}
+                                    {% elif interest.interest_type == 'golf_event' %}{% trans 'Event' %}
+                                    {% else %}{% trans 'Experience' %}{% endif %}
+                                </span>
+                                <span class="summary-item__title">{{ interest.title }}</span>
+                            </div>
+                            <button
+                                type="button"
+                                class="summary-item__remove"
+                                data-remove-item
+                                data-remove-key="{{ interest.interest_type }}:{{ interest.object_id }}"
+                                aria-label="{% trans 'Remove from custom package' %}"
+                                title="{% trans 'Remove' %}"
+                            >&times;</button>
+                        </li>
+                    {% endfor %}
+                    {% if selected_region %}
+                        <li class="summary-item">
+                            <div>
+                                <span class="summary-item__type">{% trans 'Region' %}</span>
+                                <span class="summary-item__title">{% if request.LANGUAGE_CODE == 'de' %}{{ selected_region.name_de }}{% else %}{{ selected_region.name_en }}{% endif %}</span>
+                            </div>
+                        </li>
+                    {% endif %}
+                    {% if planning_focus %}
+                        <li class="summary-item">
+                            <div>
+                                <span class="summary-item__type">{% trans 'Focus' %}</span>
+                                <span class="summary-item__title">{{ planning_focus }}</span>
+                            </div>
+                        </li>
+                    {% endif %}
+                    {% if travel_pace %}
+                        <li class="summary-item">
+                            <div>
+                                <span class="summary-item__type">{% trans 'Pace' %}</span>
+                                <span class="summary-item__title">{{ travel_pace }}</span>
+                            </div>
+                        </li>
+                    {% endif %}
+                    {% if accommodation_style %}
+                        <li class="summary-item">
+                            <div>
+                                <span class="summary-item__type">{% trans 'Stay style' %}</span>
+                                <span class="summary-item__title">{{ accommodation_style }}</span>
+                            </div>
+                        </li>
+                    {% endif %}
+                </ul>
+                <p class="summary-note" id="inquiry-summary-note">{% trans 'We will refine sequencing, seasonality, and access on your consultation. Nothing is confirmed until then.' %}</p>
+                <div class="summary-empty" id="inquiry-summary-empty" hidden>
+                    <p>{% trans 'No experiences shortlisted yet.' %}</p>
+                    <div class="summary-empty__actions">
+                        <a class="summary-link" href="/journeys/">{% trans 'Browse Journeys →' %}</a>
+                        <a class="summary-link" href="{% url 'inquiry_crm:custom_planner' %}">{% trans 'Optional planning notes →' %}</a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="summary-empty">
+                    <p>{% trans 'No experiences shortlisted yet.' %}</p>
+                    <div class="summary-empty__actions">
+                        <a class="summary-link" href="/journeys/">{% trans 'Browse Journeys →' %}</a>
+                        <a class="summary-link" href="{% url 'inquiry_crm:custom_planner' %}">{% trans 'Optional planning notes →' %}</a>
+                    </div>
+                </div>
+            {% endif %}
+        </aside>
+    </form>
+</article>
+
+<script>
+    (() => {
+        const root = document.querySelector('.inquiry-layout');
+        if (!root) {
+            return;
+        }
+
+        const closeCustomSelect = (select) => {
+            const trigger = select.querySelector('.custom-select__trigger');
+            select.classList.remove('is-open');
+            if (trigger) {
+                trigger.setAttribute('aria-expanded', 'false');
+            }
+        };
+
+        const closeAllCustomSelects = (exceptSelect = null) => {
+            root.querySelectorAll('[data-custom-select]').forEach((select) => {
+                if (select !== exceptSelect) {
+                    closeCustomSelect(select);
+                }
+            });
+        };
+
+        root.querySelectorAll('[data-custom-select]').forEach((select) => {
+            const trigger = select.querySelector('.custom-select__trigger');
+            const label = select.querySelector('[data-custom-select-label]');
+            const input = select.querySelector('[data-custom-select-input]');
+            const options = select.querySelectorAll('.custom-select__option');
+
+            if (!trigger || !label || !input) {
+                return;
+            }
+
+            trigger.addEventListener('click', () => {
+                const isOpen = select.classList.contains('is-open');
+                closeAllCustomSelects(select);
+                select.classList.toggle('is-open', !isOpen);
+                trigger.setAttribute('aria-expanded', String(!isOpen));
+            });
+
+            options.forEach((option) => {
+                option.addEventListener('click', () => {
+                    input.value = option.dataset.value || '';
+                    label.textContent = option.textContent.trim();
+
+                    options.forEach((item) => {
+                        const isSelected = item === option;
+                        item.classList.toggle('is-selected', isSelected);
+                        item.setAttribute('aria-selected', String(isSelected));
+                    });
+
+                    closeCustomSelect(select);
+                });
+            });
+
+            select.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    closeCustomSelect(select);
+                    trigger.focus();
+                }
+            });
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!event.target.closest('[data-custom-select]')) {
+                closeAllCustomSelects();
+            }
+        });
+
+        const removeUrl = root.dataset.removeUrl;
+        const csrfInput = root.querySelector('[name=csrfmiddlewaretoken]');
+        const summaryList = document.getElementById('inquiry-summary-list');
+        const summaryNote = document.getElementById('inquiry-summary-note');
+        const summaryEmpty = document.getElementById('inquiry-summary-empty');
+        const inquiryLink = document.querySelector('[data-inquiry-link]');
+
+        const updateInquiryCount = (count) => {
+            if (!inquiryLink) {
+                return;
+            }
+
+            const label = inquiryLink.dataset.inquireLabel || 'Inquire';
+            inquiryLink.textContent = count ? `${label} (${count})` : label;
+            inquiryLink.href = count ? '/custom-package/' : '/start/';
+            inquiryLink.setAttribute(
+                'aria-label',
+                count
+                    ? inquiryLink.dataset.ariaWithItems || inquiryLink.getAttribute('aria-label')
+                    : inquiryLink.dataset.ariaWithoutItems || inquiryLink.getAttribute('aria-label')
+            );
+        };
+
+        const syncSummaryEmptyState = () => {
+            if (!summaryList) {
+                return;
+            }
+
+            const hasItems = summaryList.children.length > 0;
+            summaryList.hidden = !hasItems;
+            if (summaryNote) {
+                summaryNote.hidden = !hasItems;
+            }
+            if (summaryEmpty) {
+                summaryEmpty.hidden = hasItems;
+            }
+        };
+
+        if (removeUrl && csrfInput) {
+            root.addEventListener('click', async (event) => {
+                const removeButton = event.target.closest('[data-remove-item]');
+                if (!removeButton || removeButton.disabled) {
+                    return;
+                }
+
+                event.preventDefault();
+
+                const removeKey = removeButton.dataset.removeKey;
+                if (!removeKey) {
+                    return;
+                }
+
+                removeButton.disabled = true;
+
+                const formData = new FormData();
+                formData.append('csrfmiddlewaretoken', csrfInput.value);
+                formData.append('remove_item', removeKey);
+
+                try {
+                    const response = await fetch(removeUrl, {
+                        method: 'POST',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                        },
+                        body: formData,
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Remove failed');
+                    }
+
+                    const data = await response.json();
+                    if (!data.success) {
+                        throw new Error(data.message || 'Remove failed');
+                    }
+
+                    removeButton.closest('[data-summary-item]')?.remove();
+                    root.querySelector(`[data-interest-fields="${removeKey}"]`)?.remove();
+                    updateInquiryCount(data.cart_count);
+                    syncSummaryEmptyState();
+
+                    if (typeof window.showToast === 'function') {
+                        window.showToast(data.message);
+                    }
+                } catch (error) {
+                    removeButton.disabled = false;
+                    if (typeof window.showToast === 'function') {
+                        window.showToast('Could not remove item. Please try again.');
+                    }
+                }
+            });
+        }
+    })();
+</script>
+{% endblock %}

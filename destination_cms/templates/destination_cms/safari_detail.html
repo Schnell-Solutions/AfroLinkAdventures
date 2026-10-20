@@ -1,0 +1,371 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block meta_title %}{% if safari.meta_title %}{{ safari.meta_title }}{% else %}{{ safari.name }} | Safari Destination | AfroLink Adventures{% endif %}{% endblock %}
+{% block meta_description %}{% if safari.meta_description %}{{ safari.meta_description }}{% else %}{{ safari.overview|default:safari.key_wildlife|truncatewords:36 }}{% endif %}{% endblock %}
+{% block body_class %}safari-detail-body{% endblock %}
+
+{% block extra_head %}
+{% include "destination_cms/includes/experience_detail_styles.html" %}
+<style>
+    body.safari-detail-body:not(.home-body),
+    body.safari-detail-body:not(.home-body) .site-main,
+    body.safari-detail-body:not(.home-body) .content-frame {
+        background: #FFFFFF;
+    }
+
+    .safari-detail-body .xp-media {
+        position: relative;
+    }
+
+    .safari-detail-body .xp-media::after {
+        content: "";
+        position: absolute;
+        inset: auto 0 0 0;
+        height: 28%;
+        background: linear-gradient(to top, rgba(10, 10, 10, 0.18), transparent);
+        pointer-events: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="xp-page">
+    <div class="xp-main">
+        <a class="back-link" href="{% url 'destination_cms:region_hub' safari.region.slug %}">← {% trans 'Back to region' %}</a>
+
+        <header class="xp-hero">
+            <div class="xp-hero__copy">
+                <p class="xp-kicker">{% trans 'Safari destination' %}</p>
+                <h1 class="xp-title">{{ safari.name }}</h1>
+                <p class="xp-location">{{ safari.region.name_en }}{% if safari.experience_style %} · {{ safari.experience_style }}{% endif %}</p>
+                {% if safari.overview %}
+                    <p class="xp-lede">{{ safari.overview }}</p>
+                {% elif safari.key_wildlife %}
+                    <p class="xp-lede">{{ safari.key_wildlife|truncatewords:40 }}</p>
+                {% endif %}
+            </div>
+            <div class="xp-media">
+                {% if hero_image_url %}
+                    <img src="{{ hero_image_url }}" alt="{{ safari.name }}">
+                {% else %}
+                    <div class="xp-media__placeholder">{% trans 'Safari imagery' %}</div>
+                {% endif %}
+            </div>
+        </header>
+
+        {% if safari.overview or safari.history or safari.landscape_description %}
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Overview' %}</h2>
+            {% if safari.overview %}<div class="xp-prose">{{ safari.overview }}</div>{% endif %}
+            {% if safari.landscape_description %}<div class="xp-prose" style="margin-top:12px;">{{ safari.landscape_description }}</div>{% endif %}
+            {% if safari.history %}<div class="xp-prose" style="margin-top:12px;">{{ safari.history }}</div>{% endif %}
+            {% if safari.conservation_significance %}<div class="xp-prose" style="margin-top:12px;">{{ safari.conservation_significance }}</div>{% endif %}
+        </section>
+        {% endif %}
+
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Wildlife & experiences' %}</h2>
+            {% if safari.key_wildlife %}<p class="xp-section__intro">{{ safari.key_wildlife }}</p>{% endif %}
+            <div class="xp-grid">
+                {% if safari.common_wildlife %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Common wildlife' %}</span>
+                    <div class="xp-fact__value">{{ safari.common_wildlife }}</div>
+                </div>
+                {% endif %}
+                {% if safari.rare_wildlife %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Rare wildlife' %}</span>
+                    <div class="xp-fact__value">{{ safari.rare_wildlife }}</div>
+                </div>
+                {% endif %}
+                {% if safari.photography_opportunities %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Photography' %}</span>
+                    <div class="xp-fact__value">{{ safari.photography_opportunities }}</div>
+                </div>
+                {% endif %}
+                {% if safari.typical_duration %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Typical duration' %}</span>
+                    <div class="xp-fact__value">{{ safari.typical_duration }}</div>
+                </div>
+                {% endif %}
+            </div>
+
+            {% if safari.big_five_available or safari.birdwatching or safari.seasonal_migration or safari.game_drives or safari.walking_safaris or safari.night_drives or safari.boat_safaris or safari.balloon_safaris or safari.guided_tours or safari.self_drive_allowed %}
+            <div class="xp-amenity-block">
+                {% if safari.big_five_available or safari.birdwatching or safari.seasonal_migration %}
+                <div class="xp-amenity-group">
+                    <div class="xp-amenity-group__label">{% trans 'Wildlife highlights' %}</div>
+                    <p class="xp-amenity-group__hint">{% trans 'What makes this destination distinctive for game viewing.' %}</p>
+                    <ul class="xp-amenity-list">
+                        {% if safari.big_five_available %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Big Five opportunities' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Chance to see lion, leopard, elephant, buffalo, and rhino depending on conditions.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if safari.birdwatching %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Birdwatching' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Strong birdlife alongside the main game circuits.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if safari.seasonal_migration %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Seasonal migration' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Timing windows when herds and movement are strongest.' %}</span>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if safari.game_drives or safari.walking_safaris or safari.night_drives or safari.boat_safaris or safari.balloon_safaris or safari.guided_tours or safari.self_drive_allowed %}
+                <div class="xp-amenity-group">
+                    <div class="xp-amenity-group__label">{% trans 'Ways to experience it' %}</div>
+                    <p class="xp-amenity-group__hint">{% trans 'How guests usually move through the destination.' %}</p>
+                    <ul class="xp-amenity-list">
+                        {% if safari.game_drives %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Game drives' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Guided vehicle viewing on park or conservancy roads.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if safari.walking_safaris %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Walking safaris' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Guided walks among plains game where permitted.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if safari.night_drives %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Night drives' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'After-dark predator and nocturnal wildlife viewing where allowed.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if safari.boat_safaris %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Boat safaris' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Water-based viewing from lakes or channels.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if safari.balloon_safaris %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Balloon safaris' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Optional aerial sunrise flights where operators run.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if safari.guided_tours %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Guided tours' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Professional guiding included in the destination experience.' %}</span>
+                        </li>
+                        {% endif %}
+                        {% if safari.self_drive_allowed %}
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Self-drive allowed' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Guests may self-drive where park rules permit.' %}</span>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+        </section>
+
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Logistics' %}</h2>
+            <div class="xp-grid">
+                {% if safari.distance_from_airport %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Airport access' %}</span>
+                    <div class="xp-fact__value">{{ safari.distance_from_airport }}</div>
+                </div>
+                {% endif %}
+                {% if safari.driving_time %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Driving time' %}</span>
+                    <div class="xp-fact__value">{{ safari.driving_time }}</div>
+                </div>
+                {% endif %}
+                {% if safari.park_opening_hours %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Park hours' %}</span>
+                    <div class="xp-fact__value">{{ safari.park_opening_hours }}</div>
+                </div>
+                {% endif %}
+                {% if safari.access_notes %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Access' %}</span>
+                    <div class="xp-fact__value">{{ safari.access_notes }}</div>
+                </div>
+                {% endif %}
+                {% if safari.peak_season or safari.best_season %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Peak / best season' %}</span>
+                    <div class="xp-fact__value">{% firstof safari.peak_season safari.best_season %}</div>
+                </div>
+                {% endif %}
+                {% if safari.green_season %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Green season' %}</span>
+                    <div class="xp-fact__value">{{ safari.green_season }}</div>
+                </div>
+                {% endif %}
+                {% if safari.migration_season %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Migration' %}</span>
+                    <div class="xp-fact__value">{{ safari.migration_season }}</div>
+                </div>
+                {% endif %}
+                {% if safari.best_months %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Best months' %}</span>
+                    <div class="xp-fact__value">{{ safari.best_months }}</div>
+                </div>
+                {% endif %}
+            </div>
+            {% if safari.internal_flights_available %}
+            <div class="xp-amenity-block">
+                <div class="xp-amenity-group">
+                    <div class="xp-amenity-group__label">{% trans 'Access options' %}</div>
+                    <p class="xp-amenity-group__hint">{% trans 'Transfer choices that can change the pacing of the day.' %}</p>
+                    <ul class="xp-amenity-list">
+                        <li class="xp-amenity-item">
+                            <span class="xp-amenity-item__title">{% trans 'Internal flights available' %}</span>
+                            <span class="xp-amenity-item__note">{% trans 'Light-aircraft access can shorten transfer time.' %}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+        </section>
+
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Preparation' %}</h2>
+            <div class="xp-grid">
+                {% if safari.clothing_recommendations %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Clothing' %}</span>
+                    <div class="xp-fact__value">{{ safari.clothing_recommendations }}</div>
+                </div>
+                {% endif %}
+                {% if safari.weather_notes %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Weather' %}</span>
+                    <div class="xp-fact__value">{{ safari.weather_notes }}</div>
+                </div>
+                {% endif %}
+                {% if safari.camera_recommendations %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Camera' %}</span>
+                    <div class="xp-fact__value">{{ safari.camera_recommendations }}</div>
+                </div>
+                {% endif %}
+                {% if safari.luggage_recommendations or safari.packing_notes %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Luggage & packing' %}</span>
+                    <div class="xp-fact__value">{% firstof safari.luggage_recommendations safari.packing_notes %}</div>
+                </div>
+                {% endif %}
+                {% if safari.park_regulations %}
+                <div class="xp-fact">
+                    <span class="xp-fact__label">{% trans 'Park regulations' %}</span>
+                    <div class="xp-fact__value">{{ safari.park_regulations }}</div>
+                </div>
+                {% endif %}
+            </div>
+            {% if safari.get_need_to_know %}
+            <ul class="xp-list" style="margin-top:16px;">
+                {% for note in safari.get_need_to_know %}<li>{{ note }}</li>{% endfor %}
+            </ul>
+            {% endif %}
+        </section>
+
+        {% if included_items or optional_items %}
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Included & optional' %}</h2>
+            <div class="xp-split">
+                {% if included_items %}
+                <div>
+                    <p class="xp-fact__label">{% trans 'Included' %}</p>
+                    <ul class="xp-list">{% for item in included_items %}<li>{{ item.label }}</li>{% endfor %}</ul>
+                </div>
+                {% endif %}
+                {% if optional_items %}
+                <div>
+                    <p class="xp-fact__label">{% trans 'Optional extras' %}</p>
+                    <ul class="xp-list">{% for item in optional_items %}<li>{{ item.label }}</li>{% endfor %}</ul>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+        {% endif %}
+
+        {% if safari.gallery_images.all %}
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Gallery' %}</h2>
+            <div class="xp-gallery">
+                {% for image in safari.gallery_images.all %}
+                <figure>
+                    <img src="{{ image.image_url }}" alt="{{ image.caption_en|default:safari.name }}">
+                    {% if image.caption_en %}<figcaption>{{ image.caption_en }}</figcaption>{% endif %}
+                </figure>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        {% if faqs %}
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'FAQ' %}</h2>
+            <div class="xp-faq" data-faq-accordion>
+                {% for faq in faqs %}
+                <details name="safari-faq" {% if forloop.first %}open{% endif %}>
+                    <summary>{{ faq.question }}</summary>
+                    <p>{{ faq.answer }}</p>
+                </details>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        {% if related_cards %}
+        <section class="xp-section">
+            <h2 class="xp-section__title">{% trans 'Related experiences' %}</h2>
+            <div class="xp-related">
+                {% for card in related_cards %}
+                <a href="{{ card.url }}">
+                    <div class="xp-related__media">{% if card.image_url %}<img src="{{ card.image_url }}" alt="{{ card.title }}">{% endif %}</div>
+                    {% if card.label %}<div class="xp-related__label">{{ card.label }}</div>{% endif %}
+                    <div class="xp-related__title">{{ card.title }}</div>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+    </div>
+
+    <aside class="xp-aside" data-detail-cta-panel>
+        <div class="xp-cta">
+            <div class="xp-cta__eyebrow">{% trans 'Shortlist' %}</div>
+            <h2 class="xp-cta__title">{% trans 'Add to shortlist' %}</h2>
+            <p class="xp-cta__copy">{% trans 'Save this safari destination to your shortlist. We will time wildlife days around your golf and stay plan.' %}</p>
+            <form method="post" action="{% url 'inquiry_crm:add_interest_to_inquiry_list' %}">
+                {% csrf_token %}
+                <input type="hidden" name="interest_type" value="safari_extension">
+                <input type="hidden" name="object_id" value="{{ safari.pk }}">
+                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                <button class="xp-cta__btn" type="submit">{% trans 'Add to shortlist' %} →</button>
+            </form>
+            {% include "includes/inquiry_commitment_note.html" with compact=True %}
+        </div>
+    </aside>
+</div>
+{% include "includes/detail_cta_bar.html" %}
+{% include "destination_cms/includes/experience_faq_accordion.html" %}
+{% endblock %}

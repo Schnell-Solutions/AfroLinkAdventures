@@ -1,0 +1,112 @@
+/* AfroLink Adventures — Django admin polish */
+
+:root {
+    --afrolink-ink: #0a0a0a;
+    --afrolink-gold: #c79a55;
+    --afrolink-cream: #f7f4ed;
+    --afrolink-muted: #7a6a55;
+}
+
+#header {
+    background: var(--afrolink-ink);
+    color: #faf7f0;
+}
+
+#branding h1,
+#branding h1 a:link,
+#branding h1 a:visited {
+    color: #faf7f0;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+#user-tools a {
+    color: #d8c39a;
+}
+
+#user-tools a:hover,
+#user-tools a:focus {
+    color: #ffffff;
+}
+
+.module h2,
+.module caption,
+inline-group h2 {
+    background: var(--afrolink-ink);
+    color: #faf7f0;
+}
+
+div.breadcrumbs {
+    background: #1a1a1a;
+    color: #d4cbc0;
+}
+
+div.breadcrumbs a {
+    color: #d8c39a;
+}
+
+.button,
+input[type="submit"],
+input[type="button"],
+.submit-row input,
+a.button {
+    background: var(--afrolink-ink);
+}
+
+.button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
+.submit-row input:hover,
+a.button:hover {
+    background: #2a2a2a;
+}
+
+.button.default,
+input[type="submit"].default,
+.submit-row input.default {
+    background: var(--afrolink-gold);
+    color: var(--afrolink-ink);
+}
+
+.button.default:hover,
+input[type="submit"].default:hover,
+.submit-row input.default:hover {
+    background: #b8893f;
+    color: var(--afrolink-ink);
+}
+
+#changelist-filter h2 {
+    background: var(--afrolink-ink);
+}
+
+.object-tools a:link,
+.object-tools a:visited {
+    background: var(--afrolink-ink);
+}
+
+.object-tools a:hover {
+    background: #2a2a2a;
+}
+
+/* Nested itinerary clarity */
+.djn-group-nested > h2,
+.inline-related h3 {
+    letter-spacing: 0.02em;
+}
+
+fieldset .description {
+    color: var(--afrolink-muted);
+    font-size: 0.92rem;
+    line-height: 1.45;
+    margin-bottom: 0.85rem;
+    max-width: 62rem;
+}
+
+/* Login page */
+.login #header {
+    background: var(--afrolink-ink);
+}
+
+.login #container {
+    border-top-color: var(--afrolink-gold);
+}

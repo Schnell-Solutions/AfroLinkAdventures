@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block meta_title %}Signature Itineraries | AfroLink Adventures{% endblock %}
+{% block meta_description %}Browse AfroLink signature golf, safari, and wellness itinerary packages.{% endblock %}
+
+{% block extra_head %}
+<style>
+    .package-list,
+    .package-list * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    .package-list {
+        display: grid;
+        gap: var(--space-section);
+        padding: var(--space-page);
+    }
+
+    .list-hero,
+    .package-card,
+    .empty-state {
+        border: 1px solid var(--color-line-muted);
+        background: transparent;
+    }
+
+    .list-hero {
+        min-height: 420px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: clamp(32px, 6vw, 72px);
+    }
+
+    .eyebrow {
+        margin-bottom: 18px;
+        color: var(--color-accent);
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+    }
+
+    .list-title {
+        font-size: clamp(3rem, 7vw, 7rem);
+        text-transform: uppercase;
+    }
+
+    .list-copy {
+        max-width: 720px;
+        margin-top: 24px;
+        color: var(--color-muted);
+        line-height: 1.9;
+    }
+
+    .package-grid {
+        display: grid;
+        gap: var(--space-card);
+    }
+
+    .package-card {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(260px, 0.36fr);
+        gap: 24px;
+        padding: clamp(24px, 4vw, 42px);
+    }
+
+    .package-card__title {
+        font-size: clamp(2rem, 4vw, 4.6rem);
+        text-transform: uppercase;
+    }
+
+    .package-card__price {
+        color: var(--color-text);
+        font-family: var(--font-heading);
+        font-size: clamp(1.7rem, 2.8vw, 3.2rem);
+        line-height: 1.1;
+    }
+
+    .package-card__meta {
+        margin-bottom: 14px;
+        color: var(--color-accent);
+        font-size: 0.68rem;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+    }
+
+    .package-card__actions {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 24px;
+        border-left: 1px solid var(--color-line-muted);
+        padding-left: 24px;
+    }
+
+    .text-cta {
+        width: fit-content;
+        border-bottom: 1px solid var(--color-line);
+        color: var(--color-text);
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+    }
+
+    .empty-state {
+        padding: 34px;
+        color: var(--color-muted);
+    }
+
+    @media (max-width: 860px) {
+        .package-card {
+            grid-template-columns: 1fr;
+        }
+
+        .package-card__actions {
+            border-left: 0;
+            border-top: 1px solid var(--color-line-muted);
+            padding-top: 24px;
+            padding-left: 0;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<article class="package-list">
+    <section class="list-hero">
+        <p class="eyebrow">{% trans 'Signature Itineraries' %}</p>
+        <h1 class="list-title">{% trans 'Start with a proven route.' %}</h1>
+        <p class="list-copy">
+            {% trans 'Browse signature packages, then add one to your inquiry portfolio or rebuild the journey as a custom plan.' %}
+        </p>
+    </section>
+
+    <section class="package-grid" aria-label="{% trans 'Available signature packages' %}">
+        {% for card in package_cards %}
+            <article class="package-card">
+                <div>
+                    <p class="package-card__meta">{{ card.package.duration_days }} {% trans 'Days' %}</p>
+                    <h2 class="package-card__title">
+                        {% if request.LANGUAGE_CODE == 'de' %}{{ card.package.title_de }}{% else %}{{ card.package.title_en }}{% endif %}
+                    </h2>
+                    <p class="list-copy">
+                        {% trans 'A structured private itinerary with day-by-day golf, safari, wellness, accommodation, and concierge sequencing.' %}
+                    </p>
+                </div>
+                <div class="package-card__actions">
+                    {% include "includes/package_price.html" with has_promo_price=card.has_promo_price promo_price_label=card.promo_price_label original_price_label=card.original_price_label starting_price_label=card.starting_price_label savings_label=card.savings_label promo_label=card.promo_label is_featured_promo=card.is_featured_promo compact=True only %}
+                    <a class="text-cta" href="{% url 'destination_cms:package_detail' card.package.slug %}">{% trans 'View Journey →' %}</a>
+                </div>
+            </article>
+        {% empty %}
+            {% include "includes/listing_empty.html" %}
+        {% endfor %}
+    </section>
+</article>
+{% endblock %}
